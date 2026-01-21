@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webentwicklung - Sprint Marketing Agentur</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1517134191118-9d595e4c8c2b?ixlib=rb-1.2.1');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .tech-stack {
+            font-size: 2.5rem;
+            color: #0d6efd;
+            margin: 1rem;
+            transition: all 0.3s;
+            opacity: 0;
+        }
+
+        .tech-stack:hover {
+            transform: scale(1.2);
+            color: #0a58ca;
+        }
+
+        .pricing-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .pricing-header {
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .progress-bar-animated {
+            animation: progress-bar-stripes 1s linear infinite;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(13, 110, 253, 0.9);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 100px 0;
+        }
+
+        .portfolio-filter .btn {
+            border-radius: 30px;
+            padding: 8px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-filter .btn.active {
+            background: linear-gradient(45deg, #0d6efd, #198754);
+            color: white;
+            border: none;
+        }
+
+        .portfolio-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .portfolio-img {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-img img {
+            transition: all 0.5s ease;
+        }
+
+        .portfolio-card:hover .portfolio-img img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 110, 253, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-card:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-info {
+            text-align: center;
+            color: white;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-card:hover .portfolio-info {
+            transform: translateY(0);
+        }
+
+        .portfolio-info h4 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .portfolio-info p {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Animacije za filtrirane elemente */
+        .portfolio-item {
+            transition: all 0.6s ease;
+        }
+
+        .portfolio-item.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-filter .btn {
+                font-size: 0.9rem;
+                padding: 6px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigacija -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                Sprint Marketing Agentur
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Startseite</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            Leistungen
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="seo.html">SEO-Optimierung</a></li>
+                            <li><a class="dropdown-item" href="ppc.html">PPC-Kampagnen</a></li>
+                            <li><a class="dropdown-item" href="social.html">Social Media</a></li>
+                            <li><a class="dropdown-item active" href="webdev.html">Webentwicklung</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#o-nama">Über uns</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#kontakt">Kontakt</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Sekcija -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="display-3 mb-4">Webentwicklung</h1>
+                    <p class="lead mb-4">Wir erstellen moderne, responsive und schnelle Websites nach Ihren Wünschen</p>
+                    <a href="#kontakt" class="btn btn-primary btn-lg me-3">Projekt starten</a>
+                    <a href="#portfolio" class="btn btn-outline-light btn-lg">Portfolio ansehen</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tehnologije -->
+    <section class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="mb-5">Unsere Technologien</h2>
+            <div class="row">
+                <div class="col">
+                    <i class="fab fa-html5 tech-stack" title="HTML5"></i>
+                    <i class="fab fa-css3-alt tech-stack" title="CSS3"></i>
+                    <i class="fab fa-js tech-stack" title="JavaScript"></i>
+                    <i class="fab fa-react tech-stack" title="React"></i>
+                    <i class="fab fa-angular tech-stack" title="Angular"></i>
+                    <i class="fab fa-vuejs tech-stack" title="Vue.js"></i>
+                    <i class="fab fa-node tech-stack" title="Node.js"></i>
+                    <i class="fab fa-php tech-stack" title="PHP"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paketi -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Webentwicklung Pakete</h2>
+            <div class="row">
+                <!-- Landing Page Paket -->
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <div class="pricing-header bg-primary">
+                            <h4>Landing Page</h4>
+                            <h2 class="display-4">499€</h2>
+                            <p>einmalig</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check text-success"></i> One-Page Design</li>
+                                <li><i class="fas fa-check text-success"></i> Responsives Design</li>
+                                <li><i class="fas fa-check text-success"></i> Kontaktformular</li>
+                                <li><i class="fas fa-check text-success"></i> SEO-Optimierung</li>
+                                <li><i class="fas fa-check text-success"></i> Google Analytics</li>
+                            </ul>
+                            <button class="btn btn-primary w-100 mt-4">Paket wählen</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Paket -->
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <div class="pricing-header bg-success">
+                            <span class="badge bg-warning position-absolute top-0 end-0 mt-2 me-2">Beliebt</span>
+                            <h4>Business Website</h4>
+                            <h2 class="display-4">999€</h2>
+                            <p>einmalig</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check text-success"></i> Bis zu 5 Seiten</li>
+                                <li><i class="fas fa-check text-success"></i> Custom Design</li>
+                                <li><i class="fas fa-check text-success"></i> CMS System</li>
+                                <li><i class="fas fa-check text-success"></i> Blog Bereich</li>
+                                <li><i class="fas fa-check text-success"></i> SSL Zertifikat</li>
+                            </ul>
+                            <button class="btn btn-success w-100 mt-4">Paket wählen</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- E-commerce Paket -->
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <div class="pricing-header bg-info">
+                            <h4>E-Commerce</h4>
+                            <h2 class="display-4">1999€</h2>
+                            <p>einmalig</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check text-success"></i> Online-Shop</li>
+                                <li><i class="fas fa-check text-success"></i> Zahlungsabwicklung</li>
+                                <li><i class="fas fa-check text-success"></i> Lagerverwaltung</li>
+                                <li><i class="fas fa-check text-success"></i> Versandintegration</li>
+                                <li><i class="fas fa-check text-success"></i> Admin-Panel</li>
+                            </ul>
+                            <button class="btn btn-info w-100 mt-4">Paket wählen</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Web App -->
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <div class="pricing-header bg-warning">
+                            <h4>Custom Web App</h4>
+                            <h2 class="display-4">2999€</h2>
+                            <p>Startpreis</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check text-success"></i> Full-stack Entwicklung</li>
+                                <li><i class="fas fa-check text-success"></i> API Integrationen</li>
+                                <li><i class="fas fa-check text-success"></i> Custom Funktionalitäten</li>
+                                <li><i class="fas fa-check text-success"></i> Datenbank</li>
+                                <li><i class="fas fa-check text-success"></i> Cloud Hosting</li>
+                            </ul>
+                            <button class="btn btn-warning w-100 mt-4">Kontaktieren Sie uns</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SaaS Platform -->
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <div class="pricing-header bg-danger">
+                            <h4>SaaS Platform</h4>
+                            <h2 class="display-4">4999€</h2>
+                            <p>Startpreis</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check text-success"></i> Abonnementsystem</li>
+                                <li><i class="fas fa-check text-success"></i> Multi-tenant Architektur</li>
+                                <li><i class="fas fa-check text-success"></i> Skalierbare Infrastruktur</li>
+                                <li><i class="fas fa-check text-success"></i> API Dokumentation</li>
+                                <li><i class="fas fa-check text-success"></i> 24/7 Monitoring</li>
+                            </ul>
+                            <button class="btn btn-danger w-100 mt-4">Kontaktieren Sie uns</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="col-md-4">
+                    <div class="pricing-card">
+                        <div class="pricing-header bg-dark">
+                            <h4>Enterprise</h4>
+                            <h2 class="display-4">ab 9999€</h2>
+                            <p>einmalig</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check text-success"></i> Enterprise System</li>
+                                <li><i class="fas fa-check text-success"></i> Eigenes Team</li>
+                                <li><i class="fas fa-check text-success"></i> 24/7 Support</li>
+                                <li><i class="fas fa-check text-success"></i> SLA Garantie</li>
+                                <li><i class="fas fa-check text-success"></i> Audit & Tests</li>
+                            </ul>
+                            <button class="btn btn-dark w-100 mt-4">Termin vereinbaren</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="portfolio-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 gradient-text">Unsere Arbeiten</h2>
+            
+            <!-- Filter buttons -->
+            <div class="portfolio-filter text-center mb-5">
+                <button class="btn btn-outline-primary active mx-2 mb-3" data-filter="*">Alle Projekte</button>
+                <button class="btn btn-outline-primary mx-2 mb-3" data-filter=".web">Webseiten</button>
+                <button class="btn btn-outline-primary mx-2 mb-3" data-filter=".ecommerce">E-Commerce</button>
+                <button class="btn btn-outline-primary mx-2 mb-3" data-filter=".landing">Landing Pages</button>
+            </div>
+
+            <!-- Portfolio grid -->
+            <div class="row g-4 portfolio-grid">
+                <!-- Web Sajt 1 -->
+                <div class="col-lg-4 col-md-6 portfolio-item web">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img">
+                            <img src="https://picsum.photos/400/300?random=1" alt="Projekt 1" class="img-fluid">
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-info">
+                                    <h4>Unternehmenswebsite</h4>
+                                    <p>Webentwicklung</p>
+                                    <a href="#" class="btn btn-light btn-sm mt-3">Projekt ansehen</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- E-commerce 1 -->
+                <div class="col-lg-4 col-md-6 portfolio-item ecommerce">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img">
+                            <img src="https://picsum.photos/400/300?random=2" alt="Projekt 2" class="img-fluid">
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-info">
+                                    <h4>Online-Shop</h4>
+                                    <p>E-Commerce</p>
+                                    <a href="#" class="btn btn-light btn-sm mt-3">Projekt ansehen</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Landing Page 1 -->
+                <div class="col-lg-4 col-md-6 portfolio-item landing">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img">
+                            <img src="https://picsum.photos/400/300?random=3" alt="Projekt 3" class="img-fluid">
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-info">
+                                    <h4>Landingpage</h4>
+                                    <p>Landing Page</p>
+                                    <a href="#" class="btn btn-light btn-sm mt-3">Projekt ansehen</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dodati još projekata... -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Basic info -->
+                <div class="col-lg-4">
+                    <h5 class="mb-4">
+                        Sprint Marketing Agentur
+                    </h5>
+                    <p class="mb-3">Ihr Partner für digitales Wachstum und Entwicklung. Wir verwandeln Ideen in digitalen Erfolg.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick links -->
+                <div class="col-lg-2">
+                    <h5 class="mb-4">Schnellzugriff</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white text-decoration-none">Startseite</a></li>
+                        <li class="mb-2"><a href="#uber-uns" class="text-white text-decoration-none">Über uns</a></li>
+                        <li class="mb-2"><a href="#leistungen" class="text-white text-decoration-none">Leistungen</a></li>
+                        <li class="mb-2"><a href="#kontakt" class="text-white text-decoration-none">Kontakt</a></li>
+                    </ul>
+                </div>
+
+                <!-- Usluge -->
+                <div class="col-lg-3">
+                    <h5 class="mb-4">Unsere Leistungen</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="seo.html" class="text-white text-decoration-none">SEO Optimierung</a></li>
+                        <li class="mb-2"><a href="ppc.html" class="text-white text-decoration-none">PPC Kampanje</a></li>
+                        <li class="mb-2"><a href="social.html" class="text-white text-decoration-none">Društvene Mreže</a></li>
+                        <li class="mb-2"><a href="webdev.html" class="text-white text-decoration-none">Web Development</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kontakt -->
+                <div class="col-lg-3">
+                    <h5 class="mb-4">Kontaktieren Sie uns</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fas fa-map-marker-alt me-2"></i> 
+                            Karadjordjeva 127
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-phone me-2"></i> 
+                            065 856 0207
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-envelope me-2"></i>
+                            agencijasprint@gmail.com
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-clock me-2"></i>
+                            Mo - Fr: 09:00 - 17:00
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright line -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <hr class="bg-light">
+                    <div class="text-center mt-4">
+                        <p class="mb-0">&copy; 2025 Sprint Marketing Agentur. Alle Rechte vorbehalten.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dodati CSS für Footer -->
+    <style>
+        footer {
+            position: relative;
+            background: linear-gradient(45deg, #1a1a1a, #2c2c2c);
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #0d6efd, #198754);
+        }
+
+        footer .social-links a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        footer .social-links a:hover {
+            background: #0d6efd;
+            transform: translateY(-3px);
+        }
+
+        footer ul li a {
+            transition: all 0.3s;
+        }
+
+        footer ul li a:hover {
+            color: #0d6efd !important;
+            padding-left: 5px;
+        }
+
+        footer hr {
+            opacity: 0.1;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Animacija za Technologien
+            $('.tech-stack').each(function(index) {
+                $(this).css('opacity', '0').delay(index * 100).animate({
+                    opacity: 1
+                }, 500);
+            });
+
+            // Hover Effekt für Pakete
+            $('.pricing-card').hover(
+                function() {
+                    $(this).find('.pricing-header').addClass('bg-gradient');
+                },
+                function() {
+                    $(this).find('.pricing-header').removeClass('bg-gradient');
+                }
+            );
+
+            // Smooth scroll
+            $('a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                const target = $(this.hash);
+                if (target.length) {
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - 70
+                    }, 1000);
+                }
+            });
+
+            // Filter Funktionalität
+            $('.portfolio-filter button').click(function() {
+                const filter = $(this).data('filter');
+                
+                // Aktives Button
+                $('.portfolio-filter button').removeClass('active');
+                $(this).addClass('active');
+                
+                if(filter === '*') {
+                    $('.portfolio-item').removeClass('hidden');
+                } else {
+                    $('.portfolio-item').addClass('hidden');
+                    $(filter).removeClass('hidden');
+                }
+            });
+
+            // Animacija auf Scroll
+            function checkPortfolio() {
+                $('.portfolio-item').each(function() {
+                    if(isElementInViewport(this) && !$(this).hasClass('animated')) {
+                        $(this).addClass('animated').css({
+                            'animation': 'fadeInUp 0.6s forwards',
+                            'animation-delay': $(this).index() * 0.2 + 's'
+                        });
+                    }
+                });
+            }
+
+            // Initial check
+            checkPortfolio();
+            $(window).scroll(checkPortfolio);
+        });
+    </script>
+</body>
+</html> 

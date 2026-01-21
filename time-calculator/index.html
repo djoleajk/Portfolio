@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="sr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Napredni Kalkulator Vremena</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+			rel="stylesheet"
+		/>
+		<link href="styles.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="container py-4">
+			<div class="d-flex justify-content-between align-items-center mb-4">
+				<h1 class="mb-0">
+					<i class="bi bi-clock-history"></i> Napredni Kalkulator Vremena
+				</h1>
+				<div>
+					<button class="btn btn-sm btn-outline-primary" onclick="prikaziTrenutnoVreme()">
+						<i class="bi bi-clock"></i> Trenutno vreme
+					</button>
+					<button class="btn btn-sm btn-outline-secondary" onclick="toggleFormat()">
+						<i class="bi bi-arrow-repeat"></i> <span id="formatLabel">24h</span>
+					</button>
+				</div>
+			</div>
+
+			<div id="trenutnoVremeCard" class="alert alert-info" style="display: none">
+				<strong>Trenutno vreme:</strong> <span id="trenutnoVreme"></span>
+			</div>
+
+			<!-- Tabs navigacija -->
+			<ul class="nav nav-tabs mb-4" id="mainTabs" role="tablist">
+				<li class="nav-item" role="presentation">
+					<button
+						class="nav-link active"
+						id="tab-osnovne"
+						data-bs-toggle="tab"
+						data-bs-target="#osnovne"
+						type="button"
+					>
+						<i class="bi bi-calculator"></i> Osnovne operacije
+					</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button
+						class="nav-link"
+						id="tab-razlika"
+						data-bs-toggle="tab"
+						data-bs-target="#razlika"
+						type="button"
+					>
+						<i class="bi bi-dash-circle"></i> Razlika vremena
+					</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button
+						class="nav-link"
+						id="tab-sabiranje"
+						data-bs-toggle="tab"
+						data-bs-target="#sabiranje"
+						type="button"
+					>
+						<i class="bi bi-plus-circle"></i> Saberi više perioda
+					</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button
+						class="nav-link"
+						id="tab-radni"
+						data-bs-toggle="tab"
+						data-bs-target="#radni"
+						type="button"
+					>
+						<i class="bi bi-briefcase"></i> Radni sati
+					</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button
+						class="nav-link"
+						id="tab-konverzija"
+						data-bs-toggle="tab"
+						data-bs-target="#konverzija"
+						type="button"
+					>
+						<i class="bi bi-arrow-left-right"></i> Konverzija
+					</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button
+						class="nav-link"
+						id="tab-alarm"
+						data-bs-toggle="tab"
+						data-bs-target="#alarm"
+						type="button"
+					>
+						<i class="bi bi-alarm"></i> Alarm
+					</button>
+				</li>
+			</ul>
+
+			<!-- Tab sadržaj -->
+			<div class="tab-content" id="mainTabsContent">
+				<!-- Osnovne operacije -->
+				<div class="tab-pane fade show active" id="osnovne">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Osnovne kalkulacije</h5>
+							<div class="form-check mb-3">
+								<input
+									class="form-check-input"
+									type="radio"
+									name="tipKalkulacije"
+									id="napred"
+									value="napred"
+									checked
+								/>
+								<label class="form-check-label" for="napred">
+									<strong>Računaj unapred</strong> (početno + trajanje)
+								</label>
+							</div>
+							<div class="form-check mb-3">
+								<input
+									class="form-check-input"
+									type="radio"
+									name="tipKalkulacije"
+									id="nazad"
+									value="nazad"
+								/>
+								<label class="form-check-label" for="nazad">
+									<strong>Računaj unazad</strong> (krajnje - trajanje)
+								</label>
+							</div>
+
+							<div id="unosNapred">
+								<div class="row mb-3">
+									<div class="col-md-6">
+										<label for="pocetnoVreme" class="form-label">
+											Početno vreme
+										</label>
+										<div class="input-group">
+											<input
+												type="time"
+												class="form-control"
+												id="pocetnoVreme"
+											/>
+											<button
+												class="btn btn-outline-secondary"
+												type="button"
+												onclick="popuniTrenutno('pocetnoVreme')"
+												title="Postavi trenutno vreme"
+											>
+												<i class="bi bi-clock"></i>
+											</button>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Trajanje</label>
+										<div class="row g-2">
+											<div class="col-6">
+												<select class="form-select" id="trajanjeSati">
+													<option value="">Sati</option>
+													<option value="0">0h</option>
+													<option value="1">1h</option>
+													<option value="2">2h</option>
+													<option value="3">3h</option>
+													<option value="4">4h</option>
+													<option value="5">5h</option>
+													<option value="6">6h</option>
+													<option value="7">7h</option>
+													<option value="8">8h</option>
+													<option value="9">9h</option>
+													<option value="10">10h</option>
+													<option value="12">12h</option>
+													<option value="24">24h</option>
+													<option value="48">48h</option>
+												</select>
+											</div>
+											<div class="col-6">
+												<select class="form-select" id="trajanjeMinuti">
+													<option value="">Minuti</option>
+													<option value="0">0 min</option>
+													<option value="5">5 min</option>
+													<option value="10">10 min</option>
+													<option value="15">15 min</option>
+													<option value="20">20 min</option>
+													<option value="25">25 min</option>
+													<option value="30">30 min</option>
+													<option value="35">35 min</option>
+													<option value="40">40 min</option>
+													<option value="45">45 min</option>
+													<option value="50">50 min</option>
+													<option value="55">55 min</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-check mb-3">
+									<input
+										class="form-check-input"
+										type="checkbox"
+										id="ukljuciDane"
+									/>
+									<label class="form-check-label" for="ukljuciDane">
+										Prikaži i dane (ako prelazi 24h)
+									</label>
+								</div>
+							</div>
+
+							<div id="unosNazad" style="display: none">
+								<div class="row mb-3">
+									<div class="col-md-6">
+										<label for="krajnjeVreme" class="form-label">
+											Krajnje vreme
+										</label>
+										<div class="input-group">
+											<input
+												type="time"
+												class="form-control"
+												id="krajnjeVreme"
+											/>
+											<button
+												class="btn btn-outline-secondary"
+												type="button"
+												onclick="popuniTrenutno('krajnjeVreme')"
+												title="Postavi trenutno vreme"
+											>
+												<i class="bi bi-clock"></i>
+											</button>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Trajanje</label>
+										<div class="row g-2">
+											<div class="col-6">
+												<select class="form-select" id="trajanjeNazadSati">
+													<option value="">Sati</option>
+													<option value="0">0h</option>
+													<option value="1">1h</option>
+													<option value="2">2h</option>
+													<option value="3">3h</option>
+													<option value="4">4h</option>
+													<option value="5">5h</option>
+													<option value="6">6h</option>
+													<option value="7">7h</option>
+													<option value="8">8h</option>
+													<option value="9">9h</option>
+													<option value="10">10h</option>
+													<option value="12">12h</option>
+													<option value="24">24h</option>
+												</select>
+											</div>
+											<div class="col-6">
+												<select class="form-select" id="trajanjeNazadMinuti">
+													<option value="">Minuti</option>
+													<option value="0">0 min</option>
+													<option value="5">5 min</option>
+													<option value="10">10 min</option>
+													<option value="15">15 min</option>
+													<option value="20">20 min</option>
+													<option value="25">25 min</option>
+													<option value="30">30 min</option>
+													<option value="35">35 min</option>
+													<option value="40">40 min</option>
+													<option value="45">45 min</option>
+													<option value="50">50 min</option>
+													<option value="55">55 min</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<button class="btn btn-primary" onclick="izracunajVreme()">
+								<i class="bi bi-calculator"></i> Izračunaj
+							</button>
+							<button class="btn btn-secondary" onclick="ocistiOsnovne()">
+								<i class="bi bi-x-circle"></i> Očisti
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Razlika vremena -->
+				<div class="tab-pane fade" id="razlika">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Koliko je prošlo između dva vremena?</h5>
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label for="vremeOd" class="form-label">Od vremena</label>
+									<div class="input-group">
+										<input
+											type="time"
+											class="form-control"
+											id="vremeOd"
+										/>
+										<button
+											class="btn btn-outline-secondary"
+											type="button"
+											onclick="popuniTrenutno('vremeOd')"
+											title="Postavi trenutno vreme"
+										>
+											<i class="bi bi-clock"></i>
+										</button>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<label for="vremeDo" class="form-label">Do vremena</label>
+									<div class="input-group">
+										<input
+											type="time"
+											class="form-control"
+											id="vremeDo"
+										/>
+										<button
+											class="btn btn-outline-secondary"
+											type="button"
+											onclick="popuniTrenutno('vremeDo')"
+											title="Postavi trenutno vreme"
+										>
+											<i class="bi bi-clock"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="form-check mb-3">
+								<input class="form-check-input" type="checkbox" id="prelazDana" />
+								<label class="form-check-label" for="prelazDana">
+									Prelazi u sledeći dan (ako je "Do" manje od "Od")
+								</label>
+							</div>
+							<button class="btn btn-primary" onclick="izracunajRazliku()">
+								<i class="bi bi-calculator"></i> Izračunaj razliku
+							</button>
+							<button class="btn btn-secondary" onclick="ocistiRazliku()">
+								<i class="bi bi-x-circle"></i> Očisti
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Sabiranje više perioda -->
+				<div class="tab-pane fade" id="sabiranje">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Saberi više vremenskih perioda</h5>
+							<div id="periodiKontejner">
+								<div class="row mb-2 period-item align-items-end">
+									<div class="col-md-2">
+										<label class="form-label small">Sati</label>
+										<select class="form-select form-select-sm">
+											<option value="0">0h</option>
+											<option value="1">1h</option>
+											<option value="2" selected>2h</option>
+											<option value="3">3h</option>
+											<option value="4">4h</option>
+											<option value="5">5h</option>
+											<option value="6">6h</option>
+											<option value="8">8h</option>
+											<option value="10">10h</option>
+										</select>
+									</div>
+									<div class="col-md-2">
+										<label class="form-label small">Min</label>
+										<select class="form-select form-select-sm">
+											<option value="0">0</option>
+											<option value="15">15</option>
+											<option value="30" selected>30</option>
+											<option value="45">45</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label small">Opis (opciono)</label>
+										<input
+											type="text"
+											class="form-control form-control-sm"
+											placeholder="npr. Sastanak"
+										/>
+									</div>
+									<div class="col-md-2">
+										<button
+											class="btn btn-danger btn-sm w-100"
+											onclick="ukloniPeriod(this)"
+											disabled
+										>
+											<i class="bi bi-trash"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							<button class="btn btn-success btn-sm mb-3" onclick="dodajPeriod()">
+								<i class="bi bi-plus-circle"></i> Dodaj još jedan period
+							</button>
+							<br />
+							<button class="btn btn-primary" onclick="saberiPeriode()">
+								<i class="bi bi-calculator"></i> Saberi sve
+							</button>
+							<button class="btn btn-secondary" onclick="ocistiPeriode()">
+								<i class="bi bi-x-circle"></i> Očisti sve
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Radni sati -->
+				<div class="tab-pane fade" id="radni">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Kalkulacija radnih sati (sa pauzama)</h5>
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label for="pocetakRada" class="form-label">
+										Početak rada
+									</label>
+									<div class="input-group">
+										<input
+											type="time"
+											class="form-control"
+											id="pocetakRada"
+										/>
+										<button
+											class="btn btn-outline-secondary"
+											type="button"
+											onclick="popuniTrenutno('pocetakRada')"
+											title="Postavi trenutno vreme"
+										>
+											<i class="bi bi-clock"></i>
+										</button>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<label for="krajRada" class="form-label">
+										Kraj rada
+									</label>
+									<div class="input-group">
+										<input
+											type="time"
+											class="form-control"
+											id="krajRada"
+										/>
+										<button
+											class="btn btn-outline-secondary"
+											type="button"
+											onclick="popuniTrenutno('krajRada')"
+											title="Postavi trenutno vreme"
+										>
+											<i class="bi bi-clock"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							<div id="pauzeKontejner">
+								<label class="form-label">Pauze</label>
+								<div class="row mb-2 pauza-item align-items-end">
+									<div class="col-md-2">
+										<label class="form-label small">Sati</label>
+										<select class="form-select form-select-sm">
+											<option value="0" selected>0h</option>
+											<option value="1">1h</option>
+											<option value="2">2h</option>
+										</select>
+									</div>
+									<div class="col-md-2">
+										<label class="form-label small">Min</label>
+										<select class="form-select form-select-sm">
+											<option value="0">0</option>
+											<option value="15">15</option>
+											<option value="30" selected>30</option>
+											<option value="45">45</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label small">Opis (opciono)</label>
+										<input
+											type="text"
+											class="form-control form-control-sm"
+											placeholder="npr. Ručak"
+										/>
+									</div>
+									<div class="col-md-2">
+										<button
+											class="btn btn-danger btn-sm w-100"
+											onclick="ukloniPauzu(this)"
+											disabled
+										>
+											<i class="bi bi-trash"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							<button class="btn btn-success btn-sm mb-3" onclick="dodajPauzu()">
+								<i class="bi bi-plus-circle"></i> Dodaj još jednu pauzu
+							</button>
+							<br />
+							<button class="btn btn-primary" onclick="izracunajRadneSate()">
+								<i class="bi bi-calculator"></i> Izračunaj radne sate
+							</button>
+							<button class="btn btn-secondary" onclick="ocistiRadne()">
+								<i class="bi bi-x-circle"></i> Očisti
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Konverzija -->
+				<div class="tab-pane fade" id="konverzija">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Konverzija vremena</h5>
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label for="konverzijaBroj" class="form-label">Vrednost</label>
+									<input
+										type="number"
+										class="form-control"
+										id="konverzijaBroj"
+										placeholder="120"
+									/>
+								</div>
+								<div class="col-md-6">
+									<label for="konverzijaOd" class="form-label">Jedinica</label>
+									<select class="form-select" id="konverzijaOd">
+										<option value="sekunde">Sekunde</option>
+										<option value="minute" selected>Minute</option>
+										<option value="sati">Sati</option>
+										<option value="dani">Dani</option>
+									</select>
+								</div>
+							</div>
+							<button class="btn btn-primary" onclick="konvertujVreme()">
+								<i class="bi bi-arrow-left-right"></i> Konvertuj
+							</button>
+							<button class="btn btn-secondary" onclick="ocistiKonverziju()">
+								<i class="bi bi-x-circle"></i> Očisti
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Alarm -->
+				<div class="tab-pane fade" id="alarm">
+					<div class="card">
+						<div class="card-body text-center">
+							<h5 class="card-title">Postavi Alarm</h5>
+							<div class="row mb-3">
+								<div class="col-md-6 mx-auto">
+									<label for="alarmVreme" class="form-label">
+										Vreme alarma
+									</label>
+									<input
+										type="time"
+										class="form-control"
+										id="alarmVreme"
+									/>
+								</div>
+							</div>
+							<div class="mb-3">
+								<label for="alarmPoruka" class="form-label">
+									Poruka (opciono)
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="alarmPoruka"
+									placeholder="Vreme za kafu!"
+								/>
+							</div>
+							<p id="prikazTajmera" class="display-4 my-4">--:--:--</p>
+							<button
+								id="dugmeTajmer"
+								class="btn btn-danger btn-lg"
+								onclick="pokreniTajmer()"
+							>
+								<i class="bi bi-alarm"></i> Pokreni Alarm
+							</button>
+							<button
+								class="btn btn-warning btn-lg ms-2"
+								onclick="zaustaviTajmer()"
+							>
+								<i class="bi bi-stop-circle"></i> Zaustavi
+							</button>
+							<audio
+								id="zvukAlarma"
+								src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3"
+								preload="auto"
+							></audio>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Rezultat -->
+			<div id="rezultat" class="alert alert-success mt-4" style="display: none">
+			</div>
+
+			<!-- Istorija -->
+			<div class="card mt-4">
+				<div class="card-body">
+					<h5 class="card-title">
+						<i class="bi bi-clock-history"></i> Istorija kalkulacija
+					</h5>
+					<div id="istorijaKontejner">
+						<p class="text-muted">Nema kalkulacija u istoriji.</p>
+					</div>
+					<button class="btn btn-sm btn-outline-danger" onclick="ocistiIstoriju()">
+						<i class="bi bi-trash"></i> Očisti istoriju
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="script.js"></script>
+	</body>
+</html>

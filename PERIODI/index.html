@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Jednostavna aplikacija za praćenje menstrualnog ciklusa sa AI anketama i predviđanjima">
+    <meta name="theme-color" content="#e91e63">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Periodi">
+    <!-- Android PWA meta tags -->
+    <meta name="application-name" content="Periodi">
+    <meta name="msapplication-TileColor" content="#e91e63">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>Periodi - Praćenje Menstrualnog Ciklusa</title>
+    <link rel="manifest" href="manifest.json">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title"><i class="fas fa-heartbeat"></i> Periodi</h1>
+                <button class="btn btn-link text-white theme-toggle" id="themeToggle" aria-label="Promeni temu">
+                    <i class="fas fa-moon theme-icon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-tab="dashboard">
+                <i class="fas fa-chart-line tab-icon"></i>
+                <span class="tab-text">Dashboard</span>
+            </button>
+            <button class="tab-btn" data-tab="calendar">
+                <i class="fas fa-calendar-alt tab-icon"></i>
+                <span class="tab-text">Kalendar</span>
+            </button>
+            <button class="tab-btn" data-tab="symptoms">
+                <i class="fas fa-pills tab-icon"></i>
+                <span class="tab-text">Simptomi</span>
+            </button>
+            <button class="tab-btn" data-tab="settings">
+                <i class="fas fa-cog tab-icon"></i>
+                <span class="tab-text">Podešavanja</span>
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Tab -->
+            <section class="tab-content active" id="dashboard">
+                <div class="dashboard-container">
+                    <!-- Cycle Status Card -->
+                    <div class="card cycle-status-card">
+                        <h2 class="card-title">Trenutni Status Ciklusa</h2>
+                        <div class="cycle-status-info">
+                            <div class="cycle-day-display">
+                                <span class="cycle-day-number" id="currentCycleDay">-</span>
+                                <span class="cycle-day-label">dan ciklusa</span>
+                            </div>
+                            <div class="cycle-phase" id="currentCyclePhase">-</div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="cycleProgress"></div>
+                            </div>
+                            <div class="progress-label" id="cycleProgressLabel">0%</div>
+                        </div>
+                    </div>
+
+                    <!-- Predictions Card -->
+                    <div class="card predictions-card">
+                        <h2 class="card-title">Predviđanja</h2>
+                        <div class="prediction-item">
+                            <span class="prediction-label">Sledeća menstruacija:</span>
+                            <span class="prediction-value" id="nextPeriodDate">-</span>
+                        </div>
+                        <div class="prediction-item">
+                            <span class="prediction-label">Ovulacija:</span>
+                            <span class="prediction-value" id="ovulationDate">-</span>
+                        </div>
+                        <div class="prediction-item">
+                            <span class="prediction-label">Plodni dani:</span>
+                            <span class="prediction-value" id="fertileWindow">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Card -->
+                    <div class="card statistics-card">
+                        <h2 class="card-title">Statistika Ciklusa</h2>
+                        <div id="statisticsEmptyState" class="empty-state" style="display: none;">
+                            <i class="fas fa-chart-line empty-icon"></i>
+                            <p class="empty-message">Nema podataka za statistiku</p>
+                            <p class="text-muted small">Započni ciklus da vidiš statistiku</p>
+                        </div>
+                        <div class="stat-grid" id="statisticsGrid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="avgCycleLength">-</div>
+                                <div class="stat-label">Prosečna dužina</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="avgPeriodLength">-</div>
+                                <div class="stat-label">Prosečna menstruacija</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="totalCycles">-</div>
+                                <div class="stat-label">Ukupno ciklusa</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="shortestCycle">-</div>
+                                <div class="stat-label">Najkraći ciklus</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="longestCycle">-</div>
+                                <div class="stat-label">Najduži ciklus</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="cycleRegularity">-</div>
+                                <div class="stat-label">Regularnost</div>
+                            </div>
+                        </div>
+                        <div class="chart-container mt-3">
+                            <canvas id="cycleLengthChart" style="width: 100%; height: 200px;"></canvas>
+                        </div>
+                    </div>
+                    
+
+                    <!-- Symptoms Statistics Card -->
+                    <div class="card symptoms-stats-card">
+                        <h2 class="card-title">Statistika Simptoma</h2>
+                        <div class="symptom-stat-grid">
+                            <div class="symptom-stat-item">
+                                <div class="symptom-stat-label">Energija</div>
+                                <div class="symptom-stat-bar">
+                                    <div class="symptom-stat-fill" id="avgEnergy" style="width: 0%"></div>
+                                </div>
+                                <div class="symptom-stat-value" id="avgEnergyValue">-</div>
+                            </div>
+                            <div class="symptom-stat-item">
+                                <div class="symptom-stat-label">Raspoloženje</div>
+                                <div class="symptom-stat-bar">
+                                    <div class="symptom-stat-fill" id="avgMood" style="width: 0%"></div>
+                                </div>
+                                <div class="symptom-stat-value" id="avgMoodValue">-</div>
+                            </div>
+                            <div class="symptom-stat-item">
+                                <div class="symptom-stat-label">Bol</div>
+                                <div class="symptom-stat-bar">
+                                    <div class="symptom-stat-fill" id="avgPain" style="width: 0%"></div>
+                                </div>
+                                <div class="symptom-stat-value" id="avgPainValue">-</div>
+                            </div>
+                            <div class="symptom-stat-item">
+                                <div class="symptom-stat-label">Libido</div>
+                                <div class="symptom-stat-bar">
+                                    <div class="symptom-stat-fill" id="avgLibido" style="width: 0%"></div>
+                                </div>
+                                <div class="symptom-stat-value" id="avgLibidoValue">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="card quick-actions-card">
+                        <h2 class="card-title">Brze Akcije</h2>
+                        <div class="quick-actions-grid">
+                            <button class="action-btn" id="startCycleBtn">
+                                <i class="fas fa-play action-icon"></i>
+                                <span class="action-text">Počni Ciklus</span>
+                            </button>
+                            <button class="action-btn" id="recordSymptomsBtn">
+                                <i class="fas fa-edit action-icon"></i>
+                                <span class="action-text">Zabeleži Simptome</span>
+                            </button>
+                            <button class="action-btn" id="addReminderBtn">
+                                <i class="fas fa-bell action-icon"></i>
+                                <span class="action-text">Dodaj Podsetnik</span>
+                            </button>
+                            <button class="action-btn" id="startSurveyBtn">
+                                <i class="fas fa-clipboard-list action-icon"></i>
+                                <span class="action-text">Popuni Anketu</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cycle Information Card -->
+                    <div class="card cycle-info-card">
+                        <h2 class="card-title">
+                            <i class="fas fa-info-circle"></i> Informacije o Ciklusu
+                            <button class="btn btn-sm btn-link p-0 ms-2" id="toggleCycleInfo" style="text-decoration: none;">
+                                <i class="fas fa-chevron-down" id="cycleInfoIcon"></i>
+                            </button>
+                        </h2>
+                        <div class="cycle-info-content" id="cycleInfoContent" style="display: none;">
+                            <div class="cycle-phase-info">
+                                <h5 class="mb-3"><i class="fas fa-calendar-alt text-primary"></i> Faze Menstrualnog Ciklusa</h5>
+                                
+                                <div class="phase-item mb-3">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="phase-color menstruation-color"></span>
+                                        <strong class="ms-2">Menstruacija (1-5 dan)</strong>
+                                    </div>
+                                    <p class="text-muted small ms-4">Period krvarenja. Prvi dan menstruacije je prvi dan ciklusa.</p>
+                                </div>
+
+                                <div class="phase-item mb-3">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="phase-color follicular-color"></span>
+                                        <strong class="ms-2">Folikularna faza</strong>
+                                    </div>
+                                    <p class="text-muted small ms-4">Faza rasta folikula u jajniku. Traje od kraja menstruacije do ovulacije.</p>
+                                </div>
+
+                                <div class="phase-item mb-3">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="phase-color ovulation-color"></span>
+                                        <strong class="ms-2">Ovulacija</strong>
+                                    </div>
+                                    <p class="text-muted small ms-4">Oslobađanje zrele jajne ćelije iz jajnika. Dešava se oko 14 dana PRE početka sledeće menstruacije.</p>
+                                </div>
+
+                                <div class="phase-item mb-3">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="phase-color fertile-color"></span>
+                                        <strong class="ms-2">Plodni dani (7 dana)</strong>
+                                    </div>
+                                    <p class="text-muted small ms-4">5 dana pre ovulacije + dan ovulacije + 1 dan posle. Spermatozoidi mogu preživeti do 5 dana, jajna ćelija živi oko 24 sata.</p>
+                                </div>
+
+                                <div class="phase-item mb-3">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="phase-color luteal-color"></span>
+                                        <strong class="ms-2">Lutealna faza</strong>
+                                    </div>
+                                    <p class="text-muted small ms-4">Faza nakon ovulacije. Traje konstantno oko 14 dana do početka sledeće menstruacije.</p>
+                                </div>
+
+                                <hr class="my-3">
+
+                                <h5 class="mb-3"><i class="fas fa-calculator text-primary"></i> Kako se Računa?</h5>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-check-circle text-success"></i> 
+                                        <strong>Dužina ciklusa:</strong> Od prvog dana menstruacije do dana pre sledeće menstruacije
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check-circle text-success"></i> 
+                                        <strong>Ovulacija:</strong> Dužina ciklusa - 14 dana (npr. 28 dana ciklus = ovulacija na dan 14)
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check-circle text-success"></i> 
+                                        <strong>Plodni dani:</strong> 5 dana pre ovulacije do 1 dan posle ovulacije
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check-circle text-success"></i> 
+                                        <strong>Prosečan ciklus:</strong> 21-35 dana (najčešće 28 dana)
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check-circle text-success"></i> 
+                                        <strong>Prosečna menstruacija:</strong> 3-7 dana (najčešće 5 dana)
+                                    </li>
+                                </ul>
+
+                                <div class="alert alert-info mt-3">
+                                    <i class="fas fa-lightbulb"></i> 
+                                    <strong>Savet:</strong> Praćenje ciklusa tokom nekoliko meseci pomaže u preciznijem predviđanju. Ako imaš neredovne cikluse, konsultuj se sa ginekologom.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Calendar Tab -->
+            <section class="tab-content" id="calendar">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="btn btn-primary calendar-nav-btn" id="prevMonthBtn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h2 class="calendar-month-year" id="calendarMonthYear"></h2>
+                        <button class="btn btn-primary calendar-nav-btn" id="nextMonthBtn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                    <div class="calendar-legend">
+                        <div class="legend-item">
+                            <span class="legend-color menstruation"></span>
+                            <span class="legend-label">Menstruacija</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color follicular"></span>
+                            <span class="legend-label">Folikularna faza</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color ovulation"></span>
+                            <span class="legend-label">Ovulacija</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color fertile"></span>
+                            <span class="legend-label">Plodni dani</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color luteal"></span>
+                            <span class="legend-label">Lutealna faza</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Cycle Phases Information Card -->
+                    <div class="card cycle-phases-card mt-4">
+                        <h2 class="card-title">
+                            <i class="fas fa-info-circle"></i> Faze Menstrualnog Ciklusa
+                        </h2>
+                        <div class="cycle-phases-content" id="cyclePhasesContent">
+                            <div class="phase-item mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="phase-color menstruation-color"></span>
+                                    <strong class="ms-2">Menstruacija (1-5 dan)</strong>
+                                </div>
+                                <p class="text-muted small ms-4 mb-0">Period krvarenja. Prvi dan menstruacije je prvi dan ciklusa.</p>
+                            </div>
+
+                            <div class="phase-item mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="phase-color follicular-color"></span>
+                                    <strong class="ms-2">Folikularna faza</strong>
+                                </div>
+                                <p class="text-muted small ms-4 mb-0">Faza rasta folikula u jajniku. Traje od kraja menstruacije do ovulacije.</p>
+                            </div>
+
+                            <div class="phase-item mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="phase-color ovulation-color"></span>
+                                    <strong class="ms-2">Ovulacija</strong>
+                                </div>
+                                <p class="text-muted small ms-4 mb-0">Oslobađanje zrele jajne ćelije iz jajnika. Dešava se oko 14 dana PRE početka sledeće menstruacije.</p>
+                            </div>
+
+                            <div class="phase-item mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="phase-color fertile-color"></span>
+                                    <strong class="ms-2">Plodni dani (7 dana)</strong>
+                                </div>
+                                <p class="text-muted small ms-4 mb-0">5 dana pre ovulacije + dan ovulacije + 1 dan posle. Spermatozoidi mogu preživeti do 5 dana, jajna ćelija živi oko 24 sata.</p>
+                            </div>
+
+                            <div class="phase-item mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="phase-color luteal-color"></span>
+                                    <strong class="ms-2">Lutealna faza</strong>
+                                </div>
+                                <p class="text-muted small ms-4 mb-0">Faza nakon ovulacije. Traje konstantno oko 14 dana do početka sledeće menstruacije.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Symptoms Tab -->
+            <section class="tab-content" id="symptoms">
+                <div class="symptoms-container">
+                    <!-- Symptom Form -->
+                    <div class="card symptom-form-card">
+                        <h2 class="card-title">Zabeleži Simptome</h2>
+                        <form id="symptomForm">
+                            <div class="mb-3">
+                                <label for="symptomDate" class="form-label">Datum</label>
+                                <input type="date" class="form-control" id="symptomDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="energyRange" class="form-label">Energija: <span id="energyValue">5</span>/10</label>
+                                <input type="range" id="energyRange" min="1" max="10" value="5" class="form-range range-input">
+                            </div>
+                            <div class="mb-3">
+                                <label for="moodRange" class="form-label">Raspoloženje: <span id="moodValue">5</span>/10</label>
+                                <input type="range" id="moodRange" min="1" max="10" value="5" class="form-range range-input">
+                            </div>
+                            <div class="mb-3">
+                                <label for="painRange" class="form-label">Bol: <span id="painValue">1</span>/10</label>
+                                <input type="range" id="painRange" min="1" max="10" value="1" class="form-range range-input">
+                            </div>
+                            <div class="mb-3">
+                                <label for="libidoRange" class="form-label">Libido: <span id="libidoValue">5</span>/10</label>
+                                <input type="range" id="libidoRange" min="1" max="10" value="5" class="form-range range-input">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Dodatni simptomi:</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="symptoms" value="glavobolja">
+                                        <span>Glavobolja</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="symptoms" value="grčevi">
+                                        <span>Grčevi</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="symptoms" value="nadutost">
+                                        <span>Nadutost</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="symptoms" value="osetljivost_grudi">
+                                        <span>Osetljivost grudi</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="symptoms" value="umor">
+                                        <span>Umor</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="symptoms" value="akne">
+                                        <span>Akne</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sačuvaj</button>
+                        </form>
+                    </div>
+
+                    <!-- Symptoms History -->
+                    <div class="card symptoms-history-card">
+                        <h2 class="card-title">Istorija Simptoma</h2>
+                        <div class="symptoms-history" id="symptomsHistory"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Tab -->
+            <section class="tab-content" id="settings">
+                <div class="settings-container">
+                    <div class="card settings-card">
+                        <h2 class="card-title">Podešavanja Ciklusa</h2>
+                        <form id="settingsForm">
+                            <div class="mb-3">
+                                <label for="avgCycleLength" class="form-label">
+                                    Prosečna dužina ciklusa (dana)
+                                    <i class="fas fa-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-bs-placement="right" title="Dužina ciklusa se računa od prvog dana menstruacije do dana pre sledeće menstruacije. Normalan ciklus traje 21-35 dana (najčešće 28 dana)."></i>
+                                </label>
+                                <input type="number" class="form-control" id="avgCycleLength" min="21" max="35" value="28" required>
+                                <small class="form-text text-muted">Normalan opseg: 21-35 dana</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="avgPeriodLength" class="form-label">
+                                    Prosečna dužina menstruacije (dana)
+                                    <i class="fas fa-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-bs-placement="right" title="Dužina menstruacije je broj dana koliko traje krvarenje. Normalna menstruacija traje 3-7 dana (najčešće 5 dana)."></i>
+                                </label>
+                                <input type="number" class="form-control" id="avgPeriodLength" min="3" max="7" value="5" required>
+                                <small class="form-text text-muted">Normalan opseg: 3-7 dana</small>
+                            </div>
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>Kako se računaju predviđanja:</strong><br>
+                                • <strong>Ovulacija:</strong> Dužina ciklusa - 14 dana<br>
+                                • <strong>Plodni dani:</strong> 5 dana pre ovulacije do 1 dan posle ovulacije<br>
+                                • <strong>Sledeća menstruacija:</strong> Početak ciklusa + dužina ciklusa
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sačuvaj Podešavanja</button>
+                        </form>
+                    </div>
+
+                    <div class="card notifications-card">
+                        <h2 class="card-title">Notifikacije</h2>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Status:</label>
+                            <div id="notificationStatus" class="mb-3">
+                                <span class="badge bg-secondary">Nije provereno</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary w-100 mb-3" id="requestNotificationPermission">
+                                <i class="fas fa-bell"></i> Traži Dozvolu za Notifikacije
+                            </button>
+                        </div>
+                        <hr>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tipovi Notifikacija:</label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="notifyPeriodStart">
+                            <label class="form-check-label" for="notifyPeriodStart">
+                                <i class="fas fa-calendar-day"></i> Obaveštenje o početku menstruacije
+                            </label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="notifyOvulation">
+                            <label class="form-check-label" for="notifyOvulation">
+                                <i class="fas fa-circle"></i> Obaveštenje o ovulaciji
+                            </label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="notifyFertileWindow">
+                            <label class="form-check-label" for="notifyFertileWindow">
+                                <i class="fas fa-heart"></i> Obaveštenje o plodnim danima
+                            </label>
+                        </div>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> Notifikacije će se prikazivati u 9:00 ujutru na dan događaja.
+                        </div>
+                    </div>
+
+                    <div class="card data-card">
+                        <h2 class="card-title">Podaci</h2>
+                        <div class="data-actions">
+                            <button class="btn btn-secondary" id="exportDataBtn">Izvezi Podatke</button>
+                            <button class="btn btn-danger" id="clearDataBtn">Obriši Sve Podatke</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Start Cycle Modal -->
+    <div class="modal fade" id="startCycleModal" tabindex="-1" aria-labelledby="startCycleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="startCycleModalLabel">Počni Novi Ciklus</h5>
+                    <button type="button" class="btn-close" id="closeStartCycleModal" aria-label="Zatvori"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="startCycleForm">
+                        <div class="mb-3">
+                            <label for="cycleStartDate" class="form-label">Datum početka</label>
+                            <input type="date" class="form-control" id="cycleStartDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cycleDuration" class="form-label">Dužina menstruacije (dana)</label>
+                            <input type="number" class="form-control" id="cycleDuration" min="3" max="7" value="5" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Počni Ciklus</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reminder Modal -->
+    <div class="modal fade" id="reminderModal" tabindex="-1" aria-labelledby="reminderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reminderModalLabel">Dodaj Podsetnik</h5>
+                    <button type="button" class="btn-close" id="closeReminderModal" aria-label="Zatvori"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="reminderForm">
+                        <div class="mb-3">
+                            <label for="reminderTitle" class="form-label">Naslov</label>
+                            <input type="text" class="form-control" id="reminderTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reminderDate" class="form-label">Datum</label>
+                            <input type="date" class="form-control" id="reminderDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reminderTime" class="form-label">Vreme</label>
+                            <input type="time" class="form-control" id="reminderTime" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="reminderRepeat">
+                            <label class="form-check-label" for="reminderRepeat">
+                                Ponavljaj svakog meseca
+                            </label>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-secondary flex-fill" id="cancelReminderBtn">
+                                <i class="fas fa-times"></i> Otkaži
+                            </button>
+                            <button type="submit" class="btn btn-primary flex-fill">
+                                <i class="fas fa-save"></i> Sačuvaj Podsetnik
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Survey Modal -->
+    <div class="modal fade" id="surveyModal" tabindex="-1" aria-labelledby="surveyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="surveyModalLabel">Dnevna Anketa</h5>
+                    <button type="button" class="btn-close" id="closeSurveyModal" aria-label="Zatvori"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="survey-progress mb-3">
+                        <div class="survey-progress-bar">
+                            <div class="survey-progress-fill" id="surveyProgressFill"></div>
+                        </div>
+                        <div class="survey-progress-text text-center mt-2" id="surveyProgressText">Pitanje 1 od 5</div>
+                    </div>
+                    <div class="survey-question mb-4" id="surveyQuestion"></div>
+                    <div class="survey-answers mb-4" id="surveyAnswers"></div>
+                    <div class="survey-navigation d-flex justify-content-between gap-2">
+                        <button class="btn btn-secondary" id="prevSurveyQuestion" style="display: none;">Nazad</button>
+                        <button class="btn btn-primary" id="nextSurveyQuestion">Sledeće</button>
+                        <button class="btn btn-primary" id="submitSurvey" style="display: none;">Završi Anketu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- App Scripts -->
+    <script src="app.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/confirm-dialog.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/cycles.js"></script>
+    <script src="js/symptoms.js"></script>
+    <script src="js/formular-za-simptome.js"></script>
+    <script src="js/anketa.js"></script>
+    <script src="js/reminders.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/events.js"></script>
+</body>
+</html>

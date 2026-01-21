@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Колико Комада - Калкулатор</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← Назад на мени</a>
+        
+        <h1>Колико Комада</h1>
+        <p class="subtitle">Израчунај колико комада може да се произведе</p>
+        
+        <div class="dedication-banner">
+            <div class="gift-text">
+                Поклон колегама <strong>Ковачког Центра</strong>
+            </div>
+        </div>
+        
+        <div class="current-time">
+            <div class="time-label">
+                <span class="sync-badge" title="Синхронизовано са атомским сатом">🔄 Атомски сат</span>
+            </div>
+            <div id="currentTime" class="time-display">--:--:--</div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <label><strong>Тип операције:</strong></label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="operationType" value="kovanje" checked>
+                        <span>Ковање</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="operationType" value="peskarenje">
+                        <span>Пескарење (2 ком.)</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="operationType" value="suzavanje">
+                        <span>Затварање/Сузавање</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="timePerPiece">Време по комаду (секунде):</label>
+                <input type="number" id="timePerPiece" min="1" placeholder="нпр. 24">
+            </div>
+
+            <div class="input-group">
+                <label for="startTimeInput">Почетак рада:</label>
+                <input type="time" id="startTimeInput" class="time-input" required>
+                <small class="input-note">Унеси време почетка производње</small>
+            </div>
+
+            <div class="input-group">
+                <label for="endTimeInput">Крај рада:</label>
+                <input type="time" id="endTimeInput" class="time-input" required>
+                <small class="input-note">Унеси време када производња треба да се заврши</small>
+            </div>
+
+            <button id="calculateBtn" class="btn-calculate">Израчунај</button>
+        </div>
+
+        <div id="results" class="results hidden">
+            <div class="result-card">
+                <div class="result-label">Почетак рада</div>
+                <div id="startTime" class="result-value">--:--:--</div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-label">Крај рада</div>
+                <div id="endTime" class="result-value">--:--:--</div>
+            </div>
+
+            <div class="result-card highlight">
+                <div class="result-label">Расположиво време</div>
+                <div id="availableTime" class="result-value">-- мин -- сек</div>
+            </div>
+
+            <div class="result-card success">
+                <div class="result-label">Број комада</div>
+                <div id="numberOfPieces" class="result-value">--</div>
+            </div>
+
+            <div class="result-card info">
+                <div class="result-label">Време по комаду</div>
+                <div id="timePerPieceDisplay" class="result-value">-- сек</div>
+            </div>
+        </div>
+        
+        <div class="author-footer">
+            <p>© 2025 Đorđe Živanović</p>
+        </div>
+    </div>
+
+    <script src="time-sync.js"></script>
+    <script src="history-manager.js"></script>
+    <script src="normativi.js"></script>
+    <script src="koliko-komada.js"></script>
+</body>
+</html>
+

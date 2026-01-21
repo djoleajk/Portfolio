@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Nemačka verzija -->
+  <url>
+    <loc>https://sprintmarketing.de/</loc>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://sprintmarketing.de/sr/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://sprintmarketing.de/" />
+    <lastmod>2024-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Srpska verzija -->
+  <url>
+    <loc>https://sprintmarketing.de/sr/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sprintmarketing.de/" />
+    <xhtml:link rel="alternate" hreflang="sr" href="https://sprintmarketing.de/sr/" />
+    <lastmod>2024-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>https://sprintmarketing.de/seo</loc>
+    <lastmod>2024-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sprintmarketing.de/ppc</loc>
+    <lastmod>2024-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sprintmarketing.de/social</loc>
+    <lastmod>2024-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sprintmarketing.de/webdev</loc>
+    <lastmod>2024-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset> 

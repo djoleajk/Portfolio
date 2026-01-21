@@ -1,0 +1,969 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(184, 134, 11, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(139, 0, 0, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    padding: 15px;
+    background: rgba(61, 40, 23, 0.2);
+    border-radius: 20px;
+    border: 3px solid rgba(184, 134, 11, 0.3);
+    box-shadow: 
+        inset 0 0 30px rgba(0, 0, 0, 0.3),
+        0 0 50px rgba(184, 134, 11, 0.1);
+}
+
+header {
+    text-align: center;
+    background: linear-gradient(135deg, #8b0000 0%, #b8860b 100%);
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 215, 0, 0.3),
+        0 0 0 3px #8b0000,
+        0 0 0 6px #b8860b;
+    margin-bottom: 30px;
+    border: 2px solid #ffd700;
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '☦';
+    position: absolute;
+    font-size: 200px;
+    color: rgba(255, 215, 0, 0.08);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+header h1 {
+    color: #ffd700;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.5);
+    font-weight: bold;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+}
+
+.subtitle {
+    color: #f0e68c;
+    font-size: 1.1em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 215, 0, 0.2);
+    margin-bottom: 20px;
+    border: 2px solid #8b6914;
+}
+
+.nav-btn {
+    background: linear-gradient(135deg, #8b0000 0%, #a0522d 100%);
+    color: #ffd700;
+    border: 2px solid #b8860b;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn::before {
+    content: '✦';
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.nav-btn::after {
+    content: '✦';
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: linear-gradient(135deg, #a52a2a 0%, #cd853f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    border-color: #ffd700;
+}
+
+.nav-btn:hover::before,
+.nav-btn:hover::after {
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+#currentMonth {
+    color: #ffd700;
+    font-size: 1.8em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    background: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 215, 0, 0.2);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    border: 2px solid #8b6914;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95em;
+    color: #f0e68c;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid #8b6914;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.praznik-color {
+    background: linear-gradient(135deg, #8b0000 0%, #dc143c 100%);
+}
+
+.post-color {
+    background: linear-gradient(135deg, #00008b 0%, #4169e1 100%);
+}
+
+.danas-color {
+    background: linear-gradient(135deg, #b8860b 0%, #ffd700 100%);
+}
+
+.calendar {
+    background: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        inset 0 2px 0 rgba(255, 215, 0, 0.2);
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    border: 3px solid #8b6914;
+    position: relative;
+}
+
+.calendar::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, #8b6914, #b8860b, #ffd700, #b8860b, #8b6914);
+    border-radius: 15px;
+    z-index: -1;
+}
+
+.day-header {
+    text-align: center;
+    font-weight: bold;
+    padding: 15px 5px;
+    color: #ffd700;
+    background: linear-gradient(135deg, #4a2c1a 0%, #5d3a22 100%);
+    border-radius: 8px;
+    border: 2px solid #8b6914;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 215, 0, 0.2);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    font-family: 'Georgia', serif;
+    letter-spacing: 1px;
+}
+
+.day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #5d4a3a;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #f5e6d3 0%, #d4c4b0 100%);
+    padding: 8px;
+    position: relative;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.day:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(255, 215, 0, 0.3);
+    border-color: #b8860b;
+}
+
+.day-number {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #3d2817;
+    margin-bottom: 4px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    font-family: 'Georgia', serif;
+}
+
+.day-label {
+    font-size: 0.75em;
+    text-align: center;
+    color: #5d4a3a;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 2.4em;
+    font-weight: 600;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.day.praznik {
+    background: linear-gradient(135deg, #8b0000 0%, #cd5c5c 50%, #8b0000 100%);
+    border-color: #8b0000;
+    box-shadow: 
+        0 4px 12px rgba(139, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 215, 0, 0.3),
+        0 0 15px rgba(139, 0, 0, 0.4);
+}
+
+.day.praznik .day-number {
+    color: #ffd700;
+    text-shadow: 
+        1px 1px 2px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.day.praznik .day-label {
+    color: #ffe4b5;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+}
+
+.day.post {
+    background: linear-gradient(135deg, #1e3a5f 0%, #4169e1 50%, #1e3a5f 100%);
+    border-color: #00008b;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 139, 0.6),
+        inset 0 1px 0 rgba(135, 206, 235, 0.3),
+        0 0 15px rgba(65, 105, 225, 0.4);
+}
+
+.day.post .day-number {
+    color: #f0f8ff;
+    text-shadow: 
+        1px 1px 2px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(135, 206, 235, 0.5);
+}
+
+.day.post .day-label {
+    color: #e6f2ff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+}
+
+.day.danas {
+    border-color: #ffd700;
+    border-width: 3px;
+    box-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 40px rgba(255, 215, 0, 0.4),
+        inset 0 0 20px rgba(255, 215, 0, 0.2);
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 
+            0 0 20px rgba(255, 215, 0, 0.8),
+            0 0 40px rgba(255, 215, 0, 0.4),
+            inset 0 0 20px rgba(255, 215, 0, 0.2);
+    }
+    50% {
+        box-shadow: 
+            0 0 30px rgba(255, 215, 0, 1),
+            0 0 60px rgba(255, 215, 0, 0.6),
+            inset 0 0 30px rgba(255, 215, 0, 0.3);
+    }
+}
+
+.day.empty {
+    background: transparent;
+    border: none;
+    cursor: default;
+    box-shadow: none;
+}
+
+.day.empty:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+    margin: 5% auto;
+    padding: 40px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.8),
+        inset 0 2px 0 rgba(255, 215, 0, 0.3),
+        0 0 0 3px #8b6914,
+        0 0 0 6px #b8860b;
+    animation: slideIn 0.3s;
+    position: relative;
+    border: 2px solid #ffd700;
+}
+
+.modal-content::before {
+    content: '☦';
+    position: absolute;
+    font-size: 180px;
+    color: rgba(255, 215, 0, 0.05);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.close {
+    color: #b8860b;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    z-index: 1;
+}
+
+.close:hover,
+.close:focus {
+    color: #ffd700;
+    transform: rotate(90deg) scale(1.2);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+}
+
+#modalDate {
+    color: #ffd700;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #8b6914;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-family: 'Georgia', serif;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+}
+
+#modalBody {
+    color: #f0e68c;
+    line-height: 1.8;
+    font-family: 'Georgia', serif;
+    position: relative;
+    z-index: 1;
+}
+
+.modal-section {
+    margin-bottom: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #5d4a3a;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.modal-section h3 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    border-bottom: 2px solid #8b6914;
+    padding-bottom: 8px;
+}
+
+.modal-section p {
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.modal-section strong {
+    color: #ffe4b5;
+    font-weight: bold;
+}
+
+/* Glavni navigation tabovi */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    background: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #8b6914;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 215, 0, 0.2);
+    flex-wrap: wrap;
+}
+
+.nav-tab {
+    background: linear-gradient(135deg, #4a2c1a 0%, #5d3a22 100%);
+    color: #f0e68c;
+    border: 2px solid #5d4a3a;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.nav-tab:hover {
+    background: linear-gradient(135deg, #8b6914 0%, #b8860b 100%);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    border-color: #ffd700;
+}
+
+.nav-tab.active {
+    background: linear-gradient(135deg, #8b0000 0%, #b8860b 100%);
+    color: #ffd700;
+    border-color: #ffd700;
+    box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Tab content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.section-title {
+    text-align: center;
+    color: #ffd700;
+    font-size: 2em;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-family: 'Georgia', serif;
+    letter-spacing: 2px;
+}
+
+/* Molitvenik stilovi */
+.molitva-kategorije {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.molitva-btn {
+    background: linear-gradient(135deg, #8b0000 0%, #a0522d 100%);
+    color: #ffd700;
+    border: 2px solid #b8860b;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.molitva-btn:hover {
+    background: linear-gradient(135deg, #a52a2a 0%, #cd853f 100%);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    border-color: #ffd700;
+}
+
+.molitva-sadrzaj {
+    background: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid #8b6914;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 215, 0, 0.2);
+    color: #f0e68c;
+    line-height: 1.8;
+    font-family: 'Georgia', serif;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.molitva-sadrzaj h3 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    border-bottom: 2px solid #8b6914;
+    padding-bottom: 10px;
+}
+
+.molitva-sadrzaj p {
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    text-align: justify;
+}
+
+/* Search box */
+.search-box {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+#imendanSearch {
+    flex: 1;
+    min-width: 250px;
+    padding: 15px 20px;
+    border: 2px solid #8b6914;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+    color: #ffd700;
+    font-size: 1.1em;
+    font-family: 'Georgia', serif;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+#imendanSearch::placeholder {
+    color: #b8860b;
+}
+
+#imendanSearch:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.search-button {
+    background: linear-gradient(135deg, #8b0000 0%, #a0522d 100%);
+    color: #ffd700;
+    border: 2px solid #b8860b;
+    padding: 15px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.search-button:hover {
+    background: linear-gradient(135deg, #a52a2a 0%, #cd853f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.imendan-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.imendan-card {
+    background: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #8b6914;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+.imendan-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    border-color: #ffd700;
+}
+
+.imendan-card h3 {
+    color: #ffd700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.imendan-card p {
+    color: #f0e68c;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Liturgija info */
+.liturgija-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.info-card {
+    background: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid #8b6914;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.info-card h3 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    border-bottom: 2px solid #8b6914;
+    padding-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.info-card p, .info-card li {
+    color: #f0e68c;
+    line-height: 1.8;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    margin-bottom: 10px;
+}
+
+.info-card ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.info-card li {
+    margin-bottom: 12px;
+    padding-left: 10px;
+}
+
+.color-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    margin-right: 8px;
+    vertical-align: middle;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Kandilo animacija */
+.kandilo {
+    width: 60px;
+    height: 80px;
+    margin: 0 auto 20px;
+    position: relative;
+    display: none;
+}
+
+.kandilo.active {
+    display: block;
+}
+
+.kandilo::before {
+    content: '🕯️';
+    font-size: 60px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: flicker 2s ease-in-out infinite;
+}
+
+@keyframes flicker {
+    0%, 100% {
+        opacity: 1;
+        filter: brightness(1) drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+    }
+    50% {
+        opacity: 0.8;
+        filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 215, 0, 1));
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .subtitle {
+        font-size: 0.95em;
+    }
+
+    #currentMonth {
+        font-size: 1.3em;
+    }
+
+    .nav-btn {
+        padding: 10px 16px;
+        font-size: 0.9em;
+    }
+
+    .calendar {
+        gap: 5px;
+        padding: 10px;
+    }
+
+    .day {
+        padding: 5px;
+    }
+
+    .day-number {
+        font-size: 1em;
+    }
+
+    .day-label {
+        font-size: 0.65em;
+    }
+
+    .day-header {
+        padding: 10px 2px;
+        font-size: 0.85em;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+        margin: 10% auto;
+    }
+
+    .legend {
+        gap: 15px;
+        font-size: 0.85em;
+    }
+    
+    .main-nav {
+        gap: 10px;
+    }
+    
+    .nav-tab {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+    
+    .molitva-kategorije {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-box {
+        flex-direction: column;
+    }
+    
+    .section-title {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    header {
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    .navigation {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    #currentMonth {
+        order: -1;
+        font-size: 1.2em;
+    }
+
+    .day-label {
+        display: none;
+    }
+    
+    header::before {
+        font-size: 120px;
+    }
+    
+    .modal-content::before {
+        font-size: 120px;
+    }
+}
+
+/* Dodatni vizantijski ukrasi */
+.container::before {
+    content: '☦';
+    position: fixed;
+    font-size: 120px;
+    color: rgba(139, 69, 19, 0.05);
+    top: 10%;
+    left: 5%;
+    z-index: 0;
+    animation: float 6s ease-in-out infinite;
+}
+
+.container::after {
+    content: '☦';
+    position: fixed;
+    font-size: 120px;
+    color: rgba(139, 69, 19, 0.05);
+    bottom: 10%;
+    right: 5%;
+    z-index: 0;
+    animation: float 6s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+/* Dodaj zlatnu granicu za lepši efekat */
+.day.praznik::before {
+    content: '✦';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 0.8em;
+    color: #ffd700;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+    animation: sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.2);
+    }
+}
+

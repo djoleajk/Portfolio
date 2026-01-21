@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator - Razne Vrste Kalkulacija</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calculator"></i> Univerzalni Kalkulator</h1>
+            <p>Sve vrste kalkulacija na jednom mestu</p>
+        </header>
+
+        <nav class="calculator-nav">
+            <button class="nav-btn active" data-calculator="basic">
+                <i class="fas fa-plus"></i>
+                Osnovni
+            </button>
+            <button class="nav-btn" data-calculator="scientific">
+                <i class="fas fa-square-root-alt"></i>
+                Naučni
+            </button>
+            <button class="nav-btn" data-calculator="converter">
+                <i class="fas fa-exchange-alt"></i>
+                Konverter
+            </button>
+            <button class="nav-btn" data-calculator="financial">
+                <i class="fas fa-dollar-sign"></i>
+                Finansijski
+            </button>
+            <button class="nav-btn" data-calculator="geometry">
+                <i class="fas fa-shapes"></i>
+                Geometrija
+            </button>
+        </nav>
+
+        <!-- Basic Calculator -->
+        <div id="basic-calculator" class="calculator-section active">
+            <div class="calculator">
+                <div class="display">
+                    <div class="display-history" id="history"></div>
+                    <div class="display-current" id="display">0</div>
+                </div>
+                <div class="buttons">
+                    <button class="btn btn-clear" onclick="clearAll()">C</button>
+                    <button class="btn btn-clear" onclick="clearEntry()">CE</button>
+                    <button class="btn btn-operator" onclick="deleteLast()">⌫</button>
+                    <button class="btn btn-operator" onclick="operate('/')">/</button>
+                    
+                    <button class="btn btn-number" onclick="inputNumber('7')">7</button>
+                    <button class="btn btn-number" onclick="inputNumber('8')">8</button>
+                    <button class="btn btn-number" onclick="inputNumber('9')">9</button>
+                    <button class="btn btn-operator" onclick="operate('*')">×</button>
+                    
+                    <button class="btn btn-number" onclick="inputNumber('4')">4</button>
+                    <button class="btn btn-number" onclick="inputNumber('5')">5</button>
+                    <button class="btn btn-number" onclick="inputNumber('6')">6</button>
+                    <button class="btn btn-operator" onclick="operate('-')">-</button>
+                    
+                    <button class="btn btn-number" onclick="inputNumber('1')">1</button>
+                    <button class="btn btn-number" onclick="inputNumber('2')">2</button>
+                    <button class="btn btn-number" onclick="inputNumber('3')">3</button>
+                    <button class="btn btn-operator" onclick="operate('+')">+</button>
+                    
+                    <button class="btn btn-number btn-zero" onclick="inputNumber('0')">0</button>
+                    <button class="btn btn-number" onclick="inputDecimal()">.</button>
+                    <button class="btn btn-equals" onclick="calculate()">=</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scientific Calculator -->
+        <div id="scientific-calculator" class="calculator-section">
+            <div class="scientific-calc">
+                <div class="display">
+                    <div class="display-history" id="sci-history"></div>
+                    <div class="display-current" id="sci-display">0</div>
+                </div>
+                <div class="scientific-buttons">
+                    <button class="btn btn-function" onclick="scientificFunction('sin')">sin</button>
+                    <button class="btn btn-function" onclick="scientificFunction('cos')">cos</button>
+                    <button class="btn btn-function" onclick="scientificFunction('tan')">tan</button>
+                    <button class="btn btn-function" onclick="scientificFunction('log')">log</button>
+                    <button class="btn btn-function" onclick="scientificFunction('ln')">ln</button>
+                    
+                    <button class="btn btn-function" onclick="scientificFunction('sqrt')">√</button>
+                    <button class="btn btn-function" onclick="scientificFunction('power2')">x²</button>
+                    <button class="btn btn-function" onclick="scientificFunction('power')">x^y</button>
+                    <button class="btn btn-function" onclick="scientificFunction('factorial')">x!</button>
+                    <button class="btn btn-function" onclick="inputNumber('3.14159')">π</button>
+                    
+                    <button class="btn btn-clear" onclick="clearAllSci()">C</button>
+                    <button class="btn btn-clear" onclick="clearEntrySci()">CE</button>
+                    <button class="btn btn-operator" onclick="deleteLastSci()">⌫</button>
+                    <button class="btn btn-operator" onclick="operateSci('/')">/</button>
+                    <button class="btn btn-operator" onclick="operateSci('*')">×</button>
+                    
+                    <button class="btn btn-number" onclick="inputNumberSci('7')">7</button>
+                    <button class="btn btn-number" onclick="inputNumberSci('8')">8</button>
+                    <button class="btn btn-number" onclick="inputNumberSci('9')">9</button>
+                    <button class="btn btn-operator" onclick="operateSci('-')">-</button>
+                    <button class="btn btn-operator" onclick="operateSci('+')">+</button>
+                    
+                    <button class="btn btn-number" onclick="inputNumberSci('4')">4</button>
+                    <button class="btn btn-number" onclick="inputNumberSci('5')">5</button>
+                    <button class="btn btn-number" onclick="inputNumberSci('6')">6</button>
+                    <button class="btn btn-number" onclick="inputNumberSci('1')">1</button>
+                    <button class="btn btn-number" onclick="inputNumberSci('2')">2</button>
+                    
+                    <button class="btn btn-number" onclick="inputNumberSci('3')">3</button>
+                    <button class="btn btn-number btn-zero" onclick="inputNumberSci('0')">0</button>
+                    <button class="btn btn-number" onclick="inputDecimalSci()">.</button>
+                    <button class="btn btn-equals" onclick="calculateSci()">=</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unit Converter -->
+        <div id="converter-calculator" class="calculator-section">
+            <div class="converter">
+                <h3>Konverter Jedinica</h3>
+                <div class="converter-type">
+                    <select id="converter-type" onchange="changeConverterType()">
+                        <option value="length">Dužina</option>
+                        <option value="weight">Težina</option>
+                        <option value="temperature">Temperatura</option>
+                        <option value="area">Površina</option>
+                        <option value="volume">Zapremina</option>
+                    </select>
+                </div>
+                <div class="converter-inputs">
+                    <div class="input-group">
+                        <label>Od:</label>
+                        <select id="from-unit"></select>
+                        <input type="number" id="from-value" placeholder="Unesite vrednost" oninput="convert()">
+                    </div>
+                    <div class="input-group">
+                        <label>Do:</label>
+                        <select id="to-unit"></select>
+                        <input type="number" id="to-value" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Calculator -->
+        <div id="financial-calculator" class="calculator-section">
+            <div class="financial">
+                <h3>Finansijski Kalkulator</h3>
+                <div class="financial-tabs">
+                    <button class="tab-btn active" onclick="showFinancialTab('loan')">Kredit</button>
+                    <button class="tab-btn" onclick="showFinancialTab('compound')">Složena Kamata</button>
+                    <button class="tab-btn" onclick="showFinancialTab('simple')">Jednostavna Kamata</button>
+                </div>
+                
+                <!-- Loan Calculator -->
+                <div id="loan-calc" class="financial-tab active">
+                    <h4>Kalkulator Kredita</h4>
+                    <div class="input-group">
+                        <label>Iznos kredita (RSD):</label>
+                        <input type="number" id="loan-amount" placeholder="1000000">
+                    </div>
+                    <div class="input-group">
+                        <label>Godišnja kamata (%):</label>
+                        <input type="number" id="loan-rate" placeholder="5.5" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>Period (godine):</label>
+                        <input type="number" id="loan-years" placeholder="10">
+                    </div>
+                    <button class="btn btn-calculate" onclick="calculateLoan()">Izračunaj</button>
+                    <div class="result" id="loan-result"></div>
+                </div>
+
+                <!-- Compound Interest -->
+                <div id="compound-calc" class="financial-tab">
+                    <h4>Složena Kamata</h4>
+                    <div class="input-group">
+                        <label>Početni iznos (RSD):</label>
+                        <input type="number" id="compound-principal" placeholder="100000">
+                    </div>
+                    <div class="input-group">
+                        <label>Godišnja kamata (%):</label>
+                        <input type="number" id="compound-rate" placeholder="7" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>Period (godine):</label>
+                        <input type="number" id="compound-years" placeholder="5">
+                    </div>
+                    <div class="input-group">
+                        <label>Učestalost kamatamaćenja:</label>
+                        <select id="compound-frequency">
+                            <option value="1">Godišnje</option>
+                            <option value="2">Polugodišnje</option>
+                            <option value="4">Kvartalno</option>
+                            <option value="12">Mesečno</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-calculate" onclick="calculateCompound()">Izračunaj</button>
+                    <div class="result" id="compound-result"></div>
+                </div>
+
+                <!-- Simple Interest -->
+                <div id="simple-calc" class="financial-tab">
+                    <h4>Jednostavna Kamata</h4>
+                    <div class="input-group">
+                        <label>Početni iznos (RSD):</label>
+                        <input type="number" id="simple-principal" placeholder="50000">
+                    </div>
+                    <div class="input-group">
+                        <label>Godišnja kamata (%):</label>
+                        <input type="number" id="simple-rate" placeholder="5" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>Period (godine):</label>
+                        <input type="number" id="simple-years" placeholder="3">
+                    </div>
+                    <button class="btn btn-calculate" onclick="calculateSimple()">Izračunaj</button>
+                    <div class="result" id="simple-result"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geometry Calculator -->
+        <div id="geometry-calculator" class="calculator-section">
+            <div class="geometry">
+                <h3>Geometrijski Kalkulator</h3>
+                <div class="geometry-tabs">
+                    <button class="tab-btn active" onclick="showGeometryTab('circle')">Krug</button>
+                    <button class="tab-btn" onclick="showGeometryTab('rectangle')">Pravougaonik</button>
+                    <button class="tab-btn" onclick="showGeometryTab('triangle')">Trougao</button>
+                    <button class="tab-btn" onclick="showGeometryTab('sphere')">Sfera</button>
+                </div>
+
+                <!-- Circle -->
+                <div id="circle-calc" class="geometry-tab active">
+                    <h4>Krug</h4>
+                    <div class="input-group">
+                        <label>Poluprečnik (r):</label>
+                        <input type="number" id="circle-radius" placeholder="5" oninput="calculateCircle()">
+                    </div>
+                    <div class="result" id="circle-result"></div>
+                </div>
+
+                <!-- Rectangle -->
+                <div id="rectangle-calc" class="geometry-tab">
+                    <h4>Pravougaonik</h4>
+                    <div class="input-group">
+                        <label>Dužina (a):</label>
+                        <input type="number" id="rect-length" placeholder="10" oninput="calculateRectangle()">
+                    </div>
+                    <div class="input-group">
+                        <label>Širina (b):</label>
+                        <input type="number" id="rect-width" placeholder="5" oninput="calculateRectangle()">
+                    </div>
+                    <div class="result" id="rectangle-result"></div>
+                </div>
+
+                <!-- Triangle -->
+                <div id="triangle-calc" class="geometry-tab">
+                    <h4>Trougao</h4>
+                    <div class="input-group">
+                        <label>Osnova (a):</label>
+                        <input type="number" id="triangle-base" placeholder="8" oninput="calculateTriangle()">
+                    </div>
+                    <div class="input-group">
+                        <label>Visina (h):</label>
+                        <input type="number" id="triangle-height" placeholder="6" oninput="calculateTriangle()">
+                    </div>
+                    <div class="result" id="triangle-result"></div>
+                </div>
+
+                <!-- Sphere -->
+                <div id="sphere-calc" class="geometry-tab">
+                    <h4>Sfera</h4>
+                    <div class="input-group">
+                        <label>Poluprečnik (r):</label>
+                        <input type="number" id="sphere-radius" placeholder="3" oninput="calculateSphere()">
+                    </div>
+                    <div class="result" id="sphere-result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>Uputstvo za implementaciju analitike</title>
+		<style>
+			.step {
+				margin: 20px 0;
+				padding: 20px;
+				background: #f5f5f5;
+			}
+			.code {
+				background: #333;
+				color: white;
+				padding: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Uputstvo za implementaciju analitike</h1>
+
+		<div class="step">
+			<h2>Korak 1: Dobijanje kredencijala</h2>
+			<ol>
+				<li>
+					Idite na:
+					<code>http:
+				</li>
+				<li>Kliknite "Add Client" i popunite formu</li>
+				<li>Zapišite dobijeni API ključ</li>
+				<li>
+					Idite na:
+					<code>http:
+				</li>
+				<li>Dodajte svoj sajt i zapišite dobijeni Website ID</li>
+			</ol>
+		</div>
+
+		<div class="step">
+			<h2>Korak 2: Dodavanje koda za praćenje</h2>
+			<p>Dodajte sledeći kod u HEAD sekciju vašeg sajta:</p>
+			<div class="code">
+				<pre>
+&lt;!-- Analytics Tracking Code --&gt;
+&lt;script&gt;
+window.analyticsConfig = {
+    websiteId: 'YOUR_WEBSITE_ID',
+    apiKey: 'YOUR_API_KEY'
+};
+&lt;/script&gt;
+&lt;script src="http:
+</pre
+				>
+			</div>
+		</div>
+
+		<div class="step">
+			<h2>Korak 3: Test implementacije</h2>
+			<p>Proverite da li tracking radi:</p>
+			<ol>
+				<li>Otvorite svoj sajt u browseru</li>
+				<li>Pritisnite F12 za Developer Tools</li>
+				<li>U Network tabu proverite da li se poziva track.php</li>
+				<li>
+					Posetite:
+					<code
+						>http:
+					>
+				</li>
+			</ol>
+		</div>
+
+		<div class="step">
+			<h2>Primer kompletne stranice</h2>
+			<div class="code">
+				<pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Moj Sajt&lt;/title&gt;
+
+    &lt;!-- Analytics Tracking --&gt;
+    &lt;script&gt;
+    window.analyticsConfig = {
+        websiteId: '1',
+        apiKey: 'test123api'
+    };
+    &lt;/script&gt;
+    &lt;script src="http:
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Dobrodošli na moj sajt&lt;/h1&gt;
+    &lt;!-- Vaš sadržaj --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre
+				>
+			</div>
+		</div>
+
+		<div class="step">
+			<h2>Provera statistike</h2>
+			<ul>
+				<li>
+					Dashboard:
+					<code>http:
+				</li>
+				<li>
+					Detaljna statistika:
+					<code
+						>http:
+					>
+				</li>
+				<li>
+					Izveštaji:
+					<code>http:
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>

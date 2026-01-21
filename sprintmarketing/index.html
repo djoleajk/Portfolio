@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Sprint Marketing | Digitalni marketing i razvoj sajtova Valjevo</title>
+    <meta name="description" content="Agencija Sprint Marketing iz Valjeva – digitalni marketing, upravljanje društvenim mrežama, izrada sajtova, web aplikacije i Google oglašavanje.">
+    <meta name="keywords" content="digitalni marketing, Valjevo, izrada sajtova, web aplikacije, oglašavanje, društvene mreže, Google Ads, Sprint Marketing, React, Node.js">
+    <meta name="author" content="Sprint Marketing">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Sprint Marketing | Digitalni marketing i razvoj sajtova Valjevo">
+    <meta property="og:description" content="Agencija Sprint Marketing iz Valjeva – digitalni marketing, upravljanje društvenim mrežama, izrada sajtova, web aplikacije i Google oglašavanje.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sprintmarketing.rs">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sprint Marketing | Digitalni marketing i razvoj sajtova Valjevo">
+    <meta name="twitter:description" content="Agencija Sprint Marketing iz Valjeva – digitalni marketing, upravljanje društvenim mrežama, izrada sajtova i web aplikacija.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Particle Background Canvas -->
+    <canvas id="particles-canvas"></canvas>
+    
+    <!-- Header -->
+    <header id="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <a href="#home" class="logo">
+                        <i class="fas fa-rocket"></i>
+                        <span class="logo-text">Sprint <span class="logo-accent">Marketing</span></span>
+                    </a>
+                    
+                    <ul class="nav-menu" id="nav-menu">
+                        <li><a href="#home" class="nav-link active">Početna</a></li>
+                        <li><a href="#services" class="nav-link">Usluge</a></li>
+                        <li><a href="#about" class="nav-link">O nama</a></li>
+                        <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                        <li><a href="#testimonials" class="nav-link">Utisci</a></li>
+                        <li><a href="#contact" class="nav-link">Kontakt</a></li>
+                    </ul>
+                    
+                    <div class="nav-actions">
+                        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop" alt="Digital Marketing Background" class="hero-bg-image">
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Digitalna transformacija</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    <span class="typing-text">Pokrećemo vaš digitalni uspeh</span>
+                    <span class="rocket-emoji">🚀</span>
+                </h1>
+                
+                <p class="hero-description">
+                    Pomažemo malim i srednjim preduzećima da postanu vidljiva i uspešna u online svetu.
+                    Kroz inovativne strategije i moderne tehnologije, vaš biznis dostiže nove visine.
+                </p>
+                
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-primary">
+                        <span>Saznaj više</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-phone"></i>
+                        <span>Kontaktiraj nas</span>
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="150">0</div>
+                        <div class="stat-label">Zadovoljnih klijenata</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="500">0</div>
+                        <div class="stat-label">Projekata realizovano</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="98">0</div>
+                        <div class="stat-label">% uspešnosti</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="5">0</div>
+                        <div class="stat-label">Godina iskustva</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="floating-card card-1">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fab fa-google"></i>
+                    <span>Google Ads</span>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Social Media</span>
+                </div>
+                <div class="floating-card card-4">
+                    <i class="fas fa-code"></i>
+                    <span>Web Dev</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="scroll-text">Skroluj dole</div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Šta nudimo</span>
+                <h2 class="section-title">Naše <span class="gradient-text">Usluge</span></h2>
+                <p class="section-description">
+                    Kompletna digitalna rešenja prilagođena vašim potrebama
+                </p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <h3 class="service-title">Digitalni Marketing</h3>
+                    <p class="service-description">
+                        Kompleksne digitalne kampanje koje donose realne rezultate. SEO, SEM, content marketing i više.
+                    </p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> SEO optimizacija</li>
+                        <li><i class="fas fa-check"></i> Content marketing</li>
+                        <li><i class="fas fa-check"></i> PPC kampanje</li>
+                    </ul>
+                    <a href="#contact" class="service-link">
+                        Saznaj više <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon">
+                        <i class="fab fa-instagram"></i>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <h3 class="service-title">Upravljanje društvenim mrežama</h3>
+                    <p class="service-description">
+                        Profesionalno upravljanje vašim profilima na Instagramu, Facebooku i TikToku. Kreiramo sadržaj koji privlači.
+                    </p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Kreiranje sadržaja</li>
+                        <li><i class="fas fa-check"></i> Community management</li>
+                        <li><i class="fas fa-check"></i> Influencer marketing</li>
+                    </ul>
+                    <a href="#contact" class="service-link">
+                        Saznaj više <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <h3 class="service-title">Izrada web sajtova</h3>
+                    <p class="service-description">
+                        Moderni, responzivni web sajtovi koji pretvaraju posetioce u kupce. Brzi, SEO optimizovani i sigurni.
+                    </p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Responzivan dizajn</li>
+                        <li><i class="fas fa-check"></i> E-commerce rešenja</li>
+                        <li><i class="fas fa-check"></i> CMS integracija</li>
+                    </ul>
+                    <a href="#contact" class="service-link">
+                        Saznaj više <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon">
+                        <i class="fab fa-google"></i>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <h3 class="service-title">Google oglašavanje</h3>
+                    <p class="service-description">
+                        Google Ads kampanje koje donose kvalitetne klijente. Optimizovane za maksimalan ROI i konverzije.
+                    </p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Search ads</li>
+                        <li><i class="fas fa-check"></i> Display kampanje</li>
+                        <li><i class="fas fa-check"></i> Remarketing</li>
+                    </ul>
+                    <a href="#contact" class="service-link">
+                        Saznaj više <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon">
+                        <i class="fas fa-envelope"></i>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <h3 class="service-title">Email Marketing</h3>
+                    <p class="service-description">
+                        Personalizovane email kampanje koje grade lojalnost i povećavaju prodaju. Automatizacija i segmentacija.
+                    </p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Newsletter design</li>
+                        <li><i class="fas fa-check"></i> Marketing automation</li>
+                        <li><i class="fas fa-check"></i> A/B testiranje</li>
+                    </ul>
+                    <a href="#contact" class="service-link">
+                        Saznaj više <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                        <div class="icon-bg"></div>
+                    </div>
+                    <h3 class="service-title">Izrada web aplikacija</h3>
+                    <p class="service-description">
+                        Razvijamo custom web aplikacije prilagođene vašim poslovnim potrebama. React, Vue, Node.js - moderne tehnologije.
+                    </p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Custom web app razvoj</li>
+                        <li><i class="fas fa-check"></i> SaaS platforme</li>
+                        <li><i class="fas fa-check"></i> API integracije</li>
+                    </ul>
+                    <a href="#contact" class="service-link">
+                        Saznaj više <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-wrapper">
+                <div class="about-content" data-aos="fade-right">
+                    <span class="section-badge">Ko smo mi</span>
+                    <h2 class="section-title">O <span class="gradient-text">nama</span></h2>
+                    <p class="about-text">
+                        <strong>Sprint Marketing</strong> je agencija iz Valjeva koja pomaže malim i srednjim preduzećima 
+                        da se istaknu na internetu. Naš cilj je da vaš posao raste kroz pametne kampanje 
+                        i vidljivost koja donosi rezultate.
+                    </p>
+                    <p class="about-text">
+                        U današnjem digitalnom dobu, online prisustvo nije opcija - to je neophodnost. 
+                        Mi kombinujemo kreativnost, podatke i tehnologiju da kreiramo kampanje koje ne samo 
+                        da privlače pažnju, već i pretvaraju posetioce u lojalne kupce.
+                    </p>
+                    
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-target"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Fokus na rezultate</h4>
+                                <p>Merljivi rezultati su naš prioritet</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Posvećen tim</h4>
+                                <p>Stručnjaci sa godinama iskustva</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Inovativni pristup</h4>
+                                <p>Koristimo najnovije tehnologije</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-cta">
+                        <a href="#contact" class="btn btn-primary">
+                            <span>Zakažite konsultacije</span>
+                            <i class="fas fa-calendar-check"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="about-visual" data-aos="fade-left">
+                    <div class="about-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop" alt="Sprint Marketing Team" class="about-image">
+                        <div class="about-image-overlay"></div>
+                        
+                        <div class="about-badge-1">
+                            <i class="fas fa-award"></i>
+                            <div>
+                                <strong>5+</strong>
+                                <span>Godina</span>
+                            </div>
+                        </div>
+                        
+                        <div class="about-badge-2">
+                            <i class="fas fa-trophy"></i>
+                            <div>
+                                <strong>150+</strong>
+                                <span>Klijenata</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Naši projekti</span>
+                <h2 class="section-title">Uspešne <span class="gradient-text">priče</span></h2>
+                <p class="section-description">
+                    Realni rezultati i zadovoljni klijenti - ponosimo se svakim projektom
+                </p>
+            </div>
+            
+            <div class="portfolio-grid">
+                <!-- Project 1 -->
+                <div class="portfolio-card" data-aos="fade-up">
+                    <div class="portfolio-number">01</div>
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800&h=600&fit=crop" alt="Restaurant Social Media">
+                        <div class="portfolio-gradient"></div>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">
+                            <i class="fab fa-instagram"></i>
+                            <span>Social Media Marketing</span>
+                        </div>
+                        <h3 class="portfolio-title">Restoran "Stara Česma"</h3>
+                        <p class="portfolio-description">
+                            Povećanje Instagram pratilaca za 380% u 3 meseca. Kreiranje autentičnog sadržaja i influencer kampanje.
+                        </p>
+                        <div class="portfolio-stats">
+                            <div class="stat-box">
+                                <strong>380%</strong>
+                                <span>Rast pratilaca</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>52K</strong>
+                                <span>Reach mesečno</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>4.2K</strong>
+                                <span>Avg. engagement</span>
+                            </div>
+                        </div>
+                        <a href="#contact" class="portfolio-btn">
+                            <span>Kontaktirajte nas</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-number">02</div>
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop" alt="Web Development">
+                        <div class="portfolio-gradient"></div>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">
+                            <i class="fas fa-laptop-code"></i>
+                            <span>Web Development</span>
+                        </div>
+                        <h3 class="portfolio-title">Tech Solutions d.o.o.</h3>
+                        <p class="portfolio-description">
+                            Moderna korporativna web prezentacija sa CMS sistemom i integracijom sa CRM-om. SEO optimizovano.
+                        </p>
+                        <div class="portfolio-stats">
+                            <div class="stat-box">
+                                <strong>95/100</strong>
+                                <span>PageSpeed Score</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>280%</strong>
+                                <span>Više konverzija</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>2.1s</strong>
+                                <span>Vreme učitavanja</span>
+                            </div>
+                        </div>
+                        <a href="#contact" class="portfolio-btn">
+                            <span>Kontaktirajte nas</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-number">03</div>
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=800&h=600&fit=crop" alt="Google Ads Campaign">
+                        <div class="portfolio-gradient"></div>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">
+                            <i class="fab fa-google"></i>
+                            <span>Google Ads</span>
+                        </div>
+                        <h3 class="portfolio-title">Auto Delovi "Brzina"</h3>
+                        <p class="portfolio-description">
+                            Lokalna Google Ads kampanja sa geografskim targetiranjem. Maksimizovan ROI kroz pametno bidding.
+                        </p>
+                        <div class="portfolio-stats">
+                            <div class="stat-box">
+                                <strong>520%</strong>
+                                <span>ROI</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>€3.2K</strong>
+                                <span>Mesečni prihod</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>8.4%</strong>
+                                <span>CTR</span>
+                            </div>
+                        </div>
+                        <a href="#contact" class="portfolio-btn">
+                            <span>Kontaktirajte nas</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="portfolio-number">04</div>
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop" alt="E-commerce Store">
+                        <div class="portfolio-gradient"></div>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>E-commerce</span>
+                        </div>
+                        <h3 class="portfolio-title">Fashion Boutique "Elegance"</h3>
+                        <p class="portfolio-description">
+                            Potpuna online prodavnica sa sistemom za plaćanje, live chat podrška i automatizovani email marketing.
+                        </p>
+                        <div class="portfolio-stats">
+                            <div class="stat-box">
+                                <strong>€15K</strong>
+                                <span>Mesečna prodaja</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>1,240</strong>
+                                <span>Aktivnih kupaca</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>12.5%</strong>
+                                <span>Konverzija</span>
+                            </div>
+                        </div>
+                        <a href="#contact" class="portfolio-btn">
+                            <span>Kontaktirajte nas</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="portfolio-number">05</div>
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&h=600&fit=crop" alt="SEO Optimization">
+                        <div class="portfolio-gradient"></div>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">
+                            <i class="fas fa-search"></i>
+                            <span>SEO Optimization</span>
+                        </div>
+                        <h3 class="portfolio-title">Advokatksa Kancelarija "Pravda"</h3>
+                        <p class="portfolio-description">
+                            Kompleksna SEO strategija sa content marketingom. Postizanje top 3 pozicija za ključne keyword-e.
+                        </p>
+                        <div class="portfolio-stats">
+                            <div class="stat-box">
+                                <strong>450%</strong>
+                                <span>Organski saobraćaj</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>35+</strong>
+                                <span>Top 3 keyword-a</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>92</strong>
+                                <span>Domain Authority</span>
+                            </div>
+                        </div>
+                        <a href="#contact" class="portfolio-btn">
+                            <span>Kontaktirajte nas</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="portfolio-number">06</div>
+                    <div class="portfolio-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop" alt="Brand Identity">
+                        <div class="portfolio-gradient"></div>
+                    </div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">
+                            <i class="fas fa-palette"></i>
+                            <span>Branding & Design</span>
+                        </div>
+                        <h3 class="portfolio-title">Fitness Centar "Power Gym"</h3>
+                        <p class="portfolio-description">
+                            Kompletan rebrand sa novim logom, vizuelnim identitetom i multiplatformskom kampanjom lansiranja.
+                        </p>
+                        <div class="portfolio-stats">
+                            <div class="stat-box">
+                                <strong>600+</strong>
+                                <span>Novi članovi</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>85%</strong>
+                                <span>Brand awareness</span>
+                            </div>
+                            <div class="stat-box">
+                                <strong>4.9/5</strong>
+                                <span>Ocena brenda</span>
+                            </div>
+                        </div>
+                        <a href="#contact" class="portfolio-btn">
+                            <span>Kontaktirajte nas</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Utisci klijenata</span>
+                <h2 class="section-title">Šta kažu naši <span class="gradient-text">klijenti</span></h2>
+            </div>
+            
+            <div class="testimonials-slider">
+                <div class="testimonial-card" data-aos="fade-up">
+                    <div class="testimonial-header">
+                        <img src="https://i.pravatar.cc/150?img=12" alt="Marko Petrović" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Marko Petrović</h4>
+                            <p>Vlasnik, Caffe Bar "Centar"</p>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">
+                        "Sprint Marketing je transformisao naše online prisustvo. Instagram kampanja koju su kreirali 
+                        donela nam je preko 100 novih stalnih gostiju u prvom mesecu!"
+                    </p>
+                </div>
+                
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-header">
+                        <img src="https://i.pravatar.cc/150?img=32" alt="Ana Jovanović" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Ana Jovanović</h4>
+                            <p>Osnivač, "Beauty Studio Ana"</p>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">
+                        "Profesionalnost na najvišem nivou! Web sajt koji su nam napravili je brz, lep i funkcionalan. 
+                        Online zakazivanje je povećalo našu produktivnost za 40%."
+                    </p>
+                </div>
+                
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-header">
+                        <img src="https://i.pravatar.cc/150?img=68" alt="Nikola Stojanović" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Nikola Stojanović</h4>
+                            <p>Direktor, "Tech Solutions"</p>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">
+                        "Google Ads kampanja koju je vodio Sprint Marketing donela nam je kvalitetne B2B klijente. 
+                        ROI je premašio sva naša očekivanja. Topla preporuka!"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info" data-aos="fade-right">
+                    <span class="section-badge">Kontakt</span>
+                    <h2 class="section-title">Hajde da <span class="gradient-text">razgovaramo</span></h2>
+                    <p class="contact-description">
+                        Spremni smo da vas saslušamo i pomognemo da ostvarite svoje digitalne ciljeve. 
+                        Kontaktirajte nas i zakažite besplatne konsultacije.
+                    </p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Lokacija</h4>
+                                <p>Valjevo, Srbija</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Telefon</h4>
+                                <p><a href="tel:+381658560207">065 856 0207</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Email</h4>
+                                <p><a href="mailto:agencijasprint@gmail.com">agencijasprint@gmail.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <h4>Pratite nas</h4>
+                        <div class="social-icons">
+                            <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#home" class="footer-logo">
+                        <i class="fas fa-rocket"></i>
+                        <span>Sprint <span class="logo-accent">Marketing</span></span>
+                    </a>
+                    <p class="footer-description">
+                        Pokrećemo vaš digitalni uspeh kroz inovativne marketing strategije 
+                        i moderne tehnologije.
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navigacija</h4>
+                        <ul>
+                            <li><a href="#home">Početna</a></li>
+                            <li><a href="#services">Usluge</a></li>
+                            <li><a href="#about">O nama</a></li>
+                            <li><a href="#contact">Kontakt</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Usluge</h4>
+                        <ul>
+                            <li><a href="#services">Digitalni Marketing</a></li>
+                            <li><a href="#services">Social Media</a></li>
+                            <li><a href="#services">Web Development</a></li>
+                            <li><a href="#services">Web aplikacije</a></li>
+                            <li><a href="#services">Google Ads</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Kontakt</h4>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt"></i> Valjevo, Srbija</li>
+                            <li><i class="fas fa-phone"></i> 065 856 0207</li>
+                            <li><i class="fas fa-envelope"></i> agencijasprint@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Sprint Marketing. Sva prava zadržana.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Politika privatnosti</a>
+                    <a href="#">Uslovi korišćenja</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" class="scroll-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
+

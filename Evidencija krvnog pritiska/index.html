@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidencija Krvnog Pritiska</title>
+    <meta name="description" content="Web aplikacija za praćenje i analizu krvnog pritiska. Unos merenja, statistika, grafikoni i AI analiza za bolje zdravlje.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://djoleajk.github.io/Evidencija%20krvnog%20pritiska/">
+    <meta property="og:title" content="Evidencija Krvnog Pritiska - Praćenje i Analiza">
+    <meta property="og:description" content="Web aplikacija za praćenje i analizu krvnog pritiska. Unos merenja, statistika, grafikoni i AI analiza za bolje zdravlje.">
+    <meta property="og:image" content="https://djoleajk.github.io/Evidencija%20krvnog%20pritiska/Evidencija_krvnog_pritiska.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:site_name" content="Evidencija Krvnog Pritiska">
+    <meta property="og:locale" content="sr_RS">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://djoleajk.github.io/Evidencija%20krvnog%20pritiska/">
+    <meta name="twitter:title" content="Evidencija Krvnog Pritiska - Praćenje i Analiza">
+    <meta name="twitter:description" content="Web aplikacija za praćenje i analizu krvnog pritiska. Unos merenja, statistika, grafikoni i AI analiza za bolje zdravlje.">
+    <meta name="twitter:image" content="https://djoleajk.github.io/Evidencija%20krvnog%20pritiska/Evidencija_krvnog_pritiska.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Evidencija_krvnog_pritiska.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="header-title">
+                <i class="fas fa-heartbeat"></i>
+                Evidencija Krvnog Pritiska
+            </h1>
+            <button class="theme-toggle" id="themeToggle" aria-label="Promeni temu">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+        </div>
+    </header>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <button class="nav-toggle" id="navToggle" aria-label="Meni">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#unos" class="nav-link active"><i class="fas fa-plus-circle"></i> Unos Merenja</a></li>
+                <li><a href="#pregled" class="nav-link"><i class="fas fa-list"></i> Pregled</a></li>
+                <li><a href="#statistika" class="nav-link"><i class="fas fa-chart-bar"></i> Statistika</a></li>
+                <li><a href="#grafikoni" class="nav-link"><i class="fas fa-chart-line"></i> Grafikoni</a></li>
+                <li><a href="#ai-analiza" class="nav-link"><i class="fas fa-robot"></i> AI Analiza</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <!-- Sekcija: Unos Merenja -->
+            <section id="unos" class="section active">
+                <h2 class="section-title"><i class="fas fa-plus-circle"></i> Unos Novog Merenja</h2>
+                <form id="measurementForm" class="measurement-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="systolic">Sistolički (gornji) pritisak <span class="required">*</span></label>
+                            <input type="number" id="systolic" name="systolic" min="50" max="300" required>
+                            <span class="form-hint">mmHg (50-300)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="diastolic">Dijastolički (donji) pritisak <span class="required">*</span></label>
+                            <input type="number" id="diastolic" name="diastolic" min="30" max="200" required>
+                            <span class="form-hint">mmHg (30-200)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pulse">Puls</label>
+                            <input type="number" id="pulse" name="pulse" min="30" max="200">
+                            <span class="form-hint">otkucaja/min (30-200)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="datetime">Datum i vreme</label>
+                            <input type="datetime-local" id="datetime" name="datetime">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="activity">Aktivnost pre merenja</label>
+                            <select id="activity" name="activity">
+                                <option value="">Izaberite aktivnost</option>
+                                <option value="mirno-sedenje">Mirno sedenje</option>
+                                <option value="posle-fizicke-aktivnosti">Posle fizičke aktivnosti</option>
+                                <option value="posle-jela">Posle jela</option>
+                                <option value="ujutru">Ujutru</option>
+                                <option value="uvece">Uveče</option>
+                                <option value="drugo">Drugo</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Simptomi</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="symptoms" value="glavobolja">
+                                    <span>Glavobolja</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="symptoms" value="vrtoglavica">
+                                    <span>Vrtoglavica</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="symptoms" value="mucnina">
+                                    <span>Mučnina</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="symptoms" value="umor">
+                                    <span>Umor</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="symptoms" value="bez-simptoma">
+                                    <span>Bez simptoma</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="medication">Lekovi</label>
+                            <input type="text" id="medication" name="medication" placeholder="Unesite nazive lekova (opciono)">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="notes">Napomene</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Dodatne napomene..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Sačuvaj Merenje
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            <i class="fas fa-redo"></i> Resetuj
+                        </button>
+                    </div>
+                </form>
+
+                <div id="formMessage" class="message"></div>
+            </section>
+
+            <!-- Sekcija: Pregled Merenja -->
+            <section id="pregled" class="section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-list"></i> Pregled Merenja</h2>
+                    <div class="section-controls">
+                        <select id="periodFilter" class="filter-select">
+                            <option value="today" selected>Danas</option>
+                            <option value="week">Ova nedelja</option>
+                            <option value="month">Ovaj mesec</option>
+                            <option value="all">Sva merenja</option>
+                        </select>
+                        <button id="exportBtn" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-download"></i> Export JSON
+                        </button>
+                    </div>
+                </div>
+
+                <div id="measurementsTableContainer" class="table-container">
+                    <table id="measurementsTable" class="measurements-table">
+                        <thead>
+                            <tr>
+                                <th>Datum i vreme</th>
+                                <th>Pritisak</th>
+                                <th>Status</th>
+                                <th>Puls</th>
+                                <th>Aktivnost</th>
+                                <th>Simptomi</th>
+                                <th>Akcije</th>
+                            </tr>
+                        </thead>
+                        <tbody id="measurementsTableBody">
+                            <!-- Podaci će biti dinamički dodati -->
+                        </tbody>
+                    </table>
+                    <div id="measurementsCardsContainer" class="measurements-cards">
+                        <!-- Kartice će biti dinamički dodate -->
+                    </div>
+                    <div id="emptyState" class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>Nema sačuvanih merenja. Dodajte prvo merenje!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sekcija: Statistika -->
+            <section id="statistika" class="section">
+                <h2 class="section-title"><i class="fas fa-chart-bar"></i> Statistički Pregled</h2>
+                
+                <div id="statsContainer" class="stats-container">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-label">Ukupno merenja</h3>
+                                <p class="stat-value" id="totalMeasurements">0</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-label">Prosek (sveukupno)</h3>
+                                <p class="stat-value" id="avgOverall">- / -</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-calendar-week"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-label">Prosek (ova nedelja)</h3>
+                                <p class="stat-value" id="avgWeek">- / -</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-calendar"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-label">Prosek (ovaj mesec)</h3>
+                                <p class="stat-value" id="avgMonth">- / -</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-arrow-up"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-label">Maksimum</h3>
+                                <p class="stat-value" id="maxPressure">- / -</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-arrow-down"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-label">Minimum</h3>
+                                <p class="stat-value" id="minPressure">- / -</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-heartbeat"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-label">Prosečan puls</h3>
+                                <p class="stat-value" id="avgPulse">-</p>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-trending-up"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-label">Trend</h3>
+                                <p class="stat-value" id="trend">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="statsEmptyState" class="empty-state">
+                    <i class="fas fa-chart-bar"></i>
+                    <p>Nema podataka za prikaz statistike. Dodajte merenja!</p>
+                </div>
+            </section>
+
+            <!-- Sekcija: Grafikoni -->
+            <section id="grafikoni" class="section">
+                <h2 class="section-title"><i class="fas fa-chart-line"></i> Grafikoni</h2>
+                
+                <div id="chartsContainer" class="charts-container">
+                    <div class="chart-card">
+                        <h3 class="chart-title">Pritisak kroz vreme</h3>
+                        <canvas id="pressureChart"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3 class="chart-title">Prosečan pritisak po danima</h3>
+                        <canvas id="dailyAvgChart"></canvas>
+                    </div>
+
+                    <div class="chart-card" id="pulseChartCard" style="display: none;">
+                        <h3 class="chart-title">Puls kroz vreme</h3>
+                        <canvas id="pulseChart"></canvas>
+                    </div>
+                </div>
+
+                <div id="chartsEmptyState" class="empty-state">
+                    <i class="fas fa-chart-line"></i>
+                    <p>Nema podataka za prikaz grafikona. Dodajte merenja!</p>
+                </div>
+            </section>
+
+            <!-- Sekcija: AI Analiza -->
+            <section id="ai-analiza" class="section">
+                <h2 class="section-title"><i class="fas fa-robot"></i> AI Analiza i Preporuke</h2>
+                
+                <div class="ai-container">
+                    <button id="analyzeBtn" class="btn btn-primary">
+                        <i class="fas fa-brain"></i> Analiziraj Merenja
+                    </button>
+                    
+                    <div id="aiAnalysis" class="ai-analysis" style="display: none;">
+                        <div class="ai-loading">
+                            <i class="fas fa-spinner fa-spin"></i> Analiziram podatke...
+                        </div>
+                        <div class="ai-content"></div>
+                    </div>
+                </div>
+                
+                <div class="ai-chat-container">
+                    <h3 class="chat-title"><i class="fas fa-comments"></i> Pitaj AI Asistenta</h3>
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="Postavite pitanje o krvnom pritisku...">
+                        <button id="sendChatBtn" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Pošalji
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                &copy; <span id="currentYear"></span> Đorđe Živanović. Sva prava zadržana.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Modal za izmenu -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Izmeni Merenje</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <form id="editForm" class="measurement-form">
+                <input type="hidden" id="editId">
+                <!-- Forma će biti dinamički popunjena -->
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za potvrdu brisanja -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>Potvrda brisanja</h3>
+                <button class="modal-close" id="closeDeleteModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Da li ste sigurni da želite da obrišete ovo merenje?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmDelete" class="btn btn-danger">Obriši</button>
+                <button id="cancelDelete" class="btn btn-secondary">Otkaži</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal za AI analizu pojedinačnog merenja -->
+    <div id="aiAnalysisModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-robot"></i> AI Analiza Merenja</h3>
+                <button class="modal-close" id="closeAIModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="aiAnalysisLoading" class="ai-loading">
+                    <i class="fas fa-spinner fa-spin"></i> Analiziram merenje...
+                </div>
+                <div id="aiAnalysisContent" class="ai-analysis-content" style="display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="closeAIModalBtn" class="btn btn-secondary">Zatvori</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // Automatsko ažuriranje godine u footer-u
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearElement = document.getElementById('currentYear');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

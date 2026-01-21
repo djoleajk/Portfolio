@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPC Kampanje - Sprint Marketing Agency</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1');
+            background-size: cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .platform-card {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .platform-card:hover {
+            border-color: #0d6efd;
+            transform: scale(1.05);
+        }
+
+        .roi-section {
+            background: #0d6efd;
+            color: white;
+            padding: 50px 0;
+        }
+
+        .campaign-type {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Dodatni Bootstrap stilovi */
+        .card {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            transition: all 0.3s;
+        }
+
+        .platform-card:hover .feature-icon {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .progress-bar-animated {
+            animation: progress-bar-stripes 1s linear infinite;
+        }
+
+        .badge-custom {
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+        }
+
+        .pricing-card {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .pricing-header {
+            background: #0d6efd;
+            color: white;
+            padding: 2rem;
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 1rem;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #0d6efd;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Dodati nakon otvaranja body taga -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-bolt"></i> Sprint Marketing Agency
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Početna</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            Usluge
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="seo.html">SEO Optimizacija</a></li>
+                            <li><a class="dropdown-item active" href="ppc.html">PPC Kampanje</a></li>
+                            <li><a class="dropdown-item" href="social.html">Društvene Mreže</a></li>
+                            <li><a class="dropdown-item" href="webdev.html">Web Development</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#o-nama">O nama</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#kontakt">Kontakt</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="de/ppc.html">
+                            <img src="https://flagcdn.com/20x15/de.png" alt="Deutsch" class="me-1">
+                            DE
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Sekcija sa Bootstrap Carousel -->
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="hero-section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h1 class="display-4">PPC Kampanje</h1>
+                                <p class="lead">Maksimizujte ROI kroz precizno targetirane oglasne kampanje</p>
+                                <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#kontaktModal">
+                                    Započnite kampanju
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="hero-section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h1 class="display-4">Google Ads Eksperti</h1>
+                                <p class="lead">Optimizujte vaše Google Ads kampanje za maksimalne rezultate</p>
+                                <div class="d-flex gap-3">
+                                    <span class="badge bg-success badge-custom">
+                                        <i class="fas fa-check-circle"></i> Google Partner
+                                    </span>
+                                    <span class="badge bg-primary badge-custom">
+                                        <i class="fas fa-award"></i> Sertifikovani Stručnjaci
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <!-- Platforme sa Bootstrap Cards -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 platform-card">
+                        <div class="card-body text-center">
+                            <div class="feature-icon">
+                                <i class="fab fa-google fa-2x"></i>
+                            </div>
+                            <h4 class="card-title">Google Ads</h4>
+                            <div class="progress mb-3">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 90%">
+                                    90% Uspešnost
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Search kampanje</li>
+                                <li class="list-group-item">Display oglasi</li>
+                                <li class="list-group-item">Shopping kampanje</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 platform-card">
+                        <div class="card-body text-center">
+                            <div class="feature-icon">
+                                <i class="fab fa-facebook fa-2x"></i>
+                            </div>
+                            <h4 class="card-title">Meta Ads</h4>
+                            <div class="progress mb-3">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 80%">
+                                    80% Uspešnost
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Facebook oglasi</li>
+                                <li class="list-group-item">Instagram kampanje</li>
+                                <li class="list-group-item">Remarketing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 platform-card">
+                        <div class="card-body text-center">
+                            <div class="feature-icon">
+                                <i class="fab fa-linkedin fa-2x"></i>
+                            </div>
+                            <h4 class="card-title">LinkedIn Ads</h4>
+                            <div class="progress mb-3">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 70%">
+                                    70% Uspešnost
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">B2B kampanje</li>
+                                <li class="list-group-item">Lead generacija</li>
+                                <li class="list-group-item">Sponsored Content</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Sekcija -->
+    <section class="roi-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2>Merljivi rezultati</h2>
+                    <p class="lead">Pratite svaku potrošenu dinarsku vrednost i ROI u realnom vremenu</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-chart-line"></i> Detaljna analitika</li>
+                        <li><i class="fas fa-bullseye"></i> Precizno targetiranje</li>
+                        <li><i class="fas fa-coins"></i> Optimizacija budžeta</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <img src="roi-chart.png" alt="ROI Chart" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vrste kampanja -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Vrste kampanja</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="campaign-type">
+                        <i class="fas fa-shopping-cart fa-3x text-primary mb-3"></i>
+                        <h4>E-commerce</h4>
+                        <p>Povećajte online prodaju kroz targetirane shopping kampanje</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="campaign-type">
+                        <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                        <h4>Lead Generation</h4>
+                        <p>Generišite kvalifikovane lidove za vaš biznis</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="campaign-type">
+                        <i class="fas fa-bullhorn fa-3x text-primary mb-3"></i>
+                        <h4>Brand Awareness</h4>
+                        <p>Povećajte prepoznatljivost vašeg brenda</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Kalkulator sa Bootstrap Modal -->
+    <div class="modal fade" id="roiModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">ROI Kalkulator</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="budzet" value="1000">
+                        <label>Mesečni budžet (EUR)</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="vrednost" value="100">
+                        <label>Prosečna vrednost konverzije (EUR)</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="stopa" value="2">
+                        <label>Očekivana stopa konverzije (%)</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary w-100" id="izracunaj">Izračunaj ROI</button>
+                    <div id="rezultat" class="w-100 text-center mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Sekcija sa Bootstrap Accordion -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Često Postavljana Pitanja</h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            Koliki je minimalni budžet za PPC kampanje?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Minimalni preporučeni budžet zavisi od industrije i ciljeva...
+                        </div>
+                    </div>
+                </div>
+                <!-- Više accordion itema -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cenovnik sa Bootstrap Cards -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Paketi Usluga</h2>
+            <div class="row g-4">
+                <!-- Basic Paket -->
+                <div class="col-md-4">
+                    <div class="card pricing-card">
+                        <div class="pricing-header text-center">
+                            <h4>Basic</h4>
+                            <h2 class="display-4">199€</h2>
+                            <p>mesečno</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Do 2 kampanje
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Osnovna optimizacija
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Mesečni izveštaj
+                                </li>
+                                <li class="list-group-item text-muted">
+                                    <i class="fas fa-times text-danger"></i> A/B testiranje
+                                </li>
+                            </ul>
+                            <button class="btn btn-outline-primary w-100 mt-4">Izaberite paket</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Standard Paket -->
+                <div class="col-md-4">
+                    <div class="card pricing-card">
+                        <div class="pricing-header text-center bg-primary">
+                            <span class="badge bg-warning position-absolute top-0 end-0 mt-2 me-2">Popularno</span>
+                            <h4>Standard</h4>
+                            <h2 class="display-4">399€</h2>
+                            <p>mesečno</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Do 5 kampanja
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Napredna optimizacija
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Nedeljni izveštaji
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> A/B testiranje
+                                </li>
+                            </ul>
+                            <button class="btn btn-primary w-100 mt-4">Izaberite paket</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium Paket -->
+                <div class="col-md-4">
+                    <div class="card pricing-card">
+                        <div class="pricing-header text-center bg-dark text-white">
+                            <h4>Premium</h4>
+                            <h2 class="display-4">799€</h2>
+                            <p>mesečno</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Neograničen broj kampanja
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Premium optimizacija
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Dnevni izveštaji
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Napredna analitika
+                                </li>
+                            </ul>
+                            <button class="btn btn-dark w-100 mt-4">Izaberite paket</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- E-commerce Paket -->
+                <div class="col-md-4">
+                    <div class="card pricing-card mt-4">
+                        <div class="pricing-header text-center bg-success text-white">
+                            <h4>E-commerce</h4>
+                            <h2 class="display-4">599€</h2>
+                            <p>mesečno</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Shopping kampanje
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Dinamički remarketing
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Praćenje konverzija
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Feed optimizacija
+                                </li>
+                            </ul>
+                            <button class="btn btn-success w-100 mt-4">Izaberite paket</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- B2B Paket -->
+                <div class="col-md-4">
+                    <div class="card pricing-card mt-4">
+                        <div class="pricing-header text-center bg-info text-white">
+                            <h4>B2B</h4>
+                            <h2 class="display-4">699€</h2>
+                            <p>mesečno</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> LinkedIn kampanje
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Lead generacija
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> B2B targetiranje
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> CRM integracija
+                                </li>
+                            </ul>
+                            <button class="btn btn-info w-100 mt-4">Izaberite paket</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enterprise Paket -->
+                <div class="col-md-4">
+                    <div class="card pricing-card mt-4">
+                        <div class="pricing-header text-center bg-secondary text-white">
+                            <h4>Enterprise</h4>
+                            <h2 class="display-4">999€+</h2>
+                            <p>mesečno</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Prilagođeno rešenje
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Dedicated menadžer
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> 24/7 podrška
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-check text-success"></i> Custom izveštavanje
+                                </li>
+                            </ul>
+                            <button class="btn btn-secondary w-100 mt-4">Kontaktirajte nas</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Osnovne informacije -->
+                <div class="col-lg-4">
+                    <h5 class="mb-4">
+                        Sprint Marketing Agentur
+                    </h5>
+                    <p class="mb-3">Vaš partner za digitalni rast i razvoj. Pretvaramo ideje u digitalni uspeh.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Brzi linkovi -->
+                <div class="col-lg-2">
+                    <h5 class="mb-4">Brzi Linkovi</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white text-decoration-none">Početna</a></li>
+                        <li class="mb-2"><a href="#o-nama" class="text-white text-decoration-none">O nama</a></li>
+                        <li class="mb-2"><a href="#usluge" class="text-white text-decoration-none">Usluge</a></li>
+                        <li class="mb-2"><a href="#kontakt" class="text-white text-decoration-none">Kontakt</a></li>
+                    </ul>
+                </div>
+
+                <!-- Usluge -->
+                <div class="col-lg-3">
+                    <h5 class="mb-4">Naše Usluge</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="seo.html" class="text-white text-decoration-none">SEO Optimizacija</a></li>
+                        <li class="mb-2"><a href="ppc.html" class="text-white text-decoration-none">PPC Kampanje</a></li>
+                        <li class="mb-2"><a href="social.html" class="text-white text-decoration-none">Društvene Mreže</a></li>
+                        <li class="mb-2"><a href="webdev.html" class="text-white text-decoration-none">Web Development</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kontakt -->
+                <div class="col-lg-3">
+                    <h5 class="mb-4">Kontaktirajte Nas</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fas fa-map-marker-alt me-2"></i> 
+                            Karadjordjeva 127
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-phone me-2"></i> 
+                            065 856 0207
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-envelope me-2"></i>
+                            agencijasprint@gmail.com
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-clock me-2"></i>
+                            Pon - Pet: 09:00 - 17:00
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright linija -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <hr class="bg-light">
+                    <div class="text-center mt-4">
+                        <p class="mb-0">&copy; 2025 Sprint Marketing Agency. Sva prava zadržana.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Animirani ulaz za platforme
+            $('.platform-card').each(function(index) {
+                $(this).css({
+                    'opacity': '0',
+                    'transform': 'translateX(-50px)'
+                }).delay(index * 200).animate({
+                    'opacity': '1',
+                    'transform': 'translateX(0)'
+                }, 800);
+            });
+
+            // Dodaj ROI kalkulator
+            $('.roi-section .container').append(`
+                <div class="row mt-5">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="text-center mb-4">ROI Kalkulator</h4>
+                                <div class="form-group mb-3">
+                                    <label>Mesečni budžet (EUR)</label>
+                                    <input type="number" class="form-control" id="budzet" value="1000">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label>Prosečna vrednost konverzije (EUR)</label>
+                                    <input type="number" class="form-control" id="vrednost" value="100">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label>Očekivana stopa konverzije (%)</label>
+                                    <input type="number" class="form-control" id="stopa" value="2">
+                                </div>
+                                <button class="btn btn-primary w-100" id="izracunaj">Izračunaj ROI</button>
+                                <div id="rezultat" class="mt-3 text-center"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `);
+
+            // ROI kalkulator funkcionalnost
+            $('#izracunaj').click(function() {
+                const budzet = parseFloat($('#budzet').val());
+                const vrednost = parseFloat($('#vrednost').val());
+                const stopa = parseFloat($('#stopa').val()) / 100;
+
+                const brojKlikova = budzet / 0.5; // Prosečna cena po kliku 0.5 EUR
+                const brojKonverzija = brojKlikova * stopa;
+                const prihod = brojKonverzija * vrednost;
+                const roi = ((prihod - budzet) / budzet) * 100;
+
+                // Animiraj rezultat
+                $('#rezultat').html(`
+                    <div class="h3 text-primary" style="opacity: 0">
+                        ROI: ${roi.toFixed(2)}%
+                    </div>
+                    <div class="text-muted" style="opacity: 0">
+                        Očekivani mesečni prihod: ${prihod.toFixed(2)} EUR
+                    </div>
+                `).find('div').each(function(index) {
+                    $(this).delay(index * 200).animate({ opacity: 1 }, 500);
+                });
+            });
+
+            // Interaktivni hover efekti
+            $('.campaign-type').hover(
+                function() {
+                    $(this).find('i').addClass('fa-bounce');
+                    $(this).css('transform', 'scale(1.05)');
+                },
+                function() {
+                    $(this).find('i').removeClass('fa-bounce');
+                    $(this).css('transform', 'scale(1)');
+                }
+            );
+
+            // Bootstrap tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+
+            // Animacija za progress barove
+            $('.progress-bar').each(function() {
+                const $bar = $(this);
+                const progress = $bar.css('width');
+                $bar.css('width', '0%').animate({
+                    width: progress
+                }, 1000);
+            });
+
+            // Smooth scroll za anchor linkove
+            $('a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                const target = $(this.hash);
+                if (target.length) {
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - 70
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+
+    <style>
+        .campaign-type {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .fa-bounce {
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</body>
+</html> 

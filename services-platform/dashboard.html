@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moj Panel - Platforma za Usluge</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigacija -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-briefcase"></i>
+                <span>Platforma za Usluge</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Naslovna</a></li>
+                <li><a href="usluge.html">Usluge</a></li>
+                <li><a href="dashboard.html" class="active">Moj Panel</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="user-menu">
+                    <button class="btn btn-user" id="btnUser">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName"></span>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#" id="btnLogout">Odjava</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-layout">
+        <div class="container-fluid">
+            <div class="dashboard-grid-layout">
+                <!-- Sidebar -->
+                <aside class="dashboard-sidebar">
+                    <div class="sidebar-menu">
+                        <a href="#" class="sidebar-item active" data-section="profile">
+                            <i class="fas fa-user"></i>
+                            <span>Moj Profil</span>
+                        </a>
+                        <a href="#" class="sidebar-item" data-section="bookings">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Moji Termini</span>
+                        </a>
+                        <a href="#" class="sidebar-item" data-section="messages">
+                            <i class="fas fa-envelope"></i>
+                            <span>Poruke <span class="badge" id="msgCount">0</span></span>
+                        </a>
+                        <a href="#" class="sidebar-item" data-section="reviews" id="sidebarReviews">
+                            <i class="fas fa-star"></i>
+                            <span>Recenzije</span>
+                        </a>
+                        <a href="#" class="sidebar-item" data-section="services" id="sidebarServices" style="display:none;">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Moje Usluge</span>
+                        </a>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="dashboard-main">
+                    <!-- Profil Sekcija -->
+                    <section class="dashboard-section active" id="section-profile">
+                        <h1>Moj Profil</h1>
+                        
+                        <div class="profile-card">
+                            <div class="profile-header">
+                                <div class="profile-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="profile-info">
+                                    <h2 id="profileName"></h2>
+                                    <p id="profileEmail"></p>
+                                    <span class="badge" id="profileType"></span>
+                                </div>
+                                <button class="btn btn-outline" id="btnEditProfile">
+                                    <i class="fas fa-edit"></i> Uredi Profil
+                                </button>
+                            </div>
+
+                            <div class="profile-body" id="profileBody">
+                                <!-- Dinamički učitano -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Termini Sekcija -->
+                    <section class="dashboard-section" id="section-bookings">
+                        <h1>Moji Termini</h1>
+                        
+                        <div class="bookings-filter">
+                            <button class="filter-btn active" data-status="all">Svi</button>
+                            <button class="filter-btn" data-status="pending">Na čekanju</button>
+                            <button class="filter-btn" data-status="confirmed">Potvrđeni</button>
+                            <button class="filter-btn" data-status="completed">Završeni</button>
+                            <button class="filter-btn" data-status="cancelled">Otkazani</button>
+                        </div>
+
+                        <div class="bookings-list" id="bookingsList">
+                            <!-- Dinamički učitano -->
+                        </div>
+                    </section>
+
+                    <!-- Poruke Sekcija -->
+                    <section class="dashboard-section" id="section-messages">
+                        <h1>Poruke</h1>
+                        
+                        <div class="messages-container">
+                            <div class="messages-list" id="messagesList">
+                                <!-- Dinamički učitano -->
+                            </div>
+                            <div class="message-detail" id="messageDetail">
+                                <div class="no-message-selected">
+                                    <i class="fas fa-inbox"></i>
+                                    <p>Izaberite poruku za pregled</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Recenzije Sekcija -->
+                    <section class="dashboard-section" id="section-reviews">
+                        <h1>Recenzije</h1>
+                        
+                        <div class="reviews-stats" id="reviewsStats">
+                            <!-- Dinamički učitano -->
+                        </div>
+
+                        <div class="reviews-list" id="userReviewsList">
+                            <!-- Dinamički učitano -->
+                        </div>
+                    </section>
+
+                    <!-- Moje Usluge Sekcija (samo za pružaoce) -->
+                    <section class="dashboard-section" id="section-services">
+                        <div class="section-header">
+                            <h1>Moje Usluge</h1>
+                            <button class="btn btn-primary" id="btnAddService">
+                                <i class="fas fa-plus"></i> Nova Usluga
+                            </button>
+                        </div>
+
+                        <div class="services-list" id="myServicesList">
+                            <!-- Dinamički učitano -->
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal za Uređivanje Profila -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <span class="modal-close" data-modal="editProfileModal">&times;</span>
+            <h2>Uredi Profil</h2>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label>Ime i Prezime</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="editEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefon</label>
+                    <input type="tel" id="editPhone">
+                </div>
+                <div id="providerEditFields" style="display:none;">
+                    <div class="form-group">
+                        <label>Opis</label>
+                        <textarea id="editDescription" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Lokacija</label>
+                        <input type="text" id="editLocation">
+                    </div>
+                    <div class="form-group">
+                        <label>Cena po satu (RSD)</label>
+                        <input type="number" id="editPrice" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Kategorija</label>
+                        <select id="editCategory">
+                            <option>Popravke</option>
+                            <option>Dom i Bašta</option>
+                            <option>Lepota i Wellness</option>
+                            <option>IT i Tehnologija</option>
+                            <option>Edukacija</option>
+                            <option>Transport</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Sačuvaj Izmene</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za Dodavanje Usluge -->
+    <div class="modal" id="addServiceModal">
+        <div class="modal-content">
+            <span class="modal-close" data-modal="addServiceModal">&times;</span>
+            <h2>Nova Usluga</h2>
+            <form id="addServiceForm">
+                <div class="form-group">
+                    <label>Naziv Usluge</label>
+                    <input type="text" id="serviceName" required>
+                </div>
+                <div class="form-group">
+                    <label>Opis</label>
+                    <textarea id="serviceDescription" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Cena (RSD)</label>
+                    <input type="number" id="servicePrice" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Trajanje (minuta)</label>
+                    <input type="number" id="serviceDuration" min="15" step="15" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Dodaj Uslugu</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za Ostavljanje Recenzije -->
+    <div class="modal" id="addReviewModal">
+        <div class="modal-content">
+            <span class="modal-close" data-modal="addReviewModal">&times;</span>
+            <h2>Ostavi Recenziju</h2>
+            <form id="addReviewForm">
+                <input type="hidden" id="reviewProviderId">
+                <input type="hidden" id="reviewBookingId">
+                <div class="form-group">
+                    <label>Ocena</label>
+                    <div class="star-rating" id="starRating">
+                        <i class="far fa-star" data-rating="1"></i>
+                        <i class="far fa-star" data-rating="2"></i>
+                        <i class="far fa-star" data-rating="3"></i>
+                        <i class="far fa-star" data-rating="4"></i>
+                        <i class="far fa-star" data-rating="5"></i>
+                    </div>
+                    <input type="hidden" id="ratingValue" required>
+                </div>
+                <div class="form-group">
+                    <label>Vaš Komentar</label>
+                    <textarea id="reviewComment" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Objavi Recenziju</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za Odgovor na Poruku -->
+    <div class="modal" id="replyMessageModal">
+        <div class="modal-content">
+            <span class="modal-close" data-modal="replyMessageModal">&times;</span>
+            <h2>Odgovori na Poruku</h2>
+            <form id="replyMessageForm">
+                <input type="hidden" id="replyMessageId">
+                <div class="form-group">
+                    <label>Vaš Odgovor</label>
+                    <textarea id="replyContent" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Pošalji</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
+

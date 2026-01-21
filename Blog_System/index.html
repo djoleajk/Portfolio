@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog sistem - Čitajte i delite članke">
+    <title>Blog Sistem</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html" class="logo">BlogSistem</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Početna</a></li>
+                <li><a href="#" id="myPostsLink" class="hidden">Moji postovi</a></li>
+                <li><a href="admin.html" id="adminLink" class="hidden">Admin panel</a></li>
+                <li>
+                    <div id="authButtons">
+                        <button class="btn btn-outline" id="loginBtn">Prijavi se</button>
+                        <button class="btn btn-primary" id="registerBtn">Registruj se</button>
+                    </div>
+                    <div id="userMenu" class="hidden">
+                        <span id="userGreeting"></span>
+                        <button class="btn btn-primary" id="newPostBtn">Novi post</button>
+                        <button class="btn btn-outline" id="logoutBtn">Odjavi se</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container main-content" role="main">
+        <!-- Search and Filter Section -->
+        <section class="search-section" aria-label="Pretraga postova">
+            <div class="search-container">
+                <input type="search" id="searchInput" class="search-input" placeholder="Pretraži postove..." aria-label="Pretraži postove">
+                <select id="categoryFilter" class="filter-select" aria-label="Filtriraj po kategoriji">
+                    <option value="">Sve kategorije</option>
+                </select>
+                <select id="sortFilter" class="filter-select" aria-label="Sortiraj">
+                    <option value="newest">Najnovije</option>
+                    <option value="oldest">Najstarije</option>
+                    <option value="popular">Najpopularnije</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Posts Grid -->
+        <section class="posts-section" aria-label="Lista postova">
+            <h1>Najnoviji postovi</h1>
+            <div id="postsGrid" class="posts-grid">
+                <!-- Posts will be dynamically loaded here -->
+            </div>
+            <div id="loadingSpinner" class="spinner hidden" role="status" aria-live="polite">
+                <span class="sr-only">Učitavanje...</span>
+            </div>
+            <div id="emptyState" class="empty-state hidden">
+                <p>Nema postova za prikaz.</p>
+            </div>
+        </section>
+
+        <!-- Pagination -->
+        <nav class="pagination" id="pagination" aria-label="Paginacija postova">
+            <!-- Pagination will be dynamically loaded here -->
+        </nav>
+    </main>
+
+    <!-- Modal for Login -->
+    <div id="loginModal" class="modal" role="dialog" aria-labelledby="loginTitle" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="loginTitle">Prijavi se</h2>
+                <button class="modal-close" aria-label="Zatvori">&times;</button>
+            </div>
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="loginEmail">Email adresa</label>
+                    <input type="email" id="loginEmail" required aria-required="true" aria-describedby="loginEmailError">
+                    <span class="error-message" id="loginEmailError" role="alert"></span>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Lozinka</label>
+                    <input type="password" id="loginPassword" required aria-required="true" aria-describedby="loginPasswordError">
+                    <span class="error-message" id="loginPasswordError" role="alert"></span>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Prijavi se</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Registration -->
+    <div id="registerModal" class="modal" role="dialog" aria-labelledby="registerTitle" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="registerTitle">Registruj se</h2>
+                <button class="modal-close" aria-label="Zatvori">&times;</button>
+            </div>
+            <form id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="registerName">Ime i prezime</label>
+                    <input type="text" id="registerName" required minlength="3" aria-required="true" aria-describedby="registerNameError">
+                    <span class="error-message" id="registerNameError" role="alert"></span>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email adresa</label>
+                    <input type="email" id="registerEmail" required aria-required="true" aria-describedby="registerEmailError">
+                    <span class="error-message" id="registerEmailError" role="alert"></span>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Lozinka</label>
+                    <input type="password" id="registerPassword" required minlength="6" aria-required="true" aria-describedby="registerPasswordError">
+                    <span class="error-message" id="registerPasswordError" role="alert"></span>
+                </div>
+                <div class="form-group">
+                    <label for="registerPasswordConfirm">Potvrdi lozinku</label>
+                    <input type="password" id="registerPasswordConfirm" required aria-required="true" aria-describedby="registerPasswordConfirmError">
+                    <span class="error-message" id="registerPasswordConfirmError" role="alert"></span>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Registruj se</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for New/Edit Post -->
+    <div id="postModal" class="modal" role="dialog" aria-labelledby="postModalTitle" aria-modal="true">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="postModalTitle">Novi post</h2>
+                <button class="modal-close" aria-label="Zatvori">&times;</button>
+            </div>
+            <form id="postForm" novalidate>
+                <div class="form-group">
+                    <label for="postTitle">Naslov</label>
+                    <input type="text" id="postTitle" required minlength="5" maxlength="200" aria-required="true" aria-describedby="postTitleError">
+                    <span class="error-message" id="postTitleError" role="alert"></span>
+                </div>
+                <div class="form-group">
+                    <label for="postSlug">Slug (URL)</label>
+                    <input type="text" id="postSlug" required pattern="[a-z0-9-]+" aria-describedby="postSlugError postSlugHelp">
+                    <small id="postSlugHelp" class="form-text">Samo mala slova, brojevi i crtice</small>
+                    <span class="error-message" id="postSlugError" role="alert"></span>
+                </div>
+                <div class="form-group">
+                    <label for="postContent">Sadržaj</label>
+                    <div class="editor-toolbar">
+                        <button type="button" class="editor-btn" data-action="bold" title="Podebljano" aria-label="Podebljano">
+                            <strong>B</strong>
+                        </button>
+                        <button type="button" class="editor-btn" data-action="italic" title="Kurziv" aria-label="Kurziv">
+                            <em>I</em>
+                        </button>
+                        <button type="button" class="editor-btn" data-action="link" title="Link" aria-label="Dodaj link">
+                            🔗
+                        </button>
+                    </div>
+                    <textarea id="postContent" rows="10" required minlength="50" aria-required="true" aria-describedby="postContentError"></textarea>
+                    <span class="error-message" id="postContentError" role="alert"></span>
+                    <small class="form-text">Minimalno 50 karaktera</small>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="postCategories">Kategorije</label>
+                        <input type="text" id="postCategories" placeholder="JavaScript, CSS, HTML" aria-describedby="postCategoriesHelp">
+                        <small id="postCategoriesHelp" class="form-text">Odvojene zarezom</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="postTags">Tagovi</label>
+                        <input type="text" id="postTags" placeholder="tutorial, beginner" aria-describedby="postTagsHelp">
+                        <small id="postTagsHelp" class="form-text">Odvojeni zarezom</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="postImage">Featured slika (opciono)</label>
+                    <input type="file" id="postImage" accept="image/*" aria-describedby="postImageHelp">
+                    <small id="postImageHelp" class="form-text">Maksimalno 2MB</small>
+                </div>
+                <div class="form-group">
+                    <label for="postStatus">Status</label>
+                    <select id="postStatus" aria-label="Status posta">
+                        <option value="draft">Draft (nacrt)</option>
+                        <option value="published">Published (objavljen)</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="saveDraftBtn">Sačuvaj kao draft</button>
+                    <button type="submit" class="btn btn-primary">Objavi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Blog Sistem. Sva prava zadržana.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
+

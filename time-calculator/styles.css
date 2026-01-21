@@ -1,0 +1,204 @@
+/* Opšti stilovi */
+body {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	min-height: 100vh;
+}
+
+.container {
+	background: white;
+	border-radius: 15px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+	padding: 2rem;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+/* Kartice */
+.card {
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	border: none;
+	border-radius: 10px;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Dugmad */
+.btn {
+	border-radius: 8px;
+	padding: 10px 20px;
+	font-weight: 500;
+	transition: all 0.3s;
+}
+
+.btn:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	border: none;
+}
+
+.btn-primary:hover {
+	background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+}
+
+/* Input polja */
+.form-control,
+.form-select {
+	border-radius: 8px;
+	border: 2px solid #e0e0e0;
+	transition: border-color 0.3s;
+}
+
+.form-control:focus,
+.form-select:focus {
+	border-color: #667eea;
+	box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* Time input specifično */
+input[type="time"] {
+	font-size: 1.1rem;
+	font-weight: 500;
+	padding: 0.5rem 0.75rem;
+	cursor: pointer;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+	cursor: pointer;
+	filter: invert(38%) sepia(93%) saturate(1137%) hue-rotate(220deg)
+		brightness(96%) contrast(90%);
+	font-size: 1.2rem;
+}
+
+/* Select dropdown-i za trajanje */
+.form-select-sm {
+	font-size: 0.9rem;
+	padding: 0.4rem 0.5rem;
+}
+
+/* Labele za input polja */
+.form-label.small {
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: #666;
+	margin-bottom: 0.25rem;
+	text-transform: uppercase;
+}
+
+/* Display tajmer */
+.display-4 {
+	font-size: 3rem;
+	font-weight: bold;
+	text-align: center;
+	color: #667eea;
+	font-family: "Courier New", monospace;
+	letter-spacing: 0.1em;
+}
+
+/* Rezultat */
+#rezultat {
+	font-size: 1.2rem;
+	border-radius: 10px;
+	animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Tabs */
+.nav-tabs {
+	border-bottom: 2px solid #e0e0e0;
+}
+
+.nav-tabs .nav-link {
+	border: none;
+	color: #666;
+	font-weight: 500;
+	transition: all 0.3s;
+}
+
+.nav-tabs .nav-link:hover {
+	color: #667eea;
+	border-color: transparent;
+}
+
+.nav-tabs .nav-link.active {
+	color: #667eea;
+	border-bottom: 3px solid #667eea;
+	background: transparent;
+}
+
+/* Istorija */
+.list-group-item {
+	border-radius: 8px;
+	margin-bottom: 5px;
+	transition: background-color 0.2s;
+}
+
+.list-group-item:hover {
+	background-color: #f8f9fa;
+}
+
+/* Input grupa sa dugmetom */
+.input-group .btn {
+	border-left: none;
+}
+
+/* Animacije za dodavanje/brisanje */
+.period-item,
+.pauza-item {
+	animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateX(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.container {
+		padding: 1rem;
+	}
+
+	.display-4 {
+		font-size: 2rem;
+	}
+
+	.nav-tabs .nav-link {
+		font-size: 0.9rem;
+		padding: 0.5rem 0.7rem;
+	}
+}
+
+/* Alert trenutno vreme */
+#trenutnoVremeCard {
+	animation: fadeIn 0.5s;
+	border-left: 4px solid #667eea;
+}
+
+/* Ikone */
+.bi {
+	margin-right: 5px;
+}

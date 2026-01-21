@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pravoslavni Kalendar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>☦ Правoslavni Календар ☦</h1>
+            <p class="subtitle">✠ Praznični dani, postovi i sveci ✠</p>
+        </header>
+
+        <nav class="main-nav">
+            <button class="nav-tab active" data-tab="kalendar">📅 Kalendar</button>
+            <button class="nav-tab" data-tab="molitvenik">📿 Molitvenik</button>
+            <button class="nav-tab" data-tab="imendan">🔍 Imendan</button>
+            <button class="nav-tab" data-tab="liturgija">⛪ Liturgija</button>
+        </nav>
+
+        <div id="kalendar" class="tab-content active">
+        <div class="navigation">
+            <button id="prevMonth" class="nav-btn">← Prethodni</button>
+            <h2 id="currentMonth"></h2>
+            <button id="nextMonth" class="nav-btn">Sledeći →</button>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-color praznik-color"></span>
+                <span>🕯️ Praznik</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color post-color"></span>
+                <span>🙏 Post</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color danas-color"></span>
+                <span>⭐ Danas</span>
+            </div>
+        </div>
+
+        <div id="calendar" class="calendar"></div>
+        </div>
+
+        <div id="molitvenik" class="tab-content">
+            <h2 class="section-title">📿 Molitvenik</h2>
+            
+            <div class="molitva-kategorije">
+                <button class="molitva-btn" data-molitva="jutarnje">🌅 Jutarnje molitve</button>
+                <button class="molitva-btn" data-molitva="vecernje">🌙 Večernje molitve</button>
+                <button class="molitva-btn" data-molitva="jelo">🍞 Pre i posle jela</button>
+                <button class="molitva-btn" data-molitva="opste">✝️ Opšte molitve</button>
+                <button class="molitva-btn" data-molitva="praznike">🎊 Za praznike</button>
+            </div>
+
+            <div id="molitva-sadrzaj" class="molitva-sadrzaj"></div>
+        </div>
+
+        <div id="imendan" class="tab-content">
+            <h2 class="section-title">🔍 Pretraga Imenadana</h2>
+            
+            <div class="search-box">
+                <input type="text" id="imendanSearch" placeholder="Unesite ime svetca (npr. Miloš, Jelena, Nikola...)">
+                <button id="searchBtn" class="search-button">🔍 Pretraži</button>
+            </div>
+
+            <div id="imendanResults" class="imendan-results"></div>
+        </div>
+
+        <div id="liturgija" class="tab-content">
+            <h2 class="section-title">⛪ Liturgijske Informacije</h2>
+            
+            <div class="liturgija-info">
+                <div class="info-card">
+                    <h3>📖 O Svetoj Liturgiji</h3>
+                    <p>Sveta Liturgija je centralna bogoslužba pravoslavne crkve, najsvetija služba u kojoj se vrši pretvaranje hleba i vina u Telo i Krv Hristovu.</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>🎵 Osmoglasnik</h3>
+                    <p>Liturgijski glasovi se smenjuju svake nedelje. Postoji 8 glasova koji se rotiraju tokom crkvene godine.</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>🎨 Boje liturgijskih odeždi</h3>
+                    <ul>
+                        <li><span class="color-box" style="background: gold;"></span> <strong>Zlatna</strong> - Veliki gospodski i bogorodični praznici</li>
+                        <li><span class="color-box" style="background: #8b0000;"></span> <strong>Crvena</strong> - Praznici mučenika, Vaskrs</li>
+                        <li><span class="color-box" style="background: white; border: 1px solid #666;"></span> <strong>Bela</strong> - Bogojavljenje, Preobraženje</li>
+                        <li><span class="color-box" style="background: green;"></span> <strong>Zelena</strong> - Trojice, Duhovi</li>
+                        <li><span class="color-box" style="background: purple;"></span> <strong>Ljubičasta</strong> - Veliki post, postni periodi</li>
+                        <li><span class="color-box" style="background: #4169e1;"></span> <strong>Plava</strong> - Bogorodični praznici</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>📚 Tipovi Liturgije</h3>
+                    <ul>
+                        <li><strong>Liturgija Svetog Jovana Zlatoustog</strong> - Služi se u većinu dana u godini</li>
+                        <li><strong>Liturgija Svetog Vasilija Velikog</strong> - Služi se 10 puta godišnje (Božić, Bogojavljenje, nedelje Velikog posta...)</li>
+                        <li><strong>Liturgija Preždeosveštenih Darova</strong> - Služi se sredom i petkom u Velikom postu</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="kandilo" id="kandilo"></div>
+                <h2 id="modalDate"></h2>
+                <div id="modalBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

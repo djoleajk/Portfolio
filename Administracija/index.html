@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administracija Preduzeća - Evidencije</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal active">
+        <div class="modal-content login-content">
+            <h2>Prijavite se</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Korisničko ime:</label>
+                    <input type="text" id="login-username" name="username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label>Lozinka:</label>
+                    <input type="password" id="login-password" name="password" required autocomplete="current-password">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Prijavi se</button>
+                </div>
+                <div class="login-info">
+                    <p><strong>Demo nalozi:</strong></p>
+                    <p>Admin: <code>admin</code> / <code>admin123</code></p>
+                    <p>Urednik: <code>user</code> / <code>user123</code></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Container (sakriven dok korisnik nije prijavljen) -->
+    <div class="container" id="main-container" style="display: none;">
+        <!-- Desktop Header -->
+        <header class="desktop-header">
+            <div class="header-top">
+                <div>
+                    <h1>Administracija Preduzeća</h1>
+                    <p class="subtitle">Sistem za vodenje evidencija radnika</p>
+                </div>
+                <div class="user-info">
+                    <span id="current-user-name"></span>
+                    <span class="role-badge" id="current-user-role"></span>
+                    <button class="btn btn-secondary btn-sm" id="dark-mode-toggle" onclick="toggleDarkMode()" title="Dark Mode">🌙</button>
+                    <button class="btn btn-secondary btn-sm" onclick="logout()">Odjavi se</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <div class="mobile-header-top">
+                <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileSidebar()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="mobile-header-title">
+                    <h1 id="mobile-header-title">Administracija</h1>
+                </div>
+                <div class="mobile-header-actions">
+                    <button class="btn-icon" id="mobile-dark-mode-toggle" onclick="toggleDarkMode()" title="Dark Mode">🌙</button>
+                    <button class="btn-icon" onclick="toggleMobileUserMenu()" title="Meni">☰</button>
+                </div>
+            </div>
+            <!-- Mobile User Menu Dropdown -->
+            <div class="mobile-user-menu" id="mobile-user-menu">
+                <div class="mobile-user-info">
+                    <span id="mobile-current-user-name"></span>
+                    <span class="role-badge" id="mobile-current-user-role"></span>
+                </div>
+                <button class="mobile-menu-item" onclick="logout()">Odjavi se</button>
+            </div>
+        </header>
+
+        <!-- Mobile Sidebar -->
+        <div class="mobile-sidebar-overlay" id="mobile-sidebar-overlay" onclick="closeMobileSidebar()"></div>
+        <div class="mobile-sidebar" id="mobile-sidebar">
+            <div class="mobile-sidebar-header">
+                <h3>Navigacija</h3>
+                <button class="mobile-sidebar-close" onclick="closeMobileSidebar()">×</button>
+            </div>
+            <nav class="mobile-nav" id="mobile-nav">
+                <!-- Admin navigacija -->
+                <button class="mobile-nav-item admin-only" data-tab="dashboard" onclick="switchTab('dashboard')">
+                    <span class="mobile-nav-icon">📊</span>
+                    <span class="mobile-nav-text">Dashboard</span>
+                </button>
+                <button class="mobile-nav-item admin-only active" data-tab="radnici" onclick="switchTab('radnici')">
+                    <span class="mobile-nav-icon">👥</span>
+                    <span class="mobile-nav-text">Radnici</span>
+                </button>
+                <button class="mobile-nav-item admin-only" data-tab="plate" onclick="switchTab('plate')">
+                    <span class="mobile-nav-icon">💰</span>
+                    <span class="mobile-nav-text">Plate Liste</span>
+                </button>
+                <button class="mobile-nav-item admin-only" data-tab="odmori" onclick="switchTab('odmori')">
+                    <span class="mobile-nav-icon">🏖️</span>
+                    <span class="mobile-nav-text">Godišnji Odmori</span>
+                </button>
+                <button class="mobile-nav-item admin-only" data-tab="odmori-pregled" onclick="switchTab('odmori-pregled')">
+                    <span class="mobile-nav-icon">📋</span>
+                    <span class="mobile-nav-text">Pregled Odmora</span>
+                </button>
+                <button class="mobile-nav-item admin-only" data-tab="ostale" onclick="switchTab('ostale')">
+                    <span class="mobile-nav-icon">📝</span>
+                    <span class="mobile-nav-text">Ostale Evidencije</span>
+                </button>
+                <button class="mobile-nav-item admin-only" data-tab="poruke" onclick="switchTab('poruke')">
+                    <span class="mobile-nav-icon">💬</span>
+                    <span class="mobile-nav-text">Poruke</span>
+                </button>
+                <button class="mobile-nav-item admin-only" data-tab="zahtevi" onclick="switchTab('zahtevi')">
+                    <span class="mobile-nav-icon">📨</span>
+                    <span class="mobile-nav-text">Zahtevi</span>
+                </button>
+                <button class="mobile-nav-item admin-only" data-tab="korisnici" onclick="switchTab('korisnici')">
+                    <span class="mobile-nav-icon">👤</span>
+                    <span class="mobile-nav-text">Korisnici</span>
+                </button>
+                <!-- Radnik navigacija -->
+                <button class="mobile-nav-item radnik-only active" data-tab="radnik-profil" onclick="switchTab('radnik-profil')">
+                    <span class="mobile-nav-icon">👤</span>
+                    <span class="mobile-nav-text">Moj Profil</span>
+                </button>
+                <button class="mobile-nav-item radnik-only" data-tab="radnik-plate" onclick="switchTab('radnik-plate')">
+                    <span class="mobile-nav-icon">💰</span>
+                    <span class="mobile-nav-text">Moje Plate</span>
+                </button>
+                <button class="mobile-nav-item radnik-only" data-tab="radnik-odmori" onclick="switchTab('radnik-odmori')">
+                    <span class="mobile-nav-icon">🏖️</span>
+                    <span class="mobile-nav-text">Moji Odmori</span>
+                </button>
+                <button class="mobile-nav-item radnik-only" data-tab="radnik-evidencije" onclick="switchTab('radnik-evidencije')">
+                    <span class="mobile-nav-icon">📝</span>
+                    <span class="mobile-nav-text">Moje Evidencije</span>
+                </button>
+                <button class="mobile-nav-item radnik-only" data-tab="radnik-poruke" onclick="switchTab('radnik-poruke')">
+                    <span class="mobile-nav-icon">💬</span>
+                    <span class="mobile-nav-text">Poruke</span>
+                </button>
+                <button class="mobile-nav-item radnik-only" data-tab="radnik-zahtevi" onclick="switchTab('radnik-zahtevi')">
+                    <span class="mobile-nav-icon">📨</span>
+                    <span class="mobile-nav-text">Moji Zahtevi</span>
+                </button>
+                <!-- User navigacija -->
+                <button class="mobile-nav-item user-only active" data-tab="user-profil" onclick="switchTab('user-profil')">
+                    <span class="mobile-nav-icon">👤</span>
+                    <span class="mobile-nav-text">Moj Profil</span>
+                </button>
+                <button class="mobile-nav-item user-only" data-tab="user-zahtevi" onclick="switchTab('user-zahtevi')">
+                    <span class="mobile-nav-icon">📨</span>
+                    <span class="mobile-nav-text">Moji Zahtevi</span>
+                </button>
+                <button class="mobile-nav-item user-only" data-tab="user-poruke" onclick="switchTab('user-poruke')">
+                    <span class="mobile-nav-icon">💬</span>
+                    <span class="mobile-nav-text">Poruke</span>
+                </button>
+            </nav>
+            <div class="mobile-sidebar-footer">
+                <div class="mobile-user-info-footer">
+                    <span id="mobile-sidebar-user-name"></span>
+                    <span class="role-badge" id="mobile-sidebar-user-role"></span>
+                </div>
+                <button class="mobile-menu-item" onclick="logout()">Odjavi se</button>
+            </div>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="tabs desktop-nav">
+            <button class="tab-btn admin-only" data-tab="dashboard" style="display: none;">📊 Dashboard</button>
+            <button class="tab-btn active admin-only" data-tab="radnici" style="display: none;">Radnici</button>
+            <button class="tab-btn admin-only" data-tab="plate" style="display: none;">Plate Liste</button>
+            <button class="tab-btn admin-only" data-tab="odmori" style="display: none;">Godišnji Odmori</button>
+            <button class="tab-btn admin-only" data-tab="odmori-pregled" style="display: none;">Pregled Odmora</button>
+            <button class="tab-btn admin-only" data-tab="ostale" style="display: none;">Ostale Evidencije</button>
+            <button class="tab-btn admin-only" data-tab="poruke" style="display: none;">Poruke/Obaveštenja</button>
+            <button class="tab-btn admin-only" data-tab="zahtevi" style="display: none;">Zahtevi</button>
+            <button class="tab-btn admin-only" data-tab="korisnici" id="korisnici-tab" style="display: none;">Korisnici</button>
+            <!-- Radnik tabovi -->
+            <button class="tab-btn radnik-only" data-tab="radnik-profil" style="display: none;">Moj Profil</button>
+            <button class="tab-btn radnik-only" data-tab="radnik-plate" style="display: none;">Moje Plate</button>
+            <button class="tab-btn radnik-only" data-tab="radnik-odmori" style="display: none;">Moji Odmori</button>
+            <button class="tab-btn radnik-only" data-tab="radnik-evidencije" style="display: none;">Moje Evidencije</button>
+            <button class="tab-btn radnik-only" data-tab="radnik-poruke" style="display: none;">Poruke</button>
+            <button class="tab-btn radnik-only" data-tab="radnik-zahtevi" style="display: none;">Moji Zahtevi</button>
+            <!-- User tabovi -->
+            <button class="tab-btn user-only active" data-tab="user-profil" style="display: none;">Moj Profil</button>
+            <button class="tab-btn user-only" data-tab="user-zahtevi" style="display: none;">Moji Zahtevi</button>
+            <button class="tab-btn user-only" data-tab="user-poruke" style="display: none;">Poruke</button>
+        </nav>
+
+        <!-- Dashboard Sekcija -->
+        <section id="dashboard" class="tab-content admin-only" style="display: none;">
+            <div class="section-header">
+                <h2>📊 Dashboard - Pregled Statistika</h2>
+                <div>
+                    <button class="btn btn-secondary" onclick="BackupRestoreManager.exportAllToJSON()">💾 Backup Svega</button>
+                    <button class="btn btn-secondary" onclick="openRestoreModal()" style="margin-left: 10px;">📥 Restore</button>
+                </div>
+            </div>
+            
+            <!-- Statistike Kartice -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <h3>Ukupno Radnika</h3>
+                        <p class="stat-number" id="stat-radnici">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <h3>Ukupno Plata</h3>
+                        <p class="stat-number" id="stat-plate">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏖️</div>
+                    <div class="stat-content">
+                        <h3>Aktivni Odmori</h3>
+                        <p class="stat-number" id="stat-odmori">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-content">
+                        <h3>Čekajući Zahtevi</h3>
+                        <p class="stat-number" id="stat-zahtevi">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grafikoni -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Plate po Mesecu</h3>
+                    <canvas id="chart-plate-mesec"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Godišnji Odmori - Status</h3>
+                    <canvas id="chart-odmori-status"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Zahtevi - Status</h3>
+                    <canvas id="chart-zahtevi-status"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Top 5 Radnika po Plati</h3>
+                    <canvas id="chart-top-plate"></canvas>
+                </div>
+            </div>
+
+            <!-- Detaljne Statistike -->
+            <div class="detailed-stats">
+                <h3>Detaljne Statistike</h3>
+                <div class="stats-table-container">
+                    <table id="stats-table">
+                        <thead>
+                            <tr>
+                                <th>Kategorija</th>
+                                <th>Vrednost</th>
+                                <th>Procenat</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stats-tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sekcija Radnici -->
+        <section id="radnici" class="tab-content">
+            <div class="section-header">
+                <h2>Evidencija Radnika</h2>
+                <div>
+                    <button class="btn btn-primary admin-only" onclick="openModal('radnici')" style="display: none;">+ Dodaj Radnika</button>
+                    <button class="btn btn-secondary admin-only" onclick="ExportManager.exportRadnici()" style="display: none; margin-left: 10px;">📥 Export CSV</button>
+                </div>
+            </div>
+            <div class="search-box admin-only" style="display: none;">
+                <input type="text" id="search-radnici" placeholder="Pretraži radnike (ime, email, pozicija)..." oninput="filterRadnici(this.value)">
+            </div>
+            <div class="table-container">
+                <table id="radnici-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ime i Prezime</th>
+                            <th>JMBG</th>
+                            <th>Broj Telefona</th>
+                            <th>Email</th>
+                            <th>Pozicija</th>
+                            <th>Datum Zaposlenja</th>
+                            <th class="admin-only" style="display: none;">Akcije</th>
+                            <th class="admin-only" style="display: none;">Nalog</th>
+                        </tr>
+                    </thead>
+                    <tbody id="radnici-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sekcija Plate Liste -->
+        <section id="plate" class="tab-content">
+            <div class="section-header">
+                <h2>Plate Liste</h2>
+                <div>
+                    <button class="btn btn-primary admin-only" onclick="openModal('plate')" style="display: none;">+ Dodaj Platu</button>
+                    <button class="btn btn-secondary admin-only" onclick="ExportManager.exportPlate()" style="display: none; margin-left: 10px;">📥 Export CSV</button>
+                </div>
+            </div>
+            <div class="search-box admin-only" style="display: none;">
+                <input type="text" id="search-plate" placeholder="Pretraži plate..." oninput="filterPlate(this.value)">
+            </div>
+            <div class="table-container">
+                <table id="plate-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Korisničko Ime</th>
+                            <th>Mesec</th>
+                            <th>Godina</th>
+                            <th>Osnovna Plata</th>
+                            <th>Bonusi</th>
+                            <th>Doprinosi</th>
+                            <th>Ukupno</th>
+                            <th class="admin-only" style="display: none;">Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody id="plate-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sekcija Godišnji Odmori -->
+        <section id="odmori" class="tab-content">
+            <div class="section-header">
+                <h2>Godišnji Odmori</h2>
+                <button class="btn btn-primary admin-only" onclick="openModal('odmori')" style="display: none;">+ Dodaj Odmor</button>
+            </div>
+            <div class="table-container">
+                <table id="odmori-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Korisničko Ime</th>
+                            <th>Datum Početka</th>
+                            <th>Datum Završetka</th>
+                            <th>Broj Dana</th>
+                            <th>Status</th>
+                            <th class="admin-only" style="display: none;">Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody id="odmori-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sekcija Pregled Godišnjih Odmora po Radniku -->
+        <section id="odmori-pregled" class="tab-content">
+            <div class="section-header">
+                <h2>Pregled Godišnjih Odmora po Radniku</h2>
+            </div>
+            <div class="table-container">
+                <table id="odmori-pregled-table">
+                    <thead>
+                        <tr>
+                            <th>Korisničko Ime</th>
+                            <th>Ukupno Dana</th>
+                            <th>Iskorišćeno</th>
+                            <th>Preostalo</th>
+                            <th>Procenat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="odmori-pregled-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sekcija Ostale Evidencije -->
+        <section id="ostale" class="tab-content">
+            <div class="section-header">
+                <h2>Ostale Evidencije</h2>
+                <button class="btn btn-primary admin-only" onclick="openModal('ostale')" style="display: none;">+ Dodaj Evidenciju</button>
+            </div>
+            <div class="table-container">
+                <table id="ostale-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tip Evidencije</th>
+                            <th>Korisničko Ime</th>
+                            <th>Datum</th>
+                            <th>Opis</th>
+                            <th class="admin-only" style="display: none;">Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ostale-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sekcija Korisnici (samo admin) -->
+        <section id="korisnici" class="tab-content admin-only" style="display: none;">
+            <div class="section-header">
+                <h2>Upravljanje Korisnicima</h2>
+                <button class="btn btn-primary" onclick="openModal('korisnici')">+ Dodaj Korisnika</button>
+            </div>
+            <div class="table-container">
+                <table id="korisnici-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Korisničko Ime</th>
+                            <th>Ime i Prezime</th>
+                            <th>Uloga</th>
+                            <th>Korisničko Ime Radnika</th>
+                            <th>Email</th>
+                            <th>Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody id="korisnici-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Radnik UI - Moj Profil -->
+        <section id="radnik-profil" class="tab-content radnik-only" style="display: none;">
+            <div class="section-header">
+                <h2>Moj Profil</h2>
+            </div>
+            <div class="profile-container">
+                <div class="profile-card">
+                    <div class="profile-info">
+                        <div class="info-row">
+                            <span class="info-label">Ime i Prezime:</span>
+                            <span class="info-value" id="radnik-profil-ime"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">JMBG:</span>
+                            <span class="info-value" id="radnik-profil-jmbg"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Broj Telefona:</span>
+                            <span class="info-value" id="radnik-profil-telefon"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Email:</span>
+                            <span class="info-value" id="radnik-profil-email"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Pozicija:</span>
+                            <span class="info-value" id="radnik-profil-pozicija"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Datum Zaposlenja:</span>
+                            <span class="info-value" id="radnik-profil-datum"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Radnik UI - Moje Plate -->
+        <section id="radnik-plate" class="tab-content radnik-only" style="display: none;">
+            <div class="section-header">
+                <h2>Moje Plate Liste</h2>
+            </div>
+            <div class="table-container">
+                <table id="radnik-plate-table">
+                    <thead>
+                        <tr>
+                            <th>Mesec</th>
+                            <th>Godina</th>
+                            <th>Osnovna Plata</th>
+                            <th>Bonusi</th>
+                            <th>Doprinosi</th>
+                            <th>Ukupno</th>
+                        </tr>
+                    </thead>
+                    <tbody id="radnik-plate-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Radnik UI - Moji Odmori -->
+        <section id="radnik-odmori" class="tab-content radnik-only" style="display: none;">
+            <div class="section-header">
+                <h2>Moji Godišnji Odmori</h2>
+                <button class="btn btn-primary" onclick="openModal('radnik-zahtev-odmor')">+ Zahtev za Godišnji Odmor</button>
+            </div>
+            <div class="odmori-summary" id="radnik-odmori-summary">
+            </div>
+            <div class="table-container">
+                <table id="radnik-odmori-table">
+                    <thead>
+                        <tr>
+                            <th>Datum Početka</th>
+                            <th>Datum Završetka</th>
+                            <th>Broj Dana</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="radnik-odmori-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Radnik UI - Moje Evidencije -->
+        <section id="radnik-evidencije" class="tab-content radnik-only" style="display: none;">
+            <div class="section-header">
+                <h2>Moje Evidencije</h2>
+            </div>
+            <div class="table-container">
+                <table id="radnik-evidencije-table">
+                    <thead>
+                        <tr>
+                            <th>Tip Evidencije</th>
+                            <th>Datum</th>
+                            <th>Opis</th>
+                        </tr>
+                    </thead>
+                    <tbody id="radnik-evidencije-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Radnik UI - Poruke -->
+        <section id="radnik-poruke" class="tab-content radnik-only" style="display: none;">
+            <div class="section-header">
+                <h2>Moje Poruke</h2>
+            </div>
+            <div class="table-container">
+                <table id="radnik-poruke-table">
+                    <thead>
+                        <tr>
+                            <th>Datum</th>
+                            <th>Naslov</th>
+                            <th>Poruka</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="radnik-poruke-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Radnik UI - Moji Zahtevi -->
+        <section id="radnik-zahtevi" class="tab-content radnik-only" style="display: none;">
+            <div class="section-header">
+                <h2>Moji Zahtevi</h2>
+                <button class="btn btn-primary" onclick="openModal('radnik-zahtev-admin')">+ Novi Administrativni Zahtev</button>
+            </div>
+            <div class="table-container">
+                <table id="radnik-zahtevi-table">
+                    <thead>
+                        <tr>
+                            <th>Tip</th>
+                            <th>Datum</th>
+                            <th>Opis</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="radnik-zahtevi-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Admin - Poruke/Obaveštenja -->
+        <section id="poruke" class="tab-content admin-only" style="display: none;">
+            <div class="section-header">
+                <h2>Poruke i Obaveštenja</h2>
+                <button class="btn btn-primary" onclick="openModal('poruke')">+ Pošalji Poruku</button>
+            </div>
+            <div class="table-container">
+                <table id="poruke-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Korisničko Ime</th>
+                            <th>Datum</th>
+                            <th>Naslov</th>
+                            <th>Poruka</th>
+                            <th>Status</th>
+                            <th>Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody id="poruke-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Admin - Zahtevi -->
+        <section id="zahtevi" class="tab-content admin-only" style="display: none;">
+            <div class="section-header">
+                <h2>Zahtevi</h2>
+            </div>
+            <div class="table-container">
+                <h3 style="margin-top: 20px;">Zahtevi za Godišnji Odmor</h3>
+                <table id="zahtevi-odmor-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Korisničko Ime</th>
+                            <th>Datum Zahteva</th>
+                            <th>Početak</th>
+                            <th>Završetak</th>
+                            <th>Broj Dana</th>
+                            <th>Status</th>
+                            <th>Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody id="zahtevi-odmor-tbody">
+                    </tbody>
+                </table>
+                <h3 style="margin-top: 30px;">Administrativni Zahtevi</h3>
+                <table id="zahtevi-admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Korisničko Ime</th>
+                            <th>Tip</th>
+                            <th>Datum</th>
+                            <th>Opis</th>
+                            <th>Status</th>
+                            <th>Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody id="zahtevi-admin-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- User UI - Moj Profil -->
+        <section id="user-profil" class="tab-content user-only active" style="display: none;">
+            <div class="section-header">
+                <h2>Moj Profil</h2>
+            </div>
+            <div class="profile-container">
+                <div class="profile-card">
+                    <div class="profile-info">
+                        <div class="info-row">
+                            <span class="info-label">Ime i Prezime:</span>
+                            <span class="info-value" id="user-profil-ime"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Korisničko Ime:</span>
+                            <span class="info-value" id="user-profil-username"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Email:</span>
+                            <span class="info-value" id="user-profil-email"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Uloga:</span>
+                            <span class="info-value" id="user-profil-uloga"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- User UI - Moji Zahtevi -->
+        <section id="user-zahtevi" class="tab-content user-only" style="display: none;">
+            <div class="section-header">
+                <h2>Moji Zahtevi</h2>
+                <button class="btn btn-primary" onclick="openModal('user-zahtev-admin')">+ Novi Administrativni Zahtev</button>
+            </div>
+            <div class="table-container">
+                <table id="user-zahtevi-table">
+                    <thead>
+                        <tr>
+                            <th>Tip</th>
+                            <th>Datum</th>
+                            <th>Opis</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-zahtevi-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- User UI - Poruke -->
+        <section id="user-poruke" class="tab-content user-only" style="display: none;">
+            <div class="section-header">
+                <h2>Moje Poruke</h2>
+            </div>
+            <div class="table-container">
+                <table id="user-poruke-table">
+                    <thead>
+                        <tr>
+                            <th>Datum</th>
+                            <th>Naslov</th>
+                            <th>Poruka</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-poruke-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal za Radnike -->
+    <div id="modal-radnici" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('radnici')">&times;</span>
+            <h2>Dodaj/izmeni Radnika</h2>
+                    <form id="form-radnici">
+                <input type="hidden" id="radnici-id" name="id">
+                <div class="form-group">
+                    <label>Ime i Prezime:</label>
+                    <input type="text" id="radnici-ime" name="ime" required>
+                </div>
+                <div class="form-group" id="radnici-create-account-group" style="display: none;">
+                    <label>
+                        <input type="checkbox" id="radnici-create-account" onchange="toggleCreateAccountFields()">
+                        Kreiraj nalog za ovog radnika
+                    </label>
+                </div>
+                <div id="radnici-account-fields" style="display: none;">
+                    <div class="form-group">
+                        <label>Korisničko Ime:</label>
+                        <input type="text" id="radnici-username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label>Lozinka:</label>
+                        <input type="password" id="radnici-password" name="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>JMBG:</label>
+                    <input type="text" id="radnici-jmbg" name="jmbg" required maxlength="13">
+                </div>
+                <div class="form-group">
+                    <label>Broj Telefona:</label>
+                    <input type="tel" id="radnici-telefon" name="telefon" required>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="radnici-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Pozicija:</label>
+                    <input type="text" id="radnici-pozicija" name="pozicija" required>
+                </div>
+                <div class="form-group">
+                    <label>Datum Zaposlenja:</label>
+                    <input type="date" id="radnici-datum" name="datum" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('radnici')">Otkaži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za Plate -->
+    <div id="modal-plate" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('plate')">&times;</span>
+            <h2>Dodaj/izmeni Platu</h2>
+            <form id="form-plate">
+                <input type="hidden" id="plate-id" name="id">
+                <div class="form-group">
+                    <label>Radnik:</label>
+                    <select id="plate-radnik" name="radnik" required>
+                        <option value="">Izaberi radnika</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Mesec:</label>
+                    <select id="plate-mesec" name="mesec" required>
+                        <option value="">Izaberi mesec</option>
+                        <option value="1">Januar</option>
+                        <option value="2">Februar</option>
+                        <option value="3">Mart</option>
+                        <option value="4">April</option>
+                        <option value="5">Maj</option>
+                        <option value="6">Jun</option>
+                        <option value="7">Jul</option>
+                        <option value="8">Avgust</option>
+                        <option value="9">Septembar</option>
+                        <option value="10">Oktobar</option>
+                        <option value="11">Novembar</option>
+                        <option value="12">Decembar</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Godina:</label>
+                    <input type="number" id="plate-godina" name="godina" required min="2020" max="2030">
+                </div>
+                <h3 style="margin-top: 20px; margin-bottom: 10px;">Dobitci:</h3>
+                <div class="form-group">
+                    <label>Osnovna Plata:</label>
+                    <input type="number" id="plate-osnovna" name="osnovna" required step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Bonusi:</label>
+                    <input type="number" id="plate-bonusi" name="bonusi" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Prekovremeni Rad:</label>
+                    <input type="number" id="plate-prekovremeni" name="prekovremeni" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Noćni Rad:</label>
+                    <input type="number" id="plate-nocni" name="nocni" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Praznički Rad:</label>
+                    <input type="number" id="plate-praznicki" name="praznicki" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Regres:</label>
+                    <input type="number" id="plate-regres" name="regres" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Dodatak za Staž:</label>
+                    <input type="number" id="plate-staz" name="staz" step="0.01" min="0" value="0">
+                </div>
+                <h3 style="margin-top: 20px; margin-bottom: 10px;">Odbitci:</h3>
+                <div class="form-group">
+                    <label>PIO (Penziono):</label>
+                    <input type="number" id="plate-pio" name="pio" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>ZO (Zdravstveno):</label>
+                    <input type="number" id="plate-zo" name="zo" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Nezaposlenost:</label>
+                    <input type="number" id="plate-nezaposlenost" name="nezaposlenost" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Porez:</label>
+                    <input type="number" id="plate-porez" name="porez" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Doprinosi na teret zaposlenog:</label>
+                    <input type="number" id="plate-doprinosi" name="doprinosi" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Dugovanja:</label>
+                    <input type="number" id="plate-dugovanja" name="dugovanja" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Ostali Odbitci:</label>
+                    <input type="number" id="plate-ostali-odbitci" name="ostaliOdbitci" step="0.01" min="0" value="0">
+                </div>
+                <div class="form-group" id="plate-send-document-group" style="display: none;">
+                    <label>
+                        <input type="checkbox" id="plate-send-document" name="sendDocument">
+                        Pošalji dokument korisniku
+                    </label>
+                    <small style="color: #666; display: block; margin-top: 5px;">Dokument će biti poslat korisniku kao poruka nakon čuvanja</small>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('plate')">Otkaži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za Detaljnu Prikaz Plate -->
+    <div id="modal-plata-detalj" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeModal('plata-detalj')">&times;</span>
+            <h2>Platna Lista</h2>
+            <div id="plata-detalj-content">
+                <!-- Sadržaj će biti dinamski popunjen -->
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('plata-detalj')">Zatvori</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal za Godišnje Odmore -->
+    <div id="modal-odmori" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('odmori')">&times;</span>
+            <h2>Dodaj/izmeni Godišnji Odmor</h2>
+            <form id="form-odmori">
+                <input type="hidden" id="odmori-id" name="id">
+                <div class="form-group">
+                    <label>Radnik:</label>
+                    <select id="odmori-radnik" name="radnik" required>
+                        <option value="">Izaberi radnika</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Datum Početka:</label>
+                    <input type="date" id="odmori-pocetak" name="pocetak" required>
+                </div>
+                <div class="form-group">
+                    <label>Datum Završetka:</label>
+                    <input type="date" id="odmori-zavrsetak" name="zavrsetak" required>
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select id="odmori-status" name="status" required>
+                        <option value="Planiran">Planiran</option>
+                        <option value="Odobren">Odobren</option>
+                        <option value="U toku">U toku</option>
+                        <option value="Završen">Završen</option>
+                        <option value="Otkazan">Otkazan</option>
+                    </select>
+                </div>
+                <div class="form-group" id="odmori-send-document-group" style="display: none;">
+                    <label>
+                        <input type="checkbox" id="odmori-send-document" name="sendDocument">
+                        Pošalji dokument korisniku
+                    </label>
+                    <small style="color: #666; display: block; margin-top: 5px;">Dokument će biti poslat korisniku kao poruka nakon čuvanja</small>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('odmori')">Otkaži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za Ostale Evidencije -->
+    <div id="modal-ostale" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('ostale')">&times;</span>
+            <h2>Dodaj/izmeni Evidenciju</h2>
+            <form id="form-ostale">
+                <input type="hidden" id="ostale-id" name="id">
+                <div class="form-group">
+                    <label>Tip Evidencije:</label>
+                    <select id="ostale-tip" name="tip" required>
+                        <option value="">Izaberi tip</option>
+                        <option value="Bolovanje">Bolovanje</option>
+                        <option value="Odsustvo">Odsustvo</option>
+                        <option value="Prekovremeni rad">Prekovremeni rad</option>
+                        <option value="Obuka">Obuka</option>
+                        <option value="Promena pozicije">Promena pozicije</option>
+                        <option value="Ostalo">Ostalo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Radnik:</label>
+                    <select id="ostale-radnik" name="radnik" required>
+                        <option value="">Izaberi radnika</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Datum:</label>
+                    <input type="date" id="ostale-datum" name="datum" required>
+                </div>
+                <div class="form-group">
+                    <label>Opis:</label>
+                    <textarea id="ostale-opis" name="opis" rows="4" required></textarea>
+                </div>
+                <div class="form-group" id="ostale-send-document-group" style="display: none;">
+                    <label>
+                        <input type="checkbox" id="ostale-send-document" name="sendDocument">
+                        Pošalji dokument korisniku
+                    </label>
+                    <small style="color: #666; display: block; margin-top: 5px;">Dokument će biti poslat korisniku kao poruka nakon čuvanja</small>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('ostale')">Otkaži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za Korisnike -->
+    <div id="modal-korisnici" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('korisnici')">&times;</span>
+            <h2>Dodaj/izmeni Korisnika</h2>
+            <form id="form-korisnici">
+                <input type="hidden" id="korisnici-id" name="id">
+                <div class="form-group">
+                    <label>Korisničko Ime:</label>
+                    <input type="text" id="korisnici-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label>Lozinka:</label>
+                    <input type="password" id="korisnici-password" name="password">
+                    <small style="color: #666;">Ostavite prazno ako ne menjate lozinku</small>
+                </div>
+                <div class="form-group">
+                    <label>Ime i Prezime:</label>
+                    <input type="text" id="korisnici-ime" name="ime" required>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="korisnici-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Uloga:</label>
+                    <select id="korisnici-uloga" name="uloga" required>
+                        <option value="urednik">Urednik</option>
+                        <option value="admin">Administrator</option>
+                        <option value="radnik">Radnik</option>
+                    </select>
+                </div>
+                <div class="form-group" id="radnik-select-group" style="display: none;">
+                    <label>Poveži sa Radnikom:</label>
+                    <select id="korisnici-radnik" name="radnikId">
+                        <option value="">Nije povezano</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('korisnici')">Otkaži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za Prikaz Profila Korisnika -->
+    <div id="modal-korisnik-profil" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeModal('korisnik-profil')">&times;</span>
+            <h2>Profil Korisnika</h2>
+            <div id="korisnik-profil-content">
+                <div class="profile-container">
+                    <div class="profile-card">
+                        <div class="profile-info">
+                            <div class="info-row">
+                                <span class="info-label">Ime i Prezime:</span>
+                                <span class="info-value" id="profil-korisnik-ime"></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Korisničko Ime:</span>
+                                <span class="info-value" id="profil-korisnik-username"></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value" id="profil-korisnik-email"></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Uloga:</span>
+                                <span class="info-value" id="profil-korisnik-uloga"></span>
+                            </div>
+                            <div class="info-row" id="profil-korisnik-radnik-row" style="display: none;">
+                                <span class="info-label">Povezan sa Radnikom:</span>
+                                <span class="info-value" id="profil-korisnik-radnik"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dodatne informacije o radniku ako je povezan -->
+                    <div id="profil-radnik-detalji" style="display: none;">
+                        <div class="profile-card" style="margin-top: 20px;">
+                            <h3 style="margin-bottom: 15px;">Informacije o Radniku</h3>
+                            <div class="profile-info">
+                                <div class="info-row">
+                                    <span class="info-label">JMBG:</span>
+                                    <span class="info-value" id="profil-radnik-jmbg"></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Telefon:</span>
+                                    <span class="info-value" id="profil-radnik-telefon"></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Pozicija:</span>
+                                    <span class="info-value" id="profil-radnik-pozicija"></span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Datum Zaposlenja:</span>
+                                    <span class="info-value" id="profil-radnik-datum"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('korisnik-profil')">Zatvori</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal za Poruke -->
+    <div id="modal-poruke" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('poruke')">&times;</span>
+            <h2>Pošalji Poruku/Obaveštenje</h2>
+            <form id="form-poruke">
+                <div class="form-group">
+                    <label>Radnik:</label>
+                    <select id="poruke-radnik" name="radnik" required>
+                        <option value="">Izaberi radnika</option>
+                        <option value="svi">Svi radnici</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Naslov:</label>
+                    <input type="text" id="poruke-naslov" name="naslov" required>
+                </div>
+                <div class="form-group">
+                    <label>Poruka:</label>
+                    <textarea id="poruke-poruka" name="poruka" rows="5" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Pošalji</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('poruke')">Otkaži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za Zahtev za Godišnji Odmor (Radnik) -->
+    <div id="modal-radnik-zahtev-odmor" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('radnik-zahtev-odmor')">&times;</span>
+            <h2>Zahtev za Godišnji Odmor</h2>
+            <form id="form-radnik-zahtev-odmor">
+                <div class="form-group">
+                    <label>Datum Početka:</label>
+                    <input type="date" id="zahtev-odmor-pocetak" name="pocetak" required>
+                </div>
+                <div class="form-group">
+                    <label>Broj Dana:</label>
+                    <input type="number" id="zahtev-odmor-dana" name="dana" required min="1" max="30">
+                </div>
+                <div class="form-group">
+                    <label>Napomena (opciono):</label>
+                    <textarea id="zahtev-odmor-napomena" name="napomena" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Pošalji Zahtev</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('radnik-zahtev-odmor')">Otkaži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za Administrativni Zahtev (Radnik) -->
+    <div id="modal-radnik-zahtev-admin" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('radnik-zahtev-admin')">&times;</span>
+            <h2>Novi Administrativni Zahtev</h2>
+            <form id="form-radnik-zahtev-admin">
+                <div class="form-group">
+                    <label>Tip Zahteva:</label>
+                    <select id="zahtev-admin-tip" name="tip" required>
+                        <option value="">Izaberi tip</option>
+                        <option value="Dokumentacija">Dokumentacija</option>
+                        <option value="Potvrda">Potvrda</option>
+                        <option value="Izmena Podataka">Izmena Podataka</option>
+                        <option value="Ostalo">Ostalo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Opis:</label>
+                    <textarea id="zahtev-admin-opis" name="opis" rows="5" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Pošalji Zahtev</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('radnik-zahtev-admin')">Otkaži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal za Administrativni Zahtev (User) -->
+    <div id="modal-user-zahtev-admin" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('user-zahtev-admin')">&times;</span>
+            <h2>Novi Administrativni Zahtev</h2>
+            <form id="form-user-zahtev-admin">
+                <div class="form-group">
+                    <label>Tip Zahteva:</label>
+                    <select id="user-zahtev-admin-tip" name="tip" required>
+                        <option value="">Izaberi tip</option>
+                        <option value="Dokumentacija">Dokumentacija</option>
+                        <option value="Potvrda">Potvrda</option>
+                        <option value="Izmena Podataka">Izmena Podataka</option>
+                        <option value="Ostalo">Ostalo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Opis:</label>
+                    <textarea id="user-zahtev-admin-opis" name="opis" rows="5" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Pošalji Zahtev</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('user-zahtev-admin')">Otkaži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Restore Modal -->
+    <div id="modal-restore" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('restore')">&times;</span>
+            <h2>📥 Restore Podataka</h2>
+            <form id="form-restore">
+                <div class="form-group">
+                    <label>Izaberite JSON fajl za restore:</label>
+                    <input type="file" id="restore-file" accept=".json" required>
+                    <small style="color: #666; display: block; margin-top: 5px;">Fajl mora biti JSON format iz backup-a</small>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('restore')">Otkaži</button>
+                    <button type="submit" class="btn btn-primary">Restore</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
+        <!-- Admin bottom nav -->
+        <button class="mobile-bottom-nav-item admin-only active" data-tab="dashboard" onclick="switchTab('dashboard')">
+            <span class="mobile-bottom-nav-icon">📊</span>
+            <span class="mobile-bottom-nav-text">Dashboard</span>
+        </button>
+        <button class="mobile-bottom-nav-item admin-only" data-tab="radnici" onclick="switchTab('radnici')">
+            <span class="mobile-bottom-nav-icon">👥</span>
+            <span class="mobile-bottom-nav-text">Radnici</span>
+        </button>
+        <button class="mobile-bottom-nav-item admin-only" data-tab="plate" onclick="switchTab('plate')">
+            <span class="mobile-bottom-nav-icon">💰</span>
+            <span class="mobile-bottom-nav-text">Plate</span>
+        </button>
+        <button class="mobile-bottom-nav-item admin-only" data-tab="poruke" onclick="switchTab('poruke')">
+            <span class="mobile-bottom-nav-icon">💬</span>
+            <span class="mobile-bottom-nav-text">Poruke</span>
+        </button>
+        <button class="mobile-bottom-nav-item admin-only" data-tab="zahtevi" onclick="switchTab('zahtevi')">
+            <span class="mobile-bottom-nav-icon">📨</span>
+            <span class="mobile-bottom-nav-text">Zahtevi</span>
+        </button>
+        <!-- Radnik bottom nav -->
+        <button class="mobile-bottom-nav-item radnik-only active" data-tab="radnik-profil" onclick="switchTab('radnik-profil')">
+            <span class="mobile-bottom-nav-icon">👤</span>
+            <span class="mobile-bottom-nav-text">Profil</span>
+        </button>
+        <button class="mobile-bottom-nav-item radnik-only" data-tab="radnik-plate" onclick="switchTab('radnik-plate')">
+            <span class="mobile-bottom-nav-icon">💰</span>
+            <span class="mobile-bottom-nav-text">Plate</span>
+        </button>
+        <button class="mobile-bottom-nav-item radnik-only" data-tab="radnik-odmori" onclick="switchTab('radnik-odmori')">
+            <span class="mobile-bottom-nav-icon">🏖️</span>
+            <span class="mobile-bottom-nav-text">Odmori</span>
+        </button>
+        <button class="mobile-bottom-nav-item radnik-only" data-tab="radnik-poruke" onclick="switchTab('radnik-poruke')">
+            <span class="mobile-bottom-nav-icon">💬</span>
+            <span class="mobile-bottom-nav-text">Poruke</span>
+        </button>
+        <button class="mobile-bottom-nav-item radnik-only" data-tab="radnik-zahtevi" onclick="switchTab('radnik-zahtevi')">
+            <span class="mobile-bottom-nav-icon">📨</span>
+            <span class="mobile-bottom-nav-text">Zahtevi</span>
+        </button>
+        <!-- User bottom nav -->
+        <button class="mobile-bottom-nav-item user-only active" data-tab="user-profil" onclick="switchTab('user-profil')">
+            <span class="mobile-bottom-nav-icon">👤</span>
+            <span class="mobile-bottom-nav-text">Profil</span>
+        </button>
+        <button class="mobile-bottom-nav-item user-only" data-tab="user-zahtevi" onclick="switchTab('user-zahtevi')">
+            <span class="mobile-bottom-nav-icon">📨</span>
+            <span class="mobile-bottom-nav-text">Zahtevi</span>
+        </button>
+        <button class="mobile-bottom-nav-item user-only" data-tab="user-poruke" onclick="switchTab('user-poruke')">
+            <span class="mobile-bottom-nav-icon">💬</span>
+            <span class="mobile-bottom-nav-text">Poruke</span>
+        </button>
+    </nav>
+
+    <script src="database.js"></script>
+    <script src="auth.js"></script>
+    <!-- Utility Scripts -->
+    <script src="js/utils/deviceDetector.js"></script>
+    <script src="js/utils/password.js"></script>
+    <script src="js/utils/validators.js"></script>
+    <script src="js/utils/formatters.js"></script>
+    <script src="js/utils/toast.js"></script>
+    <script src="js/utils/loading.js"></script>
+    <script src="js/utils/errorHandler.js"></script>
+    <script src="js/utils/searchFilter.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/utils/export.js"></script>
+    <!-- Services -->
+    <script src="js/services/dashboard.js"></script>
+    <script src="js/services/backupRestore.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

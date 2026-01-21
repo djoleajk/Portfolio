@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://sprintmarketing.de/sitemap.xml
+
+# Prevent access to admin or private areas if they exist
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+
+# Prevent indexing of search results if they exist
+Disallow: /search?
+Disallow: /*?q= 

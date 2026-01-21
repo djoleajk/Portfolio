@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem za Rezervacije</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <span>📅</span>
+                Sistem za Rezervacije
+            </div>
+            <div class="nav-buttons">
+                <div id="userInfo" class="user-info hidden">
+                    <span class="user-name" id="userName"></span>
+                    <button class="btn btn-danger btn-small" onclick="logout()">Odjavi se</button>
+                </div>
+                <div id="guestButtons" class="nav-buttons">
+                    <button class="btn btn-primary btn-small" onclick="openLoginModal()">Prijava</button>
+                    <button class="btn btn-outline btn-small" onclick="openRegisterModal()">Registracija</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Landing Page -->
+        <section id="landingPage" class="landing-page">
+            <div class="hero">
+                <h1>Dobrodošli u Sistem za Rezervacije</h1>
+                <p>Lako rezervišite termine, upravite svojim rezervacijama i pratite dostupnost usluga.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="openRegisterModal()">Započnite sada</button>
+                    <button class="btn btn-outline" onclick="openLoginModal()">Prijavite se</button>
+                    <button class="btn btn-secondary" onclick="openAdminLoginModal()">Admin pristup</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Panel -->
+        <section id="userPanel" class="user-panel container">
+            <div class="panel-header">
+                <h1>Korisnički Panel</h1>
+                <p>Pregledajte dostupne termine i napravite rezervaciju</p>
+            </div>
+
+            <div class="table-container" style="margin-bottom: 2rem;">
+                <h2>Dostupne Usluge</h2>
+                <div id="servicesGrid" class="cards-grid"></div>
+            </div>
+
+            <div class="table-container">
+                <h2>Moje Rezervacije</h2>
+                <div id="userReservations"></div>
+            </div>
+        </section>
+
+        <!-- Admin Panel -->
+        <section id="adminPanel" class="admin-panel container">
+            <div class="panel-header">
+                <h1>Administratorski Panel</h1>
+                <p>Upravljajte rezervacijama i uslugama</p>
+            </div>
+
+            <div class="table-container" style="margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2>Sve Rezervacije</h2>
+                    <button class="btn btn-secondary btn-small" onclick="openManageServicesModal()">Upravljaj uslugama</button>
+                </div>
+                <div id="allReservations"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Prijava</h2>
+                <button class="close-btn" onclick="closeModal('loginModal')">&times;</button>
+            </div>
+            <form onsubmit="login(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Lozinka:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Prijavi se</button>
+                <div class="form-footer">
+                    <p>Nemate nalog? <a onclick="switchToRegister()">Registrujte se</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Registracija</h2>
+                <button class="close-btn" onclick="closeModal('registerModal')">&times;</button>
+            </div>
+            <form onsubmit="register(event)">
+                <div class="form-group">
+                    <label for="registerName">Ime i Prezime:</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email:</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Lozinka:</label>
+                    <input type="password" id="registerPassword" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">Telefon:</label>
+                    <input type="tel" id="registerPhone" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Registruj se</button>
+                <div class="form-footer">
+                    <p>Već imate nalog? <a onclick="switchToLogin()">Prijavite se</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Admin Prijava</h2>
+                <button class="close-btn" onclick="closeModal('adminLoginModal')">&times;</button>
+            </div>
+            <form onsubmit="adminLogin(event)">
+                <div class="form-group">
+                    <label for="adminEmail">Email:</label>
+                    <input type="email" id="adminEmail" value="admin@rezervacije.com">
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Lozinka:</label>
+                    <input type="password" id="adminPassword" value="admin123">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Prijavi se</button>
+                <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-muted);">
+                    Demo: admin@rezervacije.com / admin123
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reservation Modal -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nova Rezervacija</h2>
+                <button class="close-btn" onclick="closeModal('reservationModal')">&times;</button>
+            </div>
+            <form onsubmit="createReservation(event)">
+                <input type="hidden" id="reservationServiceId">
+                <div class="form-group">
+                    <label for="reservationService">Usluga:</label>
+                    <input type="text" id="reservationService" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="reservationDate">Datum:</label>
+                    <input type="date" id="reservationDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="reservationTime">Vreme:</label>
+                    <input type="time" id="reservationTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="reservationNotes">Napomena (opciono):</label>
+                    <textarea id="reservationNotes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Rezerviši</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Manage Services Modal -->
+    <div id="manageServicesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Upravljanje Uslugama</h2>
+                <button class="close-btn" onclick="closeModal('manageServicesModal')">&times;</button>
+            </div>
+            
+            <form onsubmit="addService(event)" style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 2px solid var(--border-color);">
+                <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Dodaj Novu Uslugu</h3>
+                <div class="form-group">
+                    <label for="serviceName">Naziv:</label>
+                    <input type="text" id="serviceName" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceDescription">Opis:</label>
+                    <textarea id="serviceDescription" rows="2" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="servicePrice">Cena (RSD):</label>
+                    <input type="number" id="servicePrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceDuration">Trajanje (min):</label>
+                    <input type="number" id="serviceDuration" required>
+                </div>
+                <button type="submit" class="btn btn-secondary" style="width: 100%;">Dodaj Uslugu</button>
+            </form>
+
+            <div>
+                <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Postojeće Usluge</h3>
+                <div id="servicesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <div class="notification-icon" id="notificationIcon"></div>
+        <div class="notification-message" id="notificationMessage"></div>
+        <button class="close-btn" onclick="hideNotification()">&times;</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>Search Terms Test</title>
+		<script>
+			window.analyticsConfig = {
+				websiteId: "",
+				apiKey: "",
+			};
+		</script>
+	</head>
+	<body>
+		<h2>Test Search Terms</h2>
+
+<div style="margin: 20px 0">
+			<select id="websiteSelect" onchange="updateConfig()">
+				<option value="">Select Website</option>
+			</select>
+			<button onclick="deleteWebsite()" style="margin-left: 10px">
+				Delete Website
+			</button>
+		</div>
+
+		<div style="margin: 20px 0">
+			<input
+				type="text"
+				id="searchTerm"
+				value="web development"
+				placeholder="Enter search term"
+			/>
+			<select id="searchEngine">
+				<option value="google">Google</option>
+				<option value="bing">Bing</option>
+				<option value="yahoo">Yahoo</option>
+			</select>
+			<button onclick="simulateSearch()">Simulate Search</button>
+		</div>
+
+		<div id="results"></div>
+		<div id="searchStats"></div>
+
+		<script>
+			fetch("api/get_websites.php")
+				.then((res) => res.json())
+				.then((websites) => {
+					const select = document.getElementById("websiteSelect");
+					websites.forEach((site) => {
+						const option = document.createElement("option");
+						option.value = JSON.stringify({
+							id: site.website_id,
+							apiKey: site.api_key,
+						});
+						option.textContent = site.domain;
+						select.appendChild(option);
+					});
+					if (websites.length > 0) {
+						select.selectedIndex = 1;
+						updateConfig();
+						showSearchStats();
+					}
+				});
+
+			function updateConfig() {
+				const selected = JSON.parse(
+					document.getElementById("websiteSelect").value
+				);
+				window.analyticsConfig = {
+					websiteId: selected.id,
+					apiKey: selected.apiKey,
+				};
+			}
+			function showSearchStats() {
+				const selected = JSON.parse(
+					document.getElementById("websiteSelect").value
+				);
+				fetch(`api/get_search_stats.php?website_id=${selected.id}`)
+					.then((res) => res.json())
+					.then((stats) => {
+						document.getElementById("searchStats").innerHTML = `
+							<div style="margin-top: 20px; padding: 15px; background: #f0f0f0;">
+								<h3>Search Statistics</h3>
+								<table style="width: 100%; border-collapse: collapse;">
+									<tr>
+										<th style="text-align: left;">Term</th>
+										<th style="text-align: left;">Engine</th>
+										<th style="text-align: left;">Count</th>
+									</tr>
+									${stats
+										.map(
+											(stat) => `
+										<tr>
+											<td>${stat.search_term}</td>
+											<td>${stat.search_engine}</td>
+											<td>${stat.count}</td>
+										</tr>
+									`
+										)
+										.join("")}
+								</table>
+							</div>
+						`;
+					});
+			}
+
+			function simulateSearch() {
+				const term = document.getElementById("searchTerm").value;
+				const engine = document.getElementById("searchEngine").value;
+				const urls = {
+					google: `https:
+					bing: `https:
+					yahoo: `https:
+				};
+				Object.defineProperty(document, "referrer", {
+					get: function () {
+						return urls[engine];
+					},
+				});
+				const script = document.createElement("script");
+				script.src = "tracker.js";
+				script.onload = function () {
+					document.getElementById("results").innerHTML = `
+						<div style="margin-top: 20px; padding: 10px; background: #e0e0e0;">
+							<h3>Simulated Search:</h3>
+							<p>Engine: ${engine}</p>
+							<p>Term: ${term}</p>
+							<p>Referrer: ${urls[engine]}</p>
+						</div>
+					`;
+					setTimeout(showSearchStats, 1000);
+				};
+				document.body.appendChild(script);
+			}
+
+			function deleteWebsite() {
+				const selectedOption = document.getElementById("websiteSelect");
+				if (!selectedOption.value || selectedOption.selectedIndex === 0) {
+					alert("Please select a website first");
+					return;
+				}
+
+				const websiteData = JSON.parse(selectedOption.value);
+				if (confirm("Are you sure you want to delete this website?")) {
+					fetch(`api/delete_website.php`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/x-www-form-urlencoded",
+						},
+						body: `website_id=${websiteData.id}&api_key=${websiteData.apiKey}`,
+					})
+						.then((res) => res.json())
+						.then((data) => {
+							if (data.success) {
+								selectedOption.remove(selectedOption.selectedIndex);
+								selectedOption.selectedIndex = 0;
+								document.getElementById("searchStats").innerHTML = "";
+								alert("Website deleted successfully");
+							} else {
+								alert(
+									"Error deleting website: " + (data.message || "Unknown error")
+								);
+							}
+						})
+						.catch((err) => {
+							console.error(err);
+							alert("Error deleting website");
+						});
+				}
+			}
+			showSearchStats();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Analytics - Početna</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            color: white;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: slideUp 0.8s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #dbeafe;
+            color: #1e40af;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .card.primary .card-badge {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+        }
+
+        .card.success .card-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .card.warning .card-badge {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .info-banner {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease 0.3s both;
+        }
+
+        .info-banner h3 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .info-banner p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .header p {
+                font-size: 1.2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Site Analytics</h1>
+            <p>Potpuno funkcionalna platforma za web analitiku</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="totalVisits">0</div>
+                <div class="stat-label">Ukupno poseta</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="uniqueUsers">0</div>
+                <div class="stat-label">Jedinstveni korisnici</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="sessions">0</div>
+                <div class="stat-label">Aktivne sesije</div>
+            </div>
+        </div>
+
+        <div class="cards-grid">
+            <a href="index.html" class="card primary">
+                <span class="card-icon">📊</span>
+                <h2 class="card-title">Analytics Dashboard</h2>
+                <p class="card-description">
+                    Pogledajte detaljnu analitiku - grafikone, metrike, izvore saobraćaja i real-time aktivnosti.
+                </p>
+                <span class="card-badge">🔥 Glavna aplikacija</span>
+            </a>
+
+            <a href="demo-site.html" class="card success">
+                <span class="card-icon">🎯</span>
+                <h2 class="card-title">Demo Sajt</h2>
+                <p class="card-description">
+                    Testirajte tracking sistem - klikajte po linkovima i generiši posete za praćenje.
+                </p>
+                <span class="card-badge">⚡ Testiranje</span>
+            </a>
+
+            <a href="primer-integracija.html" class="card">
+                <span class="card-icon">🔧</span>
+                <h2 class="card-title">Primer Integracije</h2>
+                <p class="card-description">
+                    Naučite kako da integriše tracker na vaš postojeći sajt - sa primerima koda.
+                </p>
+                <span class="card-badge">📚 Dokumentacija</span>
+            </a>
+
+            <a href="BRZI-START.md" class="card warning" target="_blank">
+                <span class="card-icon">🚀</span>
+                <h2 class="card-title">Brzi Start Guide</h2>
+                <p class="card-description">
+                    Kompletno uputstvo za početnike - korak po korak objašnjenje kako sve funkcioniše.
+                </p>
+                <span class="card-badge">📖 Vodič</span>
+            </a>
+
+            <a href="KAKO-DODATI-NA-SAJT.md" class="card" target="_blank">
+                <span class="card-icon">➕</span>
+                <h2 class="card-title">Dodaj na svoj sajt</h2>
+                <p class="card-description">
+                    Jednostavno uputstvo kako da dodate Analytics na vaš postojeći web sajt.
+                </p>
+                <span class="card-badge">📝 Tutorial</span>
+            </a>
+
+            <a href="moj-sajt-primer.html" class="card">
+                <span class="card-icon">🌐</span>
+                <h2 class="card-title">Primer Sajta</h2>
+                <p class="card-description">
+                    Vidi kako izgleda normalan sajt sa ugrađenim analytics trackingom.
+                </p>
+                <span class="card-badge">💡 Primer</span>
+            </a>
+        </div>
+
+        <div class="info-banner">
+            <h3>🎉 Dobrodošli!</h3>
+            <p>
+                Ovo je potpuno funkcionalni sistem za praćenje web analitike koji radi 
+                <strong>bez backend-a i baze podataka</strong>. Svi podaci se čuvaju lokalno 
+                u vašem pretraživaču. Kliknite na kartice iznad da istražite aplikaciju.
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #9ca3af;">
+                💡 <strong>Pro savet:</strong> Prvo otvorite Demo Sajt da generiše podatke, 
+                pa onda pogledajte Dashboard da vidite statistiku!
+            </p>
+        </div>
+    </div>
+
+    <!-- Učitaj Analytics Tracker -->
+    <script src="analytics-tracker.js"></script>
+
+    <script>
+        // Ažuriraj statistiku na početnoj stranici
+        function updateHomeStats() {
+            const data = JSON.parse(localStorage.getItem('siteAnalyticsData') || '{}');
+            
+            document.getElementById('totalVisits').textContent = (data.totalVisits || 0).toLocaleString('sr-RS');
+            document.getElementById('uniqueUsers').textContent = (data.uniqueVisitors?.length || 0).toLocaleString('sr-RS');
+            document.getElementById('sessions').textContent = (data.sessions?.length || 0).toLocaleString('sr-RS');
+        }
+
+        // Inicijalizacija
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHomeStats();
+            setInterval(updateHomeStats, 3000);
+        });
+
+        // Animiraj brojeve
+        function animateValue(element, start, end, duration) {
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= end) {
+                    element.textContent = end.toLocaleString('sr-RS');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current).toLocaleString('sr-RS');
+                }
+            }, 16);
+        }
+
+        console.log('%c📊 Site Analytics - Dobrodošli!', 'color: #3b82f6; font-size: 20px; font-weight: bold;');
+        console.log('%cSistem je spreman za rad. Klikite na kartice iznad da istražite.', 'color: #6b7280; font-size: 12px;');
+    </script>
+</body>
+</html>
+

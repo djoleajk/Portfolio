@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moj Sajt - Primer sa Analytics-om</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Content */
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Tracking Notice */
+        .tracking-notice {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 5px;
+        }
+
+        .tracking-notice h3 {
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+
+        .tracking-notice p {
+            color: #1b5e20;
+        }
+
+        .code-highlight {
+            background: #f5f5f5;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d32f2f;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <h1>🌟 Moj Sajt</h1>
+            <ul>
+                <li><a href="#home">Početna</a></li>
+                <li><a href="#features">Karakteristike</a></li>
+                <li><a href="#about">O nama</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Dobrodošli na moj sajt!</h2>
+        <p>
+            Ovo je primer običnog web sajta sa dodanim analytics praćenjem.
+            Svaka poseta se automatski beleži bez uticaja na performanse.
+        </p>
+        <a href="#features" class="btn">Saznaj više</a>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Tracking Notice -->
+        <div class="tracking-notice">
+            <h3>✅ Analytics Tracking AKTIVAN!</h3>
+            <p>
+                Ovaj sajt koristi Site Analytics za praćenje poseta. 
+                Vaša poseta je automatski zabeležena. Otvorite Console (F12) da vidite potvrdu.
+            </p>
+            <p style="margin-top: 1rem;">
+                <strong>Šta je praćeno:</strong> stranica, vreme, izvor, trajanje sesije
+            </p>
+        </div>
+
+        <!-- Features -->
+        <h2 id="features" style="text-align: center; margin-bottom: 2rem;">Karakteristike</h2>
+        <div class="features">
+            <div class="feature-card">
+                <h3>📊 Lako praćenje</h3>
+                <p>
+                    Dodali smo samo jednu liniju koda na kraju stranice i sve radi automatski!
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🔒 Privatnost</h3>
+                <p>
+                    Svi podaci ostaju u localStorage pretraživača. Nema slanja na eksterne servere.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>⚡ Brzo</h3>
+                <p>
+                    Analytics ne usporava sajt. Tracker je mali (10KB) i ne blokira učitavanje.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>📱 Responsive</h3>
+                <p>
+                    Dashboard za pregled analitike radi savršeno na svim uređajima.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎯 Detaljna analiza</h3>
+                <p>
+                    Vidite izvore saobraćaja, bounce rate, najposećenije stranice i još mnogo toga.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>💾 Export podataka</h3>
+                <p>
+                    Možete eksportovati sve podatke kao JSON fajl za backup ili analizu.
+                </p>
+            </div>
+        </div>
+
+        <!-- How it works -->
+        <div style="background: #f9f9f9; padding: 2rem; border-radius: 10px; margin: 3rem 0;">
+            <h2 style="text-align: center; margin-bottom: 1.5rem;">Kako smo dodali Analytics?</h2>
+            
+            <p style="margin-bottom: 1rem; text-align: center; font-size: 1.1rem;">
+                <strong>Samo smo dodali jednu liniju koda na kraju <code class="code-highlight">&lt;body&gt;</code> taga:</strong>
+            </p>
+
+            <div style="background: #2c3e50; color: white; padding: 1.5rem; border-radius: 5px; font-family: 'Courier New', monospace; overflow-x: auto;">
+<pre style="margin: 0; color: #fff;">
+&lt;!-- Kraj stranice, pre zatvaranja body taga --&gt;
+&lt;script src="analytics-tracker.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+            </div>
+
+            <p style="margin-top: 1.5rem; text-align: center; color: #666;">
+                I to je SVE! Tracker automatski radi svoj posao u pozadini. 🎉
+            </p>
+        </div>
+
+        <!-- Call to Action -->
+        <div style="text-align: center; margin: 4rem 0;">
+            <h2 style="margin-bottom: 1rem;">Želite isto na svom sajtu?</h2>
+            <p style="margin-bottom: 2rem; color: #666; font-size: 1.1rem;">
+                Pročitajte <strong>KAKO-DODATI-NA-SAJT.md</strong> za kompletna uputstva
+            </p>
+            <a href="index.html" class="btn" style="margin-right: 1rem;">📊 Pogledaj Dashboard</a>
+            <a href="KAKO-DODATI-NA-SAJT.md" class="btn" style="background: #4caf50;">📖 Uputstvo</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Moj Sajt. Sva prava zadržana.</p>
+        <p style="margin-top: 0.5rem; opacity: 0.8;">Powered by Site Analytics</p>
+    </footer>
+
+    <!-- 
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║                                                               ║
+    ║  🔥 OVO JE JEDINA LINIJA KOJA JE DODATA ZA ANALYTICS! 🔥     ║
+    ║                                                               ║
+    ║  Sve ostalo je normalan HTML/CSS kod vašeg sajta.            ║
+    ║  Tracker radi automatski u pozadini bez ikakve               ║
+    ║  dodatne konfiguracije.                                      ║
+    ║                                                               ║
+    ╚═══════════════════════════════════════════════════════════════╝
+    -->
+    <script src="analytics-tracker.js"></script>
+
+    <!-- Opciono: Prikaži notifikaciju kada je tracking aktivan -->
+    <script>
+        // Prikaži friendly poruku u Console-u
+        setTimeout(() => {
+            if (window.analyticsTracker) {
+                console.log(
+                    '%c✅ Vaša poseta je zabeležena!',
+                    'color: #4caf50; font-size: 16px; font-weight: bold;'
+                );
+                console.log(
+                    '%cOtvorite Dashboard da vidite statistiku.',
+                    'color: #666; font-size: 12px;'
+                );
+            }
+        }, 1000);
+
+        // Primer: Prati klikom na CTA dugme
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (window.analyticsTracker) {
+                    window.analyticsTracker.trackEvent('cta_click', {
+                        button: this.textContent,
+                        url: this.href
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

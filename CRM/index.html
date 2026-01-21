@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Sistem - Upravljanje Odnosima sa Klijentima</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>CRM Sistem</h1>
+                <p>Upravljanje Klijentima</p>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-item active" data-section="dashboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    <span>Dashboard</span>
+                </div>
+                <div class="nav-item" data-section="contacts">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span>Kontakti</span>
+                </div>
+                <div class="nav-item" data-section="meetings">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>Sastanci</span>
+                </div>
+                <div class="nav-item" data-section="sales">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    <span>Prodaja</span>
+                </div>
+                <div class="nav-item" data-section="admin">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>Admin Panel</span>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <h2 id="page-title">Dashboard</h2>
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">A</div>
+                    <span id="user-name">Admin</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <span class="stat-card-title">Ukupno Kontakata</span>
+                            <div class="stat-card-icon" style="background: var(--primary-color);">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-card-value" id="total-contacts">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <span class="stat-card-title">Sastanci Ovog Meseca</span>
+                            <div class="stat-card-icon" style="background: var(--secondary-color);">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-card-value" id="total-meetings">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <span class="stat-card-title">Aktivne Prilike</span>
+                            <div class="stat-card-icon" style="background: var(--warning-color);">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-card-value" id="active-opportunities">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <span class="stat-card-title">Ukupna Vrednost</span>
+                            <div class="stat-card-icon" style="background: var(--danger-color);">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-card-value" id="total-value">0 RSD</div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3 class="content-card-title">Nedavne Aktivnosti</h3>
+                    </div>
+                    <div class="timeline" id="recent-activities">
+                        <div class="empty-state">
+                            <p>Nema nedavnih aktivnosti</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contacts Section -->
+            <section id="contacts-section" class="section">
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3 class="content-card-title">Lista Kontakata</h3>
+                        <button class="btn btn-primary" onclick="openContactModal()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Dodaj Kontakt
+                        </button>
+                    </div>
+
+                    <div class="search-filter-bar">
+                        <div class="search-box">
+                            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <input type="text" class="form-control" id="contact-search" placeholder="Pretraži kontakte..." oninput="filterContacts()">
+                        </div>
+                        <select class="form-control" id="contact-status-filter" onchange="filterContacts()" style="width: 200px;">
+                            <option value="">Svi Statusi</option>
+                            <option value="aktivan">Aktivan</option>
+                            <option value="neaktivan">Neaktivan</option>
+                            <option value="potencijalan">Potencijalan</option>
+                        </select>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ime</th>
+                                    <th>Email</th>
+                                    <th>Telefon</th>
+                                    <th>Status</th>
+                                    <th>Datum Unosa</th>
+                                    <th>Akcije</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contacts-table-body">
+                                <tr>
+                                    <td colspan="6" class="empty-state">Nema kontakata. Dodajte prvi kontakt!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Meetings Section -->
+            <section id="meetings-section" class="section">
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3 class="content-card-title">Sastanci</h3>
+                        <button class="btn btn-primary" onclick="openMeetingModal()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Zakaži Sastanak
+                        </button>
+                    </div>
+
+                    <div class="search-filter-bar">
+                        <div class="search-box">
+                            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <input type="text" class="form-control" id="meeting-search" placeholder="Pretraži sastanke..." oninput="filterMeetings()">
+                        </div>
+                        <select class="form-control" id="meeting-status-filter" onchange="filterMeetings()" style="width: 200px;">
+                            <option value="">Svi Statusi</option>
+                            <option value="zakazan">Zakazan</option>
+                            <option value="održan">Održan</option>
+                            <option value="otkazan">Otkazan</option>
+                        </select>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Klijent</th>
+                                    <th>Datum</th>
+                                    <th>Vreme</th>
+                                    <th>Lokacija</th>
+                                    <th>Status</th>
+                                    <th>Akcije</th>
+                                </tr>
+                            </thead>
+                            <tbody id="meetings-table-body">
+                                <tr>
+                                    <td colspan="6" class="empty-state">Nema zakazanih sastanaka.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sales Section -->
+            <section id="sales-section" class="section">
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3 class="content-card-title">Prodajne Prilike</h3>
+                        <button class="btn btn-primary" onclick="openSalesModal()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Nova Prilika
+                        </button>
+                    </div>
+
+                    <div class="pipeline">
+                        <div class="pipeline-stage">
+                            <div class="pipeline-stage-header">
+                                <span>Lead</span>
+                                <span class="badge badge-secondary" id="lead-count">0</span>
+                            </div>
+                            <div id="lead-stage"></div>
+                        </div>
+                        <div class="pipeline-stage">
+                            <div class="pipeline-stage-header">
+                                <span>Ponuda</span>
+                                <span class="badge badge-info" id="ponuda-count">0</span>
+                            </div>
+                            <div id="ponuda-stage"></div>
+                        </div>
+                        <div class="pipeline-stage">
+                            <div class="pipeline-stage-header">
+                                <span>Ugovoreno</span>
+                                <span class="badge badge-warning" id="ugovoreno-count">0</span>
+                            </div>
+                            <div id="ugovoreno-stage"></div>
+                        </div>
+                        <div class="pipeline-stage">
+                            <div class="pipeline-stage-header">
+                                <span>Završeno</span>
+                                <span class="badge badge-success" id="zavrseno-count">0</span>
+                            </div>
+                            <div id="zavrseno-stage"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3 class="content-card-title">Mesečna Statistika Prodaje</h3>
+                    </div>
+                    <div class="chart-container" id="sales-chart"></div>
+                </div>
+
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3 class="content-card-title">Sve Prilike</h3>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Naziv</th>
+                                    <th>Klijent</th>
+                                    <th>Vrednost</th>
+                                    <th>Faza</th>
+                                    <th>Datum Kreiranja</th>
+                                    <th>Akcije</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sales-table-body">
+                                <tr>
+                                    <td colspan="6" class="empty-state">Nema prodajnih prilika.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admin Section -->
+            <section id="admin-section" class="section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <span class="stat-card-title">Ukupno Korisnika</span>
+                            <div class="stat-card-icon" style="background: var(--primary-color);">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-card-value" id="total-users">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <span class="stat-card-title">Aktivnih Korisnika</span>
+                            <div class="stat-card-icon" style="background: var(--secondary-color);">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-card-value" id="active-users">0</div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3 class="content-card-title">Upravljanje Korisnicima</h3>
+                        <button class="btn btn-primary" onclick="openUserModal()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Dodaj Korisnika
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ime</th>
+                                    <th>Email</th>
+                                    <th>Uloga</th>
+                                    <th>Status</th>
+                                    <th>Datum Registracije</th>
+                                    <th>Akcije</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body">
+                                <tr>
+                                    <td colspan="6" class="empty-state">Nema korisnika.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3 class="content-card-title">Istorija Aktivnosti</h3>
+                    </div>
+                    <div class="timeline" id="activity-history">
+                        <div class="empty-state">
+                            <p>Nema zabeleženih aktivnosti</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" onclick="toggleSidebar()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="contact-modal-title">Dodaj Novi Kontakt</h3>
+                <button class="close-btn" onclick="closeContactModal()">&times;</button>
+            </div>
+            <form id="contact-form" onsubmit="saveContact(event)">
+                <input type="hidden" id="contact-id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Ime *</label>
+                        <input type="text" class="form-control" id="contact-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email *</label>
+                        <input type="email" class="form-control" id="contact-email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Telefon *</label>
+                        <input type="tel" class="form-control" id="contact-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status *</label>
+                        <select class="form-control" id="contact-status" required>
+                            <option value="aktivan">Aktivan</option>
+                            <option value="neaktivan">Neaktivan</option>
+                            <option value="potencijalan">Potencijalan</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Kompanija</label>
+                    <input type="text" class="form-control" id="contact-company">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Napomene</label>
+                    <textarea class="form-control" id="contact-notes" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeContactModal()">Otkaži</button>
+                    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Meeting Modal -->
+    <div id="meeting-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="meeting-modal-title">Zakaži Novi Sastanak</h3>
+                <button class="close-btn" onclick="closeMeetingModal()">&times;</button>
+            </div>
+            <form id="meeting-form" onsubmit="saveMeeting(event)">
+                <input type="hidden" id="meeting-id">
+                <div class="form-group">
+                    <label class="form-label">Klijent *</label>
+                    <select class="form-control" id="meeting-contact" required>
+                        <option value="">Izaberite klijenta</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Datum *</label>
+                        <input type="date" class="form-control" id="meeting-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Vreme *</label>
+                        <input type="time" class="form-control" id="meeting-time" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Lokacija *</label>
+                    <input type="text" class="form-control" id="meeting-location" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status *</label>
+                    <select class="form-control" id="meeting-status" required>
+                        <option value="zakazan">Zakazan</option>
+                        <option value="održan">Održan</option>
+                        <option value="otkazan">Otkazan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Napomene</label>
+                    <textarea class="form-control" id="meeting-notes" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeMeetingModal()">Otkaži</button>
+                    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sales Modal -->
+    <div id="sales-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="sales-modal-title">Nova Prodajna Prilika</h3>
+                <button class="close-btn" onclick="closeSalesModal()">&times;</button>
+            </div>
+            <form id="sales-form" onsubmit="saveSales(event)">
+                <input type="hidden" id="sales-id">
+                <div class="form-group">
+                    <label class="form-label">Naziv Prilike *</label>
+                    <input type="text" class="form-control" id="sales-name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Klijent *</label>
+                    <select class="form-control" id="sales-contact" required>
+                        <option value="">Izaberite klijenta</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Vrednost (RSD) *</label>
+                        <input type="number" class="form-control" id="sales-value" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Faza Prodaje *</label>
+                        <select class="form-control" id="sales-stage" required>
+                            <option value="lead">Lead</option>
+                            <option value="ponuda">Ponuda</option>
+                            <option value="ugovoreno">Ugovoreno</option>
+                            <option value="završeno">Završeno</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Opis</label>
+                    <textarea class="form-control" id="sales-description" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeSalesModal()">Otkaži</button>
+                    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- User Modal -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="user-modal-title">Dodaj Novog Korisnika</h3>
+                <button class="close-btn" onclick="closeUserModal()">&times;</button>
+            </div>
+            <form id="user-form" onsubmit="saveUser(event)">
+                <input type="hidden" id="user-id">
+                <div class="form-group">
+                    <label class="form-label">Ime *</label>
+                    <input type="text" class="form-control" id="user-name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" class="form-control" id="user-email" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Uloga *</label>
+                        <select class="form-control" id="user-role" required>
+                            <option value="admin">Administrator</option>
+                            <option value="agent">Agent</option>
+                            <option value="manager">Menadžer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status *</label>
+                        <select class="form-control" id="user-status" required>
+                            <option value="aktivan">Aktivan</option>
+                            <option value="neaktivan">Neaktivan</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeUserModal()">Otkaži</button>
+                    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

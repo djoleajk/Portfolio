@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Analytics - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">📊 Site Analytics</h1>
+            <nav class="nav">
+                <a href="#dashboard" class="nav-link active">Dashboard</a>
+                <a href="#stats" class="nav-link">Statistika</a>
+                <a href="#settings" class="nav-link">Podešavanja</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="dashboard-section">
+                <h2 class="section-title">Pregled</h2>
+                
+                <!-- Metrics Cards -->
+                <div class="metrics-grid">
+                    <div class="metric-card" data-animation="fade-in">
+                        <div class="metric-icon">👥</div>
+                        <div class="metric-content">
+                            <h3 class="metric-title">Ukupan broj poseta</h3>
+                            <p class="metric-value" id="totalVisits">0</p>
+                            <span class="metric-change positive">+12.5%</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card" data-animation="fade-in" style="animation-delay: 0.1s">
+                        <div class="metric-icon">🔍</div>
+                        <div class="metric-content">
+                            <h3 class="metric-title">Jedinstveni korisnici</h3>
+                            <p class="metric-value" id="uniqueUsers">0</p>
+                            <span class="metric-change positive">+8.3%</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card" data-animation="fade-in" style="animation-delay: 0.2s">
+                        <div class="metric-icon">⏱️</div>
+                        <div class="metric-content">
+                            <h3 class="metric-title">Prosečno vreme</h3>
+                            <p class="metric-value" id="avgTime">0</p>
+                            <span class="metric-change positive">+5.2%</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card" data-animation="fade-in" style="animation-delay: 0.3s">
+                        <div class="metric-icon">📉</div>
+                        <div class="metric-content">
+                            <h3 class="metric-title">Stopa napuštanja</h3>
+                            <p class="metric-value" id="bounceRate">0</p>
+                            <span class="metric-change negative">-3.1%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-grid">
+                    <div class="chart-card" data-animation="fade-in" style="animation-delay: 0.4s">
+                        <h3 class="chart-title">Posete po danima (poslednja nedelja)</h3>
+                        <div class="chart-container">
+                            <canvas id="visitsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card" data-animation="fade-in" style="animation-delay: 0.5s">
+                        <h3 class="chart-title">Izvori saobraćaja</h3>
+                        <div class="chart-container">
+                            <canvas id="trafficChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Table -->
+                <div class="table-card" data-animation="fade-in" style="animation-delay: 0.6s">
+                    <h3 class="table-title">Poslednje aktivnosti</h3>
+                    <div class="table-wrapper">
+                        <table class="activity-table">
+                            <thead>
+                                <tr>
+                                    <th>IP Adresa</th>
+                                    <th>Lokacija</th>
+                                    <th>Stranica</th>
+                                    <th>Vreme posete</th>
+                                    <th>Trajanje</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activityTableBody">
+                                <!-- Data will be inserted here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistika Section -->
+            <section id="stats" class="stats-section" style="display: none;">
+                <h2 class="section-title">Detaljna statistika</h2>
+
+                <!-- Period Selector -->
+                <div class="period-selector">
+                    <button class="period-btn active" data-period="7">Poslednja nedelja</button>
+                    <button class="period-btn" data-period="30">Poslednjih 30 dana</button>
+                    <button class="period-btn" data-period="all">Sve vreme</button>
+                </div>
+
+                <!-- Advanced Stats Grid -->
+                <div class="advanced-stats-grid">
+                    <div class="stat-box">
+                        <h3>📈 Rast poseta</h3>
+                        <div class="stat-big-value" id="visitGrowth">+0%</div>
+                        <p>U odnosu na prethodni period</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h3>⏱️ Najduža sesija</h3>
+                        <div class="stat-big-value" id="longestSession">0:00</div>
+                        <p>Maksimalno vreme na sajtu</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h3>📄 Najpopularnija stranica</h3>
+                        <div class="stat-big-value" id="topPage">/</div>
+                        <p id="topPageViews">0 pregleda</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h3>🌍 Top lokacija</h3>
+                        <div class="stat-big-value" id="topLocation">N/A</div>
+                        <p id="topLocationCount">0 poseta</p>
+                    </div>
+                </div>
+
+                <!-- Hourly Activity Chart -->
+                <div class="chart-card" data-animation="fade-in">
+                    <h3 class="chart-title">Aktivnost po satima (danas)</h3>
+                    <div class="chart-container">
+                        <canvas id="hourlyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Pages Table -->
+                <div class="table-card">
+                    <h3 class="table-title">Najpopularnije stranice</h3>
+                    <div class="table-wrapper">
+                        <table class="activity-table">
+                            <thead>
+                                <tr>
+                                    <th>Stranica</th>
+                                    <th>Pregleda</th>
+                                    <th>Jedinstveni</th>
+                                    <th>Avg. vreme</th>
+                                    <th>Bounce rate</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pagesTableBody">
+                                <!-- Data will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Podešavanja Section -->
+            <section id="settings" class="settings-section" style="display: none;">
+                <h2 class="section-title">Podešavanja</h2>
+
+                <div class="settings-grid">
+                    <!-- Tracking Settings -->
+                    <div class="settings-card">
+                        <h3>🔍 Tracking opcije</h3>
+                        
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="trackingEnabled" checked>
+                                <span>Omogući praćenje</span>
+                            </label>
+                            <p class="setting-description">Beleži nove posete i aktivnosti</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="trackClicks" checked>
+                                <span>Prati klikove</span>
+                            </label>
+                            <p class="setting-description">Beleži klikove na linkove i dugmad</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="trackScrollDepth">
+                                <span>Prati scroll dubinu</span>
+                            </label>
+                            <p class="setting-description">Meri koliko korisnici scrolluju</p>
+                        </div>
+                    </div>
+
+                    <!-- Display Settings -->
+                    <div class="settings-card">
+                        <h3>🎨 Prikaz</h3>
+                        
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Auto-refresh interval:
+                            </label>
+                            <select id="refreshInterval" class="setting-select">
+                                <option value="5000">5 sekundi</option>
+                                <option value="10000" selected>10 sekundi</option>
+                                <option value="30000">30 sekundi</option>
+                                <option value="60000">1 minut</option>
+                                <option value="0">Isključeno</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                Broj aktivnosti u tabeli:
+                            </label>
+                            <select id="activityLimit" class="setting-select">
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" id="showNotifications" checked>
+                                <span>Prikaži notifikacije</span>
+                            </label>
+                            <p class="setting-description">Obaveštenja o novim posetama</p>
+                        </div>
+                    </div>
+
+                    <!-- Data Management -->
+                    <div class="settings-card">
+                        <h3>💾 Upravljanje podacima</h3>
+                        
+                        <div class="setting-item">
+                            <button class="settings-btn primary" id="exportDataBtn">
+                                📥 Eksportuj podatke
+                            </button>
+                            <p class="setting-description">Preuzmi sve podatke kao JSON</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <button class="settings-btn secondary" id="importDataBtn">
+                                📤 Importuj podatke
+                            </button>
+                            <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                            <p class="setting-description">Učitaj prethodno sačuvane podatke</p>
+                        </div>
+
+                        <div class="setting-item">
+                            <button class="settings-btn danger" id="clearDataBtn">
+                                🗑️ Obriši sve podatke
+                            </button>
+                            <p class="setting-description">Trajno ukloni sve podatke (OPREZ!)</p>
+                        </div>
+
+                        <div class="data-info">
+                            <p><strong>Ukupna veličina:</strong> <span id="dataSize">0 KB</span></p>
+                            <p><strong>Broj zapisa:</strong> <span id="recordCount">0</span></p>
+                            <p><strong>Najstariji zapis:</strong> <span id="oldestRecord">N/A</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Info Card -->
+                    <div class="settings-card info-card">
+                        <h3>ℹ️ Informacije</h3>
+                        <p><strong>Verzija:</strong> 1.0.0</p>
+                        <p><strong>Storage tip:</strong> localStorage</p>
+                        <p><strong>Browser:</strong> <span id="browserInfo">N/A</span></p>
+                        <p><strong>Visitor ID:</strong> <code id="visitorIdInfo">N/A</code></p>
+                        <p><strong>Session ID:</strong> <code id="sessionIdInfo">N/A</code></p>
+                        
+                        <div class="setting-item" style="margin-top: 1rem;">
+                            <button class="settings-btn" id="viewRawDataBtn">
+                                🔍 Pregledaj raw podatke
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Site Analytics. Sva prava zadržana.</p>
+        </div>
+    </footer>
+
+    <!-- Analytics Tracker mora biti učitan pre glavnog script-a -->
+    <script src="analytics-tracker.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Blog Sistem</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html" class="logo">BlogSistem</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Početna</a></li>
+                <li><a href="admin.html" class="active">Admin panel</a></li>
+                <li>
+                    <div id="userMenu">
+                        <span id="userGreeting"></span>
+                        <button class="btn btn-outline" id="logoutBtn">Odjavi se</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container main-content admin-panel" role="main">
+        <h1>Admin Panel</h1>
+
+        <!-- Statistics Dashboard -->
+        <section class="stats-section" aria-label="Statistika">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalUsers">0</div>
+                        <div class="stat-label">Korisnika</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalPosts">0</div>
+                        <div class="stat-label">Postova</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💬</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalComments">0</div>
+                        <div class="stat-label">Komentara</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👁️</div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalViews">0</div>
+                        <div class="stat-label">Pregleda</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs Navigation -->
+        <nav class="tabs" role="tablist" aria-label="Admin opcije">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="usersTab" id="usersTabBtn">
+                Korisnici
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="postsTab" id="postsTabBtn">
+                Postovi
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="commentsTab" id="commentsTabBtn">
+                Komentari
+            </button>
+        </nav>
+
+        <!-- Users Management Tab -->
+        <section id="usersTab" class="tab-content active" role="tabpanel" aria-labelledby="usersTabBtn">
+            <div class="tab-header">
+                <h2>Upravljanje korisnicima</h2>
+                <div class="tab-actions">
+                    <input type="search" id="userSearch" class="search-input" placeholder="Pretraži korisnike..." aria-label="Pretraži korisnike">
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table" role="table">
+                    <thead>
+                        <tr>
+                            <th>Ime</th>
+                            <th>Email</th>
+                            <th>Uloga</th>
+                            <th>Status</th>
+                            <th>Datum registracije</th>
+                            <th>Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Users will be dynamically loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Posts Management Tab -->
+        <section id="postsTab" class="tab-content" role="tabpanel" aria-labelledby="postsTabBtn">
+            <div class="tab-header">
+                <h2>Upravljanje postovima</h2>
+                <div class="tab-actions">
+                    <select id="postAuthorFilter" class="filter-select" aria-label="Filtriraj po autoru">
+                        <option value="">Svi autori</option>
+                    </select>
+                    <select id="postStatusFilter" class="filter-select" aria-label="Filtriraj po statusu">
+                        <option value="">Svi statusi</option>
+                        <option value="published">Published</option>
+                        <option value="draft">Draft</option>
+                    </select>
+                    <input type="search" id="postSearch" class="search-input" placeholder="Pretraži postove..." aria-label="Pretraži postove">
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table" role="table">
+                    <thead>
+                        <tr>
+                            <th>Naslov</th>
+                            <th>Autor</th>
+                            <th>Status</th>
+                            <th>Kategorije</th>
+                            <th>Pregledi</th>
+                            <th>Datum</th>
+                            <th>Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody id="postsTableBody">
+                        <!-- Posts will be dynamically loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Comments Moderation Tab -->
+        <section id="commentsTab" class="tab-content" role="tabpanel" aria-labelledby="commentsTabBtn">
+            <div class="tab-header">
+                <h2>Moderacija komentara</h2>
+                <div class="tab-actions">
+                    <select id="commentStatusFilter" class="filter-select" aria-label="Filtriraj po statusu">
+                        <option value="">Svi komentari</option>
+                        <option value="pending">Na čekanju</option>
+                        <option value="approved">Odobreni</option>
+                        <option value="rejected">Odbijeni</option>
+                    </select>
+                </div>
+            </div>
+            <div id="commentsContainer" class="comments-list">
+                <!-- Comments will be dynamically loaded here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Edit User -->
+    <div id="editUserModal" class="modal" role="dialog" aria-labelledby="editUserTitle" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="editUserTitle">Izmeni korisnika</h2>
+                <button class="modal-close" aria-label="Zatvori">&times;</button>
+            </div>
+            <form id="editUserForm">
+                <input type="hidden" id="editUserId">
+                <div class="form-group">
+                    <label for="editUserName">Ime i prezime</label>
+                    <input type="text" id="editUserName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editUserEmail">Email adresa</label>
+                    <input type="email" id="editUserEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="editUserRole">Uloga</label>
+                    <select id="editUserRole">
+                        <option value="subscriber">Subscriber</option>
+                        <option value="author">Author</option>
+                        <option value="editor">Editor</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editUserStatus">Status</label>
+                    <select id="editUserStatus">
+                        <option value="active">Aktivan</option>
+                        <option value="inactive">Neaktivan</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Sačuvaj izmene</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Blog Sistem. Sva prava zadržana.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>
+

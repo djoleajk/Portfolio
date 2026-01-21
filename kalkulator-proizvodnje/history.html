@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Историја калкулација</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container history-container">
+        <a href="index.html" class="back-btn">← Назад на мени</a>
+        
+        <h1>📊 Историја калкулација</h1>
+        <p class="subtitle">Преглед последњих 100 калкулација</p>
+
+        <!-- Statistika -->
+        <div class="stats-section" id="statsSection">
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-value" id="totalCalcs">0</div>
+                <div class="stat-label">Укупно калкулација</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-value" id="totalPieces">0</div>
+                <div class="stat-label">Укупно комада</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-value" id="totalTime">0h</div>
+                <div class="stat-label">Укупно времена</div>
+            </div>
+        </div>
+
+        <!-- Filteri -->
+        <div class="filters-section">
+            <div class="filter-group">
+                <label for="filterOperation">Филтрирај по операцији:</label>
+                <select id="filterOperation" class="filter-select">
+                    <option value="all">Све операције</option>
+                    <option value="Убадање">Убадање</option>
+                    <option value="Затварање Мине">Затварање Мине</option>
+                    <option value="Пескарење">Пескарење</option>
+                    <option value="Робот">Робот</option>
+                    <option value="Италијанка">Италијанка</option>
+                    <option value="БЕМ">БЕМ</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="filterDate">Филтрирај по датуму:</label>
+                <input type="date" id="filterDate" class="filter-input">
+            </div>
+
+            <button id="clearFilters" class="btn-secondary">Обриши филтере</button>
+        </div>
+
+        <!-- Akcije -->
+        <div class="actions-section">
+            <button id="exportJSON" class="btn-action">📥 Извези JSON</button>
+            <button id="exportCSV" class="btn-action">📥 Извези CSV</button>
+            <button id="clearHistory" class="btn-danger">🗑️ Обриши историју</button>
+        </div>
+
+        <!-- Lista istorije -->
+        <div id="historyList" class="history-list">
+            <div class="history-empty">
+                <div class="empty-icon">📭</div>
+                <p>Нема сачуваних калкулација</p>
+                <small>Направите нову калкулацију да видите резултате овде</small>
+            </div>
+        </div>
+
+        <div class="author-footer">
+            <p>© 2025 Đorđe Živanović</p>
+        </div>
+    </div>
+
+    <script src="time-sync.js"></script>
+    <script src="history-manager.js"></script>
+    <script>
+        // ============================================
+        // PRIKAZ ISTORIJE
+        // ============================================
+
+        let currentFilter = {
+            operation: 'all',
+            date: null
+        };
+
+        // Učitaj i prikaži istoriju
+        function loadHistory() {
+            const history = historyManager.getHistory();
+            const filtered = filterHistory(history);
+            displayHistory(filtered);
+            updateStatistics();
+        }
+
+        // Filtriraj istoriju
+        function filterHistory(history) {
+            let filtered = history;
+
+            // Filter po operaciji
+            if (currentFilter.operation !== 'all') {
+                filtered = filtered.filter(calc => calc.operation === currentFilter.operation);
+            }
+
+            // Filter po datumu
+            if (currentFilter.date) {
+                const targetDate = new Date(currentFilter.date).toLocaleDateString('sr-RS');
+                filtered = filtered.filter(calc => {
+                    const calcDate = new Date(calc.timestamp).toLocaleDateString('sr-RS');
+                    return calcDate === targetDate;
+                });
+            }
+
+            return filtered;
+        }
+
+        // Prikaži istoriju
+        function displayHistory(history) {
+            const historyList = document.getElementById('historyList');
+
+            if (history.length === 0) {
+                historyList.innerHTML = `
+                    <div class="history-empty">
+                        <div class="empty-icon">📭</div>
+                        <p>Нема калкулација за изабране филтере</p>
+                        <small>Покушајте са другим филтерима</small>
+                    </div>
+                `;
+                return;
+            }
+
+            const html = history.map(calc => {
+                const date = new Date(calc.timestamp);
+                const dateStr = date.toLocaleDateString('sr-RS', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+                const timeStr = date.toLocaleTimeString('sr-RS', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                const operationIcon = getOperationIcon(calc.operation);
+                const duration = historyManager.formatDuration(calc.totalDuration);
+
+                return `
+                    <div class="history-item" data-id="${calc.id}">
+                        <div class="history-item-header">
+                            <div class="history-item-title">
+                                <span class="operation-icon">${operationIcon}</span>
+                                <strong>${calc.operation}</strong>
+                            </div>
+                            <div class="history-item-date">
+                                📅 ${dateStr} • ${timeStr}
+                            </div>
+                        </div>
+                        <div class="history-item-body">
+                            ${calc.timePerPiece !== undefined && calc.timePerPiece !== null ? `
+                            <div class="history-detail">
+                                <span class="detail-label">Време по комаду:</span>
+                                <span class="detail-value">${calc.timePerPiece} ${typeof calc.timePerPiece === 'number' ? 'сек' : ''}</span>
+                            </div>
+                            ` : ''}
+                            ${calc.numberOfPieces !== undefined && calc.numberOfPieces !== null ? `
+                            <div class="history-detail">
+                                <span class="detail-label">Број комада:</span>
+                                <span class="detail-value">${calc.numberOfPieces} ком</span>
+                            </div>
+                            ` : ''}
+                            ${duration ? `
+                            <div class="history-detail">
+                                <span class="detail-label">Укупно трајање:</span>
+                                <span class="detail-value highlight">${duration}</span>
+                            </div>
+                            ` : ''}
+                            ${calc.startTime && calc.endTime ? `
+                            <div class="history-detail">
+                                <span class="detail-label">Време:</span>
+                                <span class="detail-value">${calc.startTime} → ${calc.endTime}</span>
+                            </div>
+                            ` : ''}
+                            ${calc.note ? `
+                            <div class="history-note">
+                                <span class="note-icon">📝</span>
+                                <span>${calc.note}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                        <div class="history-item-actions">
+                            <button class="btn-delete" onclick="deleteCalculation('${calc.id}')">🗑️ Обриши</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            historyList.innerHTML = html;
+        }
+
+        // Ažuriraj statistiku
+        function updateStatistics() {
+            const stats = historyManager.getStatistics();
+            
+            document.getElementById('totalCalcs').textContent = stats.totalCalculations || 0;
+            document.getElementById('totalPieces').textContent = (stats.totalPieces || 0).toLocaleString('sr-RS');
+            
+            // Validacija totalTime
+            const totalTimeSeconds = stats.totalTime || 0;
+            if (isNaN(totalTimeSeconds) || totalTimeSeconds < 0) {
+                document.getElementById('totalTime').textContent = '0h';
+                return;
+            }
+            
+            const hours = Math.floor(totalTimeSeconds / 3600);
+            const minutes = Math.floor((totalTimeSeconds % 3600) / 60);
+            
+            // Ako su hours i minutes validni brojevi
+            if (!isNaN(hours) && !isNaN(minutes)) {
+                document.getElementById('totalTime').textContent = `${hours}h ${minutes}m`;
+            } else {
+                document.getElementById('totalTime').textContent = '0h';
+            }
+        }
+
+        // Dobij ikonu operacije
+        function getOperationIcon(operation) {
+            const icons = {
+                'Убадање': '🔨',
+                'Затварање Мине': '🔩',
+                'Пескарење': '💨',
+                'Робот': '🤖',
+                'Италијанка': '🇮🇹',
+                'БЕМ': '⚙️'
+            };
+            return icons[operation] || '📊';
+        }
+
+        // Obriši kalkulaciju
+        function deleteCalculation(id) {
+            if (confirm('Да ли сте сигурни да желите да обришете ову калкулацију?')) {
+                historyManager.deleteCalculation(id);
+                loadHistory();
+            }
+        }
+
+        // Event listeners
+        document.getElementById('filterOperation').addEventListener('change', (e) => {
+            currentFilter.operation = e.target.value;
+            loadHistory();
+        });
+
+        document.getElementById('filterDate').addEventListener('change', (e) => {
+            currentFilter.date = e.target.value;
+            loadHistory();
+        });
+
+        document.getElementById('clearFilters').addEventListener('click', () => {
+            currentFilter = { operation: 'all', date: null };
+            document.getElementById('filterOperation').value = 'all';
+            document.getElementById('filterDate').value = '';
+            loadHistory();
+        });
+
+        document.getElementById('exportJSON').addEventListener('click', () => {
+            historyManager.exportToJSON();
+        });
+
+        document.getElementById('exportCSV').addEventListener('click', () => {
+            historyManager.exportToCSV();
+        });
+
+        document.getElementById('clearHistory').addEventListener('click', () => {
+            if (confirm('Да ли сте сигурни да желите да обришете комплетну историју?\n\nОва акција се не може опозвати!')) {
+                const confirmAgain = confirm('Последње упозорење: Све калкулације ће бити трајно обрисане. Настави?');
+                if (confirmAgain) {
+                    historyManager.clearHistory();
+                    loadHistory();
+                    alert('✓ Историја успешно обрисана');
+                }
+            }
+        });
+
+        // Inicijalno učitavanje
+        loadHistory();
+    </script>
+</body>
+</html>
+

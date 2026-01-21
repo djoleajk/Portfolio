@@ -1,0 +1,136 @@
+﻿body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav ul {
+    padding: 0;
+    list-style: none;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.content-section {
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.fasting-type, .custom-details {
+    margin-bottom: 30px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.fasting-type h3, .custom-details h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.customs h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.fasting-types h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.calendar-view {
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.calendar-month-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.calendar-month-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+    width: 100%;
+}
+
+.calendar-month-card h3 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.calendar-day {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.celebration-important {
+    color: #cc0000;
+    font-weight: bold;
+}
+
+.celebration-medium {
+    font-weight: bold;
+}
+
+.celebration-normal {
+    font-weight: normal;
+}
+
+.date {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.saint-name {
+    margin-bottom: 5px;
+}
+
+.description {
+    font-size: 0.9em;
+    line-height: 1.4;
+}

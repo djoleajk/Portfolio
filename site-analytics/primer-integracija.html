@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primer - Kako integrisati Analytics Tracker</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f9fafb;
+        }
+        
+        h1 {
+            color: #2563eb;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #1e40af;
+            margin-top: 30px;
+        }
+        
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .code-block code {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .filename {
+            background: #3b82f6;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 5px 5px 0 0;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: -5px;
+        }
+        
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        ul {
+            margin-left: 30px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        strong {
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Kako integrisati Site Analytics Tracker</h1>
+    
+    <div class="info-box">
+        <strong>🎯 Cilj:</strong> Dodati Analytics praćenje na vaš postojeći sajt u 2 minuta.
+    </div>
+
+    <h2>Korak 1: Dodajte tracker script</h2>
+    
+    <p>Na kraju svake stranice, <strong>pre zatvaranja &lt;/body&gt; taga</strong>, dodajte:</p>
+    
+    <div class="filename">vaš-sajt.html</div>
+    <div class="code-block">
+        <code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Vaš sajt&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    
+    &lt;!-- Vaš sadržaj --&gt;
+    &lt;h1&gt;Dobrodošli na moj sajt&lt;/h1&gt;
+    &lt;p&gt;Neki sadržaj...&lt;/p&gt;
+    
+    &lt;!-- 🔥 Dodajte ovu liniju na kraju --&gt;
+    &lt;script src="analytics-tracker.js"&gt;&lt;/script&gt;
+    
+&lt;/body&gt;
+&lt;/html&gt;</code>
+    </div>
+
+    <div class="success-box">
+        ✅ <strong>I to je sve!</strong> Tracker će automatski početi da beleži posete.
+    </div>
+
+    <h2>Korak 2: Dodajte tracker na SVE stranice</h2>
+    
+    <p>Ako imate više stranica (home.html, about.html, contact.html...), dodajte istu liniju na svaku:</p>
+    
+    <div class="code-block">
+        <code>vaš-sajt/
+├── index.html          ← dodaj script
+├── about.html          ← dodaj script
+├── contact.html        ← dodaj script
+├── products.html       ← dodaj script
+└── analytics-tracker.js</code>
+    </div>
+
+    <h2>Korak 3: Postavite Dashboard</h2>
+    
+    <p>Stavite <code>index.html</code> (Analytics Dashboard) u poseban folder:</p>
+    
+    <div class="code-block">
+        <code>vaš-sajt/
+├── home.html
+├── about.html
+├── analytics-tracker.js
+└── analytics/
+    ├── index.html          ← Dashboard
+    ├── script.js
+    └── style.css</code>
+    </div>
+
+    <p>Ili jednostavno preimenujte Dashboard u <code>analytics.html</code>:</p>
+
+    <div class="code-block">
+        <code>vaš-sajt/
+├── index.html              ← Vaša početna
+├── about.html
+├── analytics.html          ← Dashboard
+├── analytics-tracker.js
+├── script.js
+└── style.css</code>
+    </div>
+
+    <h2>Primer: WordPress sajt</h2>
+    
+    <div class="warning-box">
+        ⚠️ Za WordPress, dodajte tracker u <code>footer.php</code> fajl vašeg theme-a.
+    </div>
+
+    <div class="filename">wp-content/themes/vaš-theme/footer.php</div>
+    <div class="code-block">
+        <code>&lt;footer&gt;
+    &lt;!-- Footer sadržaj --&gt;
+&lt;/footer&gt;
+
+&lt;!-- 🔥 Dodajte pre zatvaranja body taga --&gt;
+&lt;script src="&lt;?php echo get_template_directory_uri(); ?&gt;/analytics-tracker.js"&gt;&lt;/script&gt;
+
+&lt;?php wp_footer(); ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code>
+    </div>
+
+    <h2>Napredne opcije</h2>
+
+    <h3>1. Custom eventi</h3>
+    <p>Pratite specifične akcije (npr. klikove na dugmad):</p>
+
+    <div class="code-block">
+        <code>&lt;button onclick="trackButtonClick()"&gt;Pošalji poruku&lt;/button&gt;
+
+&lt;script&gt;
+function trackButtonClick() {
+    if (window.analyticsTracker) {
+        window.analyticsTracker.trackEvent('button_click', {
+            button: 'Pošalji poruku',
+            timestamp: new Date().toISOString()
+        });
+    }
+}
+&lt;/script&gt;</code>
+    </div>
+
+    <h3>2. Praćenje forme</h3>
+    <p>Beležite kada korisnik pošalje formu:</p>
+
+    <div class="code-block">
+        <code>&lt;form onsubmit="trackFormSubmit(event)"&gt;
+    &lt;input type="email" name="email" required&gt;
+    &lt;button type="submit"&gt;Prijavi se&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+function trackFormSubmit(event) {
+    if (window.analyticsTracker) {
+        window.analyticsTracker.trackEvent('form_submit', {
+            form: 'Newsletter signup',
+            timestamp: new Date().toISOString()
+        });
+    }
+}
+&lt;/script&gt;</code>
+    </div>
+
+    <h3>3. Praćenje scroll dubine</h3>
+    <p>Pratite koliko korisnici scrolluju:</p>
+
+    <div class="code-block">
+        <code>&lt;script&gt;
+let maxScroll = 0;
+
+window.addEventListener('scroll', () => {
+    const scrollPercent = Math.round(
+        (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
+    );
+    
+    if (scrollPercent > maxScroll) {
+        maxScroll = scrollPercent;
+        
+        if (window.analyticsTracker && (scrollPercent === 25 || scrollPercent === 50 || 
+            scrollPercent === 75 || scrollPercent === 100)) {
+            window.analyticsTracker.trackEvent('scroll_depth', {
+                depth: scrollPercent + '%'
+            });
+        }
+    }
+});
+&lt;/script&gt;</code>
+    </div>
+
+    <h2>Provera da li radi</h2>
+
+    <ol>
+        <li>Otvorite stranicu vašeg sajta</li>
+        <li>Pritisnite <strong>F12</strong> (Developer Tools)</li>
+        <li>U <strong>Console</strong> tab-u videćete: 
+            <div class="code-block" style="margin-top: 10px;">
+                <code style="color: #10b981;">✅ Analytics Tracker aktiviran - Praćenje u toku!</code>
+            </div>
+        </li>
+        <li>U <strong>Application → Local Storage</strong> videćete podatke</li>
+    </ol>
+
+    <div class="success-box">
+        <strong>🎉 Gotovo!</strong> Vaš sajt sada ima potpuno funkcionalni analytics sistem.
+    </div>
+
+    <h2>Šta dalje?</h2>
+
+    <ul>
+        <li>📊 Otvorite Dashboard (<code>analytics.html</code> ili <code>index.html</code>)</li>
+        <li>🔍 Pratite posete u realnom vremenu</li>
+        <li>📥 Eksportujte podatke redovno</li>
+        <li>🎨 Prilagodite Dashboard svom dizajnu</li>
+        <li>🚀 Dodajte backend za perzistenciju podataka</li>
+    </ul>
+
+    <div class="info-box">
+        <strong>💡 Pro savet:</strong> Za produkciju, razmislite o slanju podataka na server umesto čuvanja samo u localStorage. Tako ćete imati centralizovane podatke za sve posetioce.
+    </div>
+
+    <hr style="margin: 40px 0; border: none; border-top: 2px solid #e5e7eb;">
+
+    <p style="text-align: center; color: #6b7280;">
+        Razvijeno sa ❤️ | <a href="index.html" style="color: #3b82f6;">Nazad na Dashboard</a>
+    </p>
+
+    <!-- ✅ Primer: Tracker je aktivan i na ovoj stranici! -->
+    <script src="analytics-tracker.js"></script>
+</body>
+</html>
+

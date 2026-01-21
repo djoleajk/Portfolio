@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprint Marketing Agency - Digitale Marketing Agentur</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1');
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .service-card {
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .marketing-savet {
+            position: relative;
+            margin-bottom: 2rem;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .form-control.is-invalid:focus,
+        .form-control.is-valid:focus {
+            box-shadow: none;
+        }
+        
+        .service-card i {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .service-card h4 {
+            transition: color 0.3s ease-in-out;
+        }
+
+        footer {
+            position: relative;
+            background: linear-gradient(45deg, #1a1a1a, #2c2c2c);
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #0d6efd, #198754);
+        }
+
+        footer .social-links a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        footer .social-links a:hover {
+            background: #0d6efd;
+            transform: translateY(-3px);
+        }
+
+        footer ul li a {
+            transition: all 0.3s;
+        }
+
+        footer ul li a:hover {
+            color: #0d6efd !important;
+            padding-left: 5px;
+        }
+
+        footer hr {
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigacija -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                Sprint Marketing Agentur
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#pocetna">Start</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            Leistungen
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="seo.html">SEO Optimierung</a></li>
+                            <li><a class="dropdown-item" href="ppc.html">PPC Kampagnen</a></li>
+                            <li><a class="dropdown-item" href="social.html">Social Media</a></li>
+                            <li><a class="dropdown-item" href="webdev.html">Webentwicklung</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#o-nama">Über uns</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#kontakt">Kontakt</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Sekcija -->
+    <section class="hero-section" id="pocetna">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="display-4">Digitales Marketing für Ihren Erfolg</h1>
+                    <p class="lead">Steigern Sie die Sichtbarkeit Ihrer Marke und erreichen Sie neue Kunden über digitale Kanäle</p>
+                    <a href="#kontakt" class="btn btn-primary btn-lg">Kontaktieren Sie uns</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usluge -->
+    <section id="usluge" class="section-padding">
+        <div class="container">
+            <h2 class="text-center mb-5">Unsere Leistungen</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card service-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-code fa-3x mb-3 text-primary"></i>
+                            <h4>Webentwicklung</h4>
+                            <p>Entwicklung moderner und responsiver Websites nach Ihren Wünschen</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>Landing Pages</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Business Websites</li>
+                                <li><i class="fas fa-check text-success me-2"></i>E-Commerce Lösungen</li>
+                            </ul>
+                            <a href="webdev.html" class="btn btn-outline-primary mt-3">Mehr erfahren</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card service-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-ad fa-3x mb-3 text-primary"></i>
+                            <h4>Google Ads</h4>
+                            <p>Professionelles Management von Google Ads Kampagnen</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>Search Kampagnen</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Display Werbung</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Shopping Kampagnen</li>
+                            </ul>
+                            <a href="ppc.html" class="btn btn-outline-primary mt-3">Mehr erfahren</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card service-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-bullhorn fa-3x mb-3 text-primary"></i>
+                            <h4>Meta Ads</h4>
+                            <p>Facebook & Instagram Werbung</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>Facebook Anzeigen</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Instagram Kampagnen</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Remarketing</li>
+                            </ul>
+                            <a href="social.html" class="btn btn-outline-primary mt-3">Mehr erfahren</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card service-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-search fa-3x mb-3 text-primary"></i>
+                            <h4>SEO Optimierung</h4>
+                            <p>Suchmaschinenoptimierung</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>On-page SEO</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Off-page SEO</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Technische Optimierung</li>
+                            </ul>
+                            <a href="seo.html" class="btn btn-outline-primary mt-3">Mehr erfahren</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card service-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chart-line fa-3x mb-3 text-primary"></i>
+                            <h4>Marketing Strategie</h4>
+                            <p>Entwicklung digitaler Marketingstrategien</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>Marktanalyse</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Wettbewerbsanalyse</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Marketingplan</li>
+                            </ul>
+                            <a href="#kontakt" class="btn btn-outline-primary mt-3">Kontaktieren Sie uns</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card service-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-paint-brush fa-3x mb-3 text-primary"></i>
+                            <h4>Grafikdesign</h4>
+                            <p>Entwicklung visueller Identität</p>
+                            <ul class="list-unstyled text-start">
+                                <li><i class="fas fa-check text-success me-2"></i>Logo Design</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Social Media Design</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Werbematerialien</li>
+                            </ul>
+                            <a href="#kontakt" class="btn btn-outline-primary mt-3">Kontaktieren Sie uns</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- O nama -->
+    <section id="o-nama" class="section-padding bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2>Über Uns</h2>
+                    <p>Wir sind ein Team von Digital Marketing-Experten mit über 10 Jahren Erfahrung. Unser Ziel ist es, Ihr Unternehmen durch innovative digitale Strategien zum Wachstum zu verhelfen.</p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1" class="img-fluid rounded" alt="O nama">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section id="kontakt" class="section-padding bg-light">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="display-4 mb-3">Starten Sie Ihr Projekt</h2>
+                    <p class="lead text-muted">Wir sind bereit, Ihre Ideen in digitalen Erfolg umzusetzen</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <!-- Kontakt informacije -->
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h4 class="mb-4">Kontaktinformationen</h4>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary rounded-circle p-3 me-3">
+                                    <i class="fas fa-map-marker-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Adresse</h6>
+                                    <p class="mb-0 text-muted">
+                                        <a href="https://goo.gl/maps/YourGoogleMapsLink" target="_blank" class="text-decoration-none text-muted">
+                                            Karadjordjeva 127
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary rounded-circle p-3 me-3">
+                                    <i class="fas fa-phone text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Telefon</h6>
+                                    <p class="mb-0 text-muted">
+                                        <a href="tel:+381658560207" class="text-decoration-none text-muted">065 856 0207</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary rounded-circle p-3 me-3">
+                                    <i class="fas fa-envelope text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Email</h6>
+                                    <p class="mb-0 text-muted">
+                                        <a href="mailto:agencijasprint@gmail.com" class="text-decoration-none text-muted">agencijasprint@gmail.com</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Mapa umesto kontakt forme -->
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-0">
+                            <iframe 
+                                src="https://maps.google.com/maps?q=Karadjordjeva+127,+Valjevo,+Serbia&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                                width="100%" 
+                                height="450" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Osnovne informacije -->
+                <div class="col-lg-4">
+                    <h5 class="mb-4">
+                        Sprint Marketing Agentur
+                    </h5>
+                    <p class="mb-3">Ihr Partner für digitales Wachstum und Entwicklung. Wir verwandeln Ideen in digitalen Erfolg.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Brzi linkovi -->
+                <div class="col-lg-2">
+                    <h5 class="mb-4">Schnelllinks</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="Pocetna.html" class="text-white text-decoration-none">Start</a></li>
+                        <li class="mb-2"><a href="#o-nama" class="text-white text-decoration-none">Über uns</a></li>
+                        <li class="mb-2"><a href="#usluge" class="text-white text-decoration-none">Leistungen</a></li>
+                        <li class="mb-2"><a href="#kontakt" class="text-white text-decoration-none">Kontakt</a></li>
+                    </ul>
+                </div>
+
+                <!-- Usluge -->
+                <div class="col-lg-3">
+                    <h5 class="mb-4">Unsere Leistungen</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="seo.html" class="text-white text-decoration-none">SEO Optimierung</a></li>
+                        <li class="mb-2"><a href="ppc.html" class="text-white text-decoration-none">PPC Kampagnen</a></li>
+                        <li class="mb-2"><a href="social.html" class="text-white text-decoration-none">Social Media</a></li>
+                        <li class="mb-2"><a href="webdev.html" class="text-white text-decoration-none">Webentwicklung</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kontakt -->
+                <div class="col-lg-3">
+                    <h5 class="mb-4">Kontaktieren Sie uns</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fas fa-map-marker-alt me-2"></i> 
+                            Karadjordjeva 127
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-phone me-2"></i> 
+                            065 856 0207
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-envelope me-2"></i>
+                            agencijasprint@gmail.com
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-clock me-2"></i>
+                            Mo - Fr: 09:00 - 17:00
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright linija -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <hr class="bg-light">
+                    <div class="text-center mt-4">
+                        <p class="mb-0">&copy; 2025 Sprint Marketing Agentur. Alle Rechte vorbehalten.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Bootstrap JS i jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        $(document).ready(function() {
+            // Animacija brojača za statistiku
+            function animateBrojac() {
+                $('.stat-number').each(function() {
+                    const $this = $(this);
+                    const broj = parseInt($this.text());
+                    $({ Counter: 0 }).animate({
+                        Counter: broj
+                    }, {
+                        duration: 2000,
+                        easing: 'swing',
+                        step: function() {
+                            $this.text(Math.ceil(this.Counter));
+                        }
+                    });
+                });
+            }
+
+            // Pokreni animaciju kada sekcija postane vidljiva
+            $(window).scroll(function() {
+                $('.stats-section').each(function() {
+                    if (isElementInViewport(this) && !$(this).hasClass('animated')) {
+                        $(this).addClass('animated');
+                        animateBrojac();
+                    }
+                });
+            });
+
+            // Parallax efekat za hero sekciju
+            $(window).scroll(function() {
+                const scroll = $(window).scrollTop();
+                $('.hero-section').css({
+                    'background-position': 'center ' + (scroll * 0.5) + 'px'
+                });
+            });
+
+            // Animirani loading za kartice usluga
+            $('.service-card').each(function(index) {
+                $(this).css({
+                    'opacity': '0',
+                    'transform': 'translateY(20px)'
+                }).delay(index * 200).animate({
+                    'opacity': '1',
+                    'transform': 'translateY(0)'
+                }, 1000);
+            });
+
+            // Interaktivni hover efekti
+            $('.service-card').hover(
+                function() {
+                    $(this).find('i').addClass('fa-spin');
+                    $(this).find('h4').css('color', '#0d6efd');
+                },
+                function() {
+                    $(this).find('i').removeClass('fa-spin');
+                    $(this).find('h4').css('color', '');
+                }
+            );
+
+            // Napredna validacija forme i slanje emaila
+            $('#kontakt-forma').on('submit', function(e) {
+                e.preventDefault();
+                
+                const ime = $('#ime').val();
+                const email = $('#email').val();
+                const usluga = $('#usluga').val();
+                const poruka = $('#poruka').val();
+                
+                // Validacija
+                let greske = [];
+                
+                if (ime.length < 2) {
+                    greske.push('Ime mora imati najmanje 2 karaktera');
+                    $('#ime').addClass('is-invalid');
+                } else {
+                    $('#ime').removeClass('is-invalid').addClass('is-valid');
+                }
+                
+                if (!validateEmail(email)) {
+                    greske.push('Unesite validnu email adresu');
+                    $('#email').addClass('is-invalid');
+                } else {
+                    $('#email').removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if (!usluga || usluga === 'Izaberite uslugu') {
+                    greske.push('Molimo izaberite uslugu');
+                    $('#usluga').addClass('is-invalid');
+                } else {
+                    $('#usluga').removeClass('is-invalid').addClass('is-valid');
+                }
+                
+                if (poruka.length < 10) {
+                    greske.push('Poruka mora imati najmanje 10 karaktera');
+                    $('#poruka').addClass('is-invalid');
+                } else {
+                    $('#poruka').removeClass('is-invalid').addClass('is-valid');
+                }
+                
+                if (greske.length > 0) {
+                    const greskeHtml = greske.map(g => `<li>${g}</li>`).join('');
+                    showNotification('Greška', `<ul class="mb-0">${greskeHtml}</ul>`, 'danger');
+                    return;
+                }
+
+                // Ako je validacija prošla, šalji podatke
+                const formData = { 
+                    ime, 
+                    email, 
+                    usluga,
+                    poruka 
+                };
+                
+                // Animiraj dugme
+                const $btn = $(this).find('button[type="submit"]');
+                const originalText = $btn.html();
+                $btn.html('<span class="spinner-border spinner-border-sm me-2"></span>Šaljem...').prop('disabled', true);
+
+                $.ajax({
+                    url: '/posalji-poruku',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        if(response.status === 'success') {
+                            showNotification('Uspeh!', 'Vaša poruka je uspešno poslata. Kontaktiraćemo vas uskoro.', 'success');
+                            $('#kontakt-forma')[0].reset();
+                            $('.form-control').removeClass('is-valid');
+                        } else {
+                            showNotification('Greška', 'Došlo je do greške pri slanju poruke.', 'danger');
+                        }
+                    },
+                    error: function() {
+                        showNotification('Greška', 'Došlo je do greške pri komunikaciji sa serverom.', 'danger');
+                    },
+                    complete: function() {
+                        $btn.html(originalText).prop('disabled', false);
+                    }
+                });
+            });
+
+            // Pomoćne funkcije
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            function isElementInViewport(el) {
+                const rect = el.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+
+            // Notifikacioni sistem
+            function showNotification(title, message, type = 'info') {
+                const notification = $(`
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header bg-${type} text-white">
+                            <strong class="me-auto">${title}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            ${message}
+                        </div>
+                    </div>
+                `);
+
+                // Dodaj kontejner za notifikacije ako ne postoji
+                if ($('#toast-container').length === 0) {
+                    $('body').append('<div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1050"></div>');
+                }
+
+                $('#toast-container').append(notification);
+                const toast = new bootstrap.Toast(notification[0], {
+                    autohide: true,
+                    delay: 5000
+                });
+                toast.show();
+
+                // Animiraj ulaz
+                notification.css({
+                    transform: 'translateX(100%)',
+                    opacity: 0
+                }).animate({
+                    transform: 'translateX(0)',
+                    opacity: 1
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>

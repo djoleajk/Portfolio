@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmovi - Vaša Kolekcija Filmova</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">🎬 Filmovi</h1>
+            <div class="header-controls">
+                <button class="admin-btn" id="showAdminBtn" aria-label="Admin panel">
+                    ⚙️ Admin
+                </button>
+                <button class="favorites-btn" id="showFavoritesBtn" aria-label="Prikaži omiljene filmove">
+                    ⭐ Omiljeni (<span id="favoritesCount">0</span>)
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search and Filters -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-filters">
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Pretraži filmove..."
+                        aria-label="Pretraga filmova"
+                    >
+                    <button class="search-icon" aria-label="Pretraži">🔍</button>
+                </div>
+                <div class="filters">
+                    <select id="genreFilter" aria-label="Filter po žanru">
+                        <option value="">Svi žanrovi</option>
+                    </select>
+                    <select id="yearFilter" aria-label="Filter po godini">
+                        <option value="">Sve godine</option>
+                    </select>
+                    <button id="resetFilters" class="reset-btn">Resetuj filtere</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Movies Grid -->
+    <main class="main-content">
+        <div class="container">
+            <div id="moviesGrid" class="movies-grid" role="list">
+                <!-- Movies will be inserted here dynamically -->
+            </div>
+            <div id="noResults" class="no-results" style="display: none;">
+                <p>Nema rezultata za vašu pretragu.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Movie Modal -->
+    <div id="movieModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose" aria-label="Zatvori modal">×</button>
+            
+            <div class="modal-body">
+                <!-- Movie Details -->
+                <div class="movie-details">
+                    <img id="modalPoster" src="" alt="" class="modal-poster">
+                    <div class="movie-info">
+                        <h2 id="modalTitle"></h2>
+                        <div class="movie-meta">
+                            <span id="modalYear"></span>
+                            <span id="modalDuration"></span>
+                            <span id="modalGenre"></span>
+                        </div>
+                        <p id="modalDescription" class="movie-description"></p>
+                        <button id="toggleFavorite" class="favorite-btn">
+                            <span id="favoriteIcon">⭐</span>
+                            <span id="favoriteText">Dodaj u omiljene</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Video Player Section -->
+                <div class="player-section">
+                    <div class="source-selector">
+                        <label for="sourceSelect">Izaberi izvor:</label>
+                        <select id="sourceSelect" aria-label="Izbor izvora videa">
+                            <!-- Sources will be populated dynamically -->
+                        </select>
+                    </div>
+
+                    <!-- Video Player Container -->
+                    <div id="playerContainer" class="player-container">
+                        <!-- Video element for mp4/HLS -->
+                        <video 
+                            id="videoPlayer" 
+                            class="video-player"
+                            preload="metadata"
+                            crossorigin="anonymous"
+                        >
+                            <track kind="captions" label="Srpski" srclang="sr" id="subtitles">
+                            Vaš pretraživač ne podržava video tagove.
+                        </video>
+
+                        <!-- Iframe for embedded content -->
+                        <iframe 
+                            id="iframePlayer" 
+                            class="iframe-player"
+                            allowfullscreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            style="display: none;"
+                        ></iframe>
+
+                        <!-- Error Message -->
+                        <div id="playerError" class="player-error" style="display: none;">
+                            <p>Greška pri učitavanju videa.</p>
+                            <button id="tryAnotherSource" class="btn-primary">Probaj drugi izvor</button>
+                        </div>
+
+                        <!-- Custom Video Controls -->
+                        <div id="videoControls" class="video-controls">
+                            <div class="progress-container">
+                                <input 
+                                    type="range" 
+                                    id="progressBar" 
+                                    class="progress-bar" 
+                                    min="0" 
+                                    max="100" 
+                                    value="0"
+                                    aria-label="Video progres"
+                                >
+                                <div class="progress-time">
+                                    <span id="currentTime">0:00</span>
+                                    <span id="duration">0:00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="controls-bottom">
+                                <div class="controls-left">
+                                    <button id="playPauseBtn" class="control-btn" aria-label="Play/Pause">
+                                        ▶️
+                                    </button>
+                                    <button id="muteBtn" class="control-btn" aria-label="Mute/Unmute">
+                                        🔊
+                                    </button>
+                                    <input 
+                                        type="range" 
+                                        id="volumeSlider" 
+                                        class="volume-slider" 
+                                        min="0" 
+                                        max="100" 
+                                        value="100"
+                                        aria-label="Volume kontrola"
+                                    >
+                                    <span id="volumeValue" class="volume-value">100%</span>
+                                </div>
+                                
+                                <div class="controls-right">
+                                    <select id="speedControl" class="speed-control" aria-label="Brzina reprodukcije">
+                                        <option value="0.5">0.5x</option>
+                                        <option value="0.75">0.75x</option>
+                                        <option value="1" selected>1x</option>
+                                        <option value="1.25">1.25x</option>
+                                        <option value="1.5">1.5x</option>
+                                        <option value="2">2x</option>
+                                    </select>
+                                    <button id="pipBtn" class="control-btn" aria-label="Picture-in-Picture" title="Picture-in-Picture">
+                                        📺
+                                    </button>
+                                    <button id="fullscreenBtn" class="control-btn" aria-label="Fullscreen">
+                                        ⛶
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Keyboard Shortcuts Info -->
+                    <div class="keyboard-shortcuts">
+                        <details>
+                            <summary>⌨️ Prečice na tastaturi</summary>
+                            <ul>
+                                <li><kbd>Space</kbd> - Play/Pause</li>
+                                <li><kbd>←</kbd> - Premotaj 5s unazad</li>
+                                <li><kbd>→</kbd> - Premotaj 5s unapred</li>
+                                <li><kbd>F</kbd> - Fullscreen</li>
+                                <li><kbd>M</kbd> - Mute/Unmute</li>
+                                <li><kbd>↑</kbd> - Povećaj glasnoću</li>
+                                <li><kbd>↓</kbd> - Smanji glasnoću</li>
+                            </ul>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="adminModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
+        <div class="modal-overlay" id="adminModalOverlay"></div>
+        <div class="modal-content admin-modal-content">
+            <button class="modal-close" id="adminModalClose" aria-label="Zatvori admin panel">×</button>
+            
+            <div class="modal-body">
+                <h2 id="adminModalTitle">⚙️ Admin Panel - Upravljanje Filmovima</h2>
+                
+                <div class="admin-tabs">
+                    <button class="tab-btn active" data-tab="add">➕ Dodaj Film</button>
+                    <button class="tab-btn" data-tab="manage">📋 Upravljaj Filmovima</button>
+                </div>
+
+                <!-- Add Movie Tab -->
+                <div id="addMovieTab" class="tab-content active">
+                    <form id="movieForm" class="movie-form">
+                        <div class="form-group">
+                            <label for="movieTitle">Naslov filma *</label>
+                            <input type="text" id="movieTitle" required placeholder="Unesite naslov">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="movieYear">Godina *</label>
+                                <input type="number" id="movieYear" required min="1900" max="2100" placeholder="2024">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="movieDuration">Trajanje *</label>
+                                <input type="text" id="movieDuration" required placeholder="120 min">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="movieGenre">Žanr *</label>
+                                <input type="text" id="movieGenre" required placeholder="Akcija, Drama...">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="movieDescription">Opis *</label>
+                            <textarea id="movieDescription" required rows="4" placeholder="Kratki opis filma..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="moviePoster">URL postera *</label>
+                            <input type="url" id="moviePoster" required placeholder="https://example.com/poster.jpg">
+                            <small>Unesite URL slike za poster filma</small>
+                        </div>
+
+                        <div class="poster-preview" id="posterPreview" style="display: none;">
+                            <img id="posterPreviewImg" src="" alt="Poster preview">
+                        </div>
+
+                        <!-- Sources Section -->
+                        <div class="sources-section">
+                            <div class="sources-header">
+                                <h3>Video izvori</h3>
+                                <button type="button" id="addSourceBtn" class="btn-secondary">➕ Dodaj izvor</button>
+                            </div>
+                            
+                            <div id="sourcesContainer">
+                                <!-- Sources will be added dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary" id="saveMovieBtn">
+                                <span id="saveMovieBtnText">💾 Sačuvaj Film</span>
+                            </button>
+                            <button type="button" class="btn-secondary" id="cancelFormBtn">Otkaži</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Manage Movies Tab -->
+                <div id="manageMoviesTab" class="tab-content">
+                    <div class="manage-movies-list">
+                        <div class="manage-search">
+                            <input type="text" id="manageSearchInput" placeholder="Pretraži filmove...">
+                        </div>
+                        <div id="manageMoviesList" class="movies-list">
+                            <!-- Movies will be listed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Filmovi. Sve u jednom mestu.</p>
+        </div>
+    </footer>
+
+    <!-- HLS.js library for HLS support -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    
+    <!-- Main Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>
+

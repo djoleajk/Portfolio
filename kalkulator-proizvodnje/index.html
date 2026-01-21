@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калкулатор Времена</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Калкулатор">
+</head>
+<body>
+    <div class="container menu-container">
+        <h1>Калкулатор Времена</h1>
+        <p class="subtitle">Изабери операцију за калkulацију времена</p>
+        
+        <div class="dedication-banner">
+            <div class="gift-text">
+                Поклон колегама <strong>Ковачког Центра</strong>
+            </div>
+        </div>
+        
+        <div class="current-time">
+            <div class="time-label">
+                <span class="sync-badge" title="Синхронизовано са атомским сатом">🔄 Атомски сат</span>
+            </div>
+            <div id="currentTime" class="time-display">--:--:--</div>
+            <div id="currentDate" class="date-display"></div>
+        </div>
+
+        <!-- Istorija -->
+        <div class="quick-actions">
+            <a href="vreme-po-komadu.html" class="action-btn action-btn-special" title="Израчунај време за један комад">
+                <span class="action-icon">⏱️</span>
+                <span class="action-text">Време по Комаду</span>
+            </a>
+            <a href="history.html" class="action-btn history-btn" title="Преглед историје калкулација">
+                <span class="action-icon">📊</span>
+                <span class="action-text">Историја</span>
+                <span id="historyCount" class="badge">0</span>
+            </a>
+            <a href="koliko-komada.html" class="action-btn action-btn-special" title="Израчунај колико комада може да се уради">
+                <span class="action-icon">🔢</span>
+                <span class="action-text">Колико Комада</span>
+            </a>
+        </div>
+
+        <div class="menu-grid">
+            <a href="ubadanje.html" class="menu-card">
+                <div class="menu-icon">🔨</div>
+                <div class="menu-title">Убадање</div>
+                <div class="menu-description">Калкулација времена за убадање</div>
+            </a>
+
+            <a href="zatvaranje-mine.html" class="menu-card">
+                <div class="menu-icon">🔩</div>
+                <div class="menu-title">Затварање Мине</div>
+                <div class="menu-description">Калкулација времена за затварање</div>
+            </a>
+
+            <a href="peskarenje.html" class="menu-card special">
+                <div class="menu-icon">💨</div>
+                <div class="menu-title">Пескарење</div>
+                <div class="menu-description">2 мине одједном</div>
+            </a>
+
+            <a href="robot.html" class="menu-card">
+                <div class="menu-icon">🤖</div>
+                <div class="menu-title">Преса "Робот"</div>
+                <div class="menu-description">Калкулација за Робот пресу</div>
+            </a>
+
+            <a href="italijanka.html" class="menu-card">
+                <div class="menu-icon">🇮🇹</div>
+                <div class="menu-title">Преса "Италијанка"</div>
+                <div class="menu-description">Калкулација за Италијанку</div>
+            </a>
+
+            <a href="bem.html" class="menu-card">
+                <div class="menu-icon">⚙️</div>
+                <div class="menu-title">Преса "БЕМ"</div>
+                <div class="menu-description">Калкулација за БЕМ пресу</div>
+            </a>
+        </div>
+
+        <div class="weather-widget-container">
+            <div id="weatherWidget"></div>
+        </div>
+        
+        <div class="author-footer">
+            <p>© 2025 Đorđe Živanović</p>
+        </div>
+    </div>
+
+    <script src="time-sync.js"></script>
+    <script src="weather.js"></script>
+    <script src="history-manager.js"></script>
+    <script>
+        // Pokreni sat sa prikazom datuma
+        atomicClock.startClock('currentTime', { 
+            showDate: true, 
+            dateElementId: 'currentDate' 
+        });
+
+        // Ažuriraj broj kalkulacija u istoriji
+        function updateHistoryCount() {
+            const history = historyManager.getHistory();
+            const countElement = document.getElementById('historyCount');
+            if (countElement) {
+                countElement.textContent = history.length;
+                countElement.style.display = history.length > 0 ? 'inline-block' : 'none';
+            }
+        }
+
+        // Inicijalno ažuriranje
+        updateHistoryCount();
+
+        // Registruj Service Worker za PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(registration => {
+                        console.log('✓ Service Worker регистрован:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker грешка:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

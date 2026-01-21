@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Sajt - Za testiranje Analytics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .info-box {
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .info-box h2 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box p {
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+        }
+
+        .btn.success {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+        }
+
+        .stat-card h3 {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            color: #1f2937;
+            font-size: 1.8rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: #6b7280;
+            padding-top: 2rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        code {
+            background: #f3f4f6;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            color: #be123c;
+        }
+
+        ul {
+            margin: 1rem 0 1rem 2rem;
+            line-height: 1.8;
+        }
+
+        li {
+            color: #374151;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Demo Sajt</h1>
+        <p class="subtitle">Ovaj sajt služi za testiranje Site Analytics sistema</p>
+
+        <div class="info-box">
+            <h2>📊 Kako funkcionišr?</h2>
+            <p>
+                Svaki put kada otvorite bilo koju stranicu, Analytics Tracker automatski beleži:
+            </p>
+            <ul>
+                <li>Vašu posetu (page view)</li>
+                <li>Jedinstveni ID posetioca</li>
+                <li>Vreme posete</li>
+                <li>Izvor saobraćaja (kako ste došli na sajt)</li>
+                <li>Trajanje sesije</li>
+            </ul>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Trenutna stranica</h3>
+                <p id="currentPage">/demo</p>
+            </div>
+            <div class="stat-card">
+                <h3>Vaš Visitor ID</h3>
+                <p id="visitorId" style="font-size: 1.2rem;">---</p>
+            </div>
+            <div class="stat-card">
+                <h3>Session ID</h3>
+                <p id="sessionId" style="font-size: 1.2rem;">---</p>
+            </div>
+            <div class="stat-card" style="border: 2px solid #10b981;">
+                <h3>Ukupno poseta</h3>
+                <p id="totalVisits">0</p>
+            </div>
+        </div>
+
+        <div class="info-box" style="background: #f0fdf4; border-left-color: #10b981;">
+            <h2>🚀 Kliknite na dugmad ispod da simulirate navigaciju</h2>
+            <p>Svaki klik će se registrovati kao nova poseta na drugoj stranici.</p>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="?page=home" class="btn">🏠 Početna</a>
+            <a href="?page=about" class="btn">ℹ️ O nama</a>
+            <a href="?page=services" class="btn">⚙️ Usluge</a>
+            <a href="?page=products" class="btn">📦 Proizvodi</a>
+            <a href="?page=blog" class="btn">📝 Blog</a>
+            <a href="?page=contact" class="btn">📧 Kontakt</a>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="index.html" class="btn success">📊 Pogledaj Analytics Dashboard</a>
+            <button onclick="generateTraffic()" class="btn secondary">🔄 Generiši 10 poseta</button>
+        </div>
+
+        <div class="info-box" style="background: #fef3c7; border-left-color: #f59e0b;">
+            <h2>💡 Savet</h2>
+            <p>
+                Otvorite <code>index.html</code> (Analytics Dashboard) u drugom tabu pretraživača
+                kako biste videli statistiku u realnom vremenu dok koristite demo sajt.
+                Dashboard se automatski osvežava svakih 10 sekundi.
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>Razvijeno sa ❤️ koristeći čist HTML, CSS i JavaScript</p>
+        </div>
+    </div>
+
+    <!-- Učitaj Analytics Tracker -->
+    <script src="analytics-tracker.js"></script>
+    
+    <script>
+        // Prikaži trenutne informacije
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStats();
+            
+            // Ažuriraj stats svakih 2 sekunde
+            setInterval(updateStats, 2000);
+        });
+
+        function updateStats() {
+            // Prikazi stranicu iz URL-a
+            const urlParams = new URLSearchParams(window.location.search);
+            const page = urlParams.get('page') || 'demo';
+            document.getElementById('currentPage').textContent = '/' + page;
+
+            // Prikaži Visitor ID
+            const visitorId = localStorage.getItem('visitorId') || 'N/A';
+            const shortId = visitorId.split('_')[2] || visitorId.substring(0, 8);
+            document.getElementById('visitorId').textContent = shortId;
+
+            // Prikaži Session ID
+            const sessionId = sessionStorage.getItem('currentSession') || 'N/A';
+            const shortSession = sessionId.split('_')[2] || sessionId.substring(0, 8);
+            document.getElementById('sessionId').textContent = shortSession;
+
+            // Prikaži ukupan broj poseta
+            const data = JSON.parse(localStorage.getItem('siteAnalyticsData') || '{"totalVisits": 0}');
+            const totalVisitsEl = document.getElementById('totalVisits');
+            const newTotal = data.totalVisits || 0;
+            
+            if (totalVisitsEl.textContent !== newTotal.toString()) {
+                totalVisitsEl.textContent = newTotal;
+                totalVisitsEl.style.transform = 'scale(1.2)';
+                totalVisitsEl.style.color = '#10b981';
+                setTimeout(() => {
+                    totalVisitsEl.style.transform = 'scale(1)';
+                    totalVisitsEl.style.color = '';
+                }, 300);
+            }
+        }
+
+        // Funkcija za generisanje više poseta odjednom
+        function generateTraffic() {
+            const pages = ['home', 'about', 'services', 'products', 'blog', 'contact', 'pricing', 'portfolio', 'team', 'careers'];
+            let count = 0;
+            
+            const interval = setInterval(() => {
+                if (count >= 10) {
+                    clearInterval(interval);
+                    alert('✅ Generisano 10 poseta! Pogledajte Analytics Dashboard.');
+                    return;
+                }
+                
+                const randomPage = pages[Math.floor(Math.random() * pages.length)];
+                
+                // Simuliraj posetu (menja se samo u localStorage)
+                if (window.analyticsTracker) {
+                    window.history.pushState({}, '', `?page=${randomPage}`);
+                    window.analyticsTracker.trackPageView();
+                }
+                
+                count++;
+            }, 300);
+        }
+
+        // Prati sve klikove na linkove
+        document.querySelectorAll('a.btn').forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Animacija klika
+                e.currentTarget.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    e.currentTarget.style.transform = '';
+                }, 150);
+            });
+        });
+
+        console.log('%c🎯 Demo sajt aktivan!', 'color: #10b981; font-size: 16px; font-weight: bold;');
+        console.log('%cNavigirajte kroz stranicu da vidite kako Analytics prati vaše aktivnosti.', 'color: #6b7280;');
+    </script>
+</body>
+</html>
+

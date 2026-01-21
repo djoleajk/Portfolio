@@ -1,0 +1,26 @@
+{
+  "name": "platforma-za-usluge",
+  "version": "1.0.0",
+  "description": "Online platforma koja povezuje pružaoce usluga sa klijentima",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx live-server --port=8080 --open=index.html",
+    "dev": "npx live-server --port=8080 --open=index.html",
+    "test": "echo \"No tests specified yet\""
+  },
+  "keywords": [
+    "usluge",
+    "platforma",
+    "marketplace",
+    "services",
+    "frontend",
+    "javascript",
+    "html",
+    "css"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
+
